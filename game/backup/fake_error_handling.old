@@ -1,0 +1,147 @@
+default error_text = '''I'm sorry, but an uncaught exception occurred.
+
+While running game code:
+  File "renpy/common/00keymap.rpy", line 473, in script
+    python hide:
+  File "renpy/common/00keymap.rpy", line 473, in <module>
+    python hide:
+  File "renpy/common/00keymap.rpy", line 497, in _execute_python_hide
+    renpy.save("_reload-1", "reload save game")
+  File "game/01-definitions.rpy", line 71, in jsoncallback
+    d['playthrough'] = persistence.playthrough
+NameError: name 'persistence' is not defined
+
+-- Full Traceback ------------------------------------------------------------
+
+Full traceback:
+  File "renpy/common/00keymap.rpy", line 473, in script
+    python hide:
+  File "D:\renpy-7.4.4-sdk\renpy\ast.py", line 1131, in execute
+    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
+  File "D:\renpy-7.4.4-sdk\renpy\python.py", line 1061, in py_exec_bytecode
+    exec(bytecode, globals, locals)
+  File "renpy/common/00keymap.rpy", line 473, in <module>
+    python hide:
+  File "renpy/common/00keymap.rpy", line 497, in _execute_python_hide
+    renpy.save("_reload-1", "reload save game")
+  File "D:\renpy-7.4.4-sdk\renpy\loadsave.py", line 418, in save
+    i(json)
+  File "game/01-definitions.rpy", line 71, in jsoncallback
+    d['playthrough'] = persistence.playthrough
+NameError: name 'persistence' is not defined
+
+Windows-10-10.0.22621 AMD64
+Ren'Py 8.0.3.22090809
+untitled 0.1
+Fri Feb 17 18:08:24 2026'''
+
+# The screen that is used for error handling.
+screen fake_exception:
+    modal True
+    tag quick_menu
+    zorder 99
+
+    frame:
+        style_group ""
+
+        has side "t c b":
+            spacing gui._scale(10)
+
+        side "c r":
+            xfill True
+            label "发生异常。" text_size gui._scale(40)
+            text "{size=-3}[config.version!q]\n[renpy.version_only!q]\n[renpy.platform!q]{/size}" text_align 1.0 yalign 0.5
+
+        viewport:
+            id "viewport"
+            child_size (4000, None)
+            mousewheel True
+            draggable True
+            ymaximum 800
+            scrollbars "both"
+
+            has vbox
+
+            text '[error_text]'
+            
+
+        hbox:
+            vbox:
+                hbox:
+                    spacing gui._scale(25)
+                    box_wrap True
+                    box_wrap_spacing gui._scale(5)
+
+                    # textbutton "回滚":
+                    #     action rollback_action
+                    #     tooltip "尝试回滚到先前的状态，使您可以存档或者选择不同选项。"
+                    
+                    textbutton "忽略":
+                        action Return()
+                        tooltip "忽略异常，让您可以继续。但这通常会引起更多错误。"
+
+                
+
+                # Tooltip.
+                $ tooltip = GetTooltip() 
+                if tooltip:
+                    text tooltip
+
+            vbox:
+                xfill True
+
+                textbutton _("退出"):
+                    xalign 1.0
+                    action Quit(confirm=True)
+                    tooltip "退出游戏。"
+
+
+# # The screen that is used for error handling.
+# screen fake_parse_errors:
+#     modal True
+#     zorder 1090
+
+#     default fmt_errors = __format_parse_errors(errors)
+
+#     frame:
+#         style_group ""
+
+#         has side "t c b":
+#             spacing gui._scale(10)
+
+#         label _("Parsing the script failed.") text_size gui._scale(40)
+
+#         viewport:
+#             id "viewport"
+#             child_size (4000, None)
+#             mousewheel True
+#             draggable True
+#             scrollbars "both"
+#             xfill True
+#             yfill True
+
+#             has vbox
+
+#             text fmt_errors substitute False
+
+#         vbox:
+
+#             hbox:
+#                 spacing gui._scale(25)
+
+#                 textbutton _("Reload"):
+#                     action reload_action
+#                     hovered tt.action(_("Reloads the game from disk, saving and restoring game state if possible."))
+
+                
+
+#                 vbox:
+#                     xfill True
+
+#                     textbutton _("Quit"):
+#                         action __ErrorQuit()
+#                         hovered tt.action(_("Quits the game."))
+#                         xalign 1.0
+
+#             # Tooltip.
+#             text tt.value

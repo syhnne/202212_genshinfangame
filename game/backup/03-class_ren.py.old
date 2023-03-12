@@ -1,0 +1,167 @@
+
+
+
+
+time=0
+
+"""renpy
+init python:
+"""
+
+
+class MapEvents:
+
+    def __init__(self, name='', showname='', position=(), show=True, excdays=[], *excdays_choice):
+        self.name = name
+        self.showname = showname
+        self.position = position
+        self.show = show
+        self.excdays = excdays
+        self.excdays_choice = excdays_choice
+
+    def spn():
+        return self.showname
+
+    def return_spot_position():
+        return self.position
+
+    def return_show_spot():
+        if time in self.excdays:
+            return not self.show
+        elif self.excdays_choice:
+            for timelist in self.excdays_choice:
+                for t in timelist:
+                    if True in timelist: ## vandian了，我得把点击动作换成这里的一个函数。。。这样才能向这个list中写入true表示我选过了
+                        break
+                    elif t == time:
+                        return not self.show
+        else:
+            return self.show
+
+    def excdays_choice_del(): ## 好，类的方法是callable，在screen里面加入这个函数来删掉已经看过的剧情
+        if self.excdays_choice:
+            for timelist in Self.excdays_choice:
+                for t in timelist:
+                    if True in timelist:
+                        break
+                    elif t == time:
+                        timelist.append(True)
+        else:
+            raise AttributeError('你这地点没有那种点一次就消失的事件啊，别在这里用删除函数')
+
+    ## 子类必须重写这个方法，天知道你那时间显示不显示地点啊
+    def return_has_event():
+        for key,value in mapevents.items():
+            if time == key and type(value[0]) == type(''):
+                if value[0]==self.name:
+                    return True
+
+
+class MapEvents_z(MapEvents):
+
+    mapevents = {
+    # 6:['bgyh', 'z01'],
+    # 7:['bgyh', 'z01'],
+    8:['bgyh', 'p01'],
+    10:[False, 'p00'],
+    ## events_c[10] = [False, 'p02']
+    13:['lygmt','z02'],
+    15:['mxjxh', 'z03'],
+    16:['mxjxh', 'z03'],
+    17:['mxjxh', 'z03'],
+    ## events_z[19] = [False, 'p03']
+    ## events_z[21] = [False, 'z04']
+    ## events_z[24] = ['mxjxh', 'z05']
+    32:[False, 'p04'],
+    34:['lygmt', 'z06'],
+    ## events_z[36] = [False, 'p05']
+    42:['wmt', 'p06'],
+    48:['wwjs', 'p07'],
+    55:[False, 'z08'],
+    ## events_z[57] = [False, 'p08']
+    ## events_z[60] = [False, 'p09']
+    69:['c_home', 'z09'],
+    70:['c_home', 'z09'],
+    71:['c_home', 'z09'],
+    75:['mxjxh', 'z10'], 
+    76:['mxjxh', 'z10'], 
+    77:['mxjxh', 'z10'], 
+    ## events_z[80] = [False, 'p10']
+    ## events_z[81] = [False, 'p11']
+    87:['outside', 'p12'],
+    }
+            
+        
+    def append_event():
+        pass
+    
+class MapEvents_c(MapEvents):
+
+    mapevents = {
+    0:[True, 'c01'],
+    1:[True, 'c01'],
+    2:[True, 'c01'],
+    4:[False, 'c02'],
+    7:[False, 'c03'],
+    8:['stay', 'p01'],
+    ## events_z[10] = [False, 'p02']
+    13:['lygmt','c04'],
+    15:['mxjxh', 'c05'],
+    16:['mxjxh', 'c05'],
+    17:['mxjxh', 'c05'],
+    ## events_c[19] = [False, 'p03']
+    ## events_c[21] = [False, 'c06']
+    27:['wjt', 'c07'],
+    28:['wjt', 'c07'],
+    29:['wjt', 'c07'],
+    32:[False, 'p04'],
+    34:[False, 'c08'],
+    36:[False, 'c09'], ## events_c[36] = [False, 'p05']
+    ## events_c[37] = [False, 'c10']
+    ## events_c[38] = [False, 'c10']
+    ## events_c[39] = [True, 'c10']
+    ## events_c[40] = [True, 'c10']
+    ## events_c[41] = [True, 'c10']
+    42:['wmt', 'p06'],
+    ## events_c[46] = [False, 'c11']
+    48:['wwjs', 'p07'],
+    55:['wst', 'c12'],
+    56:['wst', 'c12'],
+    ## events_c[57] = [False, 'p08']
+    ## events_c[60] = [False, 'p09']
+    72:['wwjs', 'c15'],
+    73:['wwjs', 'c15'],
+    74:['wwjs', 'c15'],
+    75:['mxjxh', 'c13'], 
+    76:['mxjxh', 'c13'], 
+    77:['mxjxh', 'c13'], 
+    ## events_c[80] = [False, 'p10']
+    ## events_c[81] = [False, 'p11']
+    86:[False, 'c14'],
+    87:['outside', 'p12'],
+    }
+
+
+
+map_liyuegang_dict = {
+    'outside':[180,550,'离开璃月港…'],
+    'stay':[0,15,'不出门…'],
+    'wmt':[1565,339,'万民堂'],
+    'mxjxh':[1478,221,'冒险家协会'],
+    'bgyh':[1010,441,'北国银行'],
+    'wwjs':[459,660,'万文集舍'],
+    'llt':[637,585,'琉璃亭'],
+    'xyx':[835,538,'新月轩'],
+    'yjt':[1246,785,'玉京台'],
+    'lygmt':[1175,218,'璃月港码头'],
+    'swbgg':[1470,360,'「三碗不过港」'],
+    'wst':[1202,496,'往生堂'],
+    'wjt':[1339,366,'「玩具摊」'],
+    'c_home':[200,200,'c_home'],
+    'z_home':[200,400,'z_home'],}
+
+
+
+outside_z = MapEvents_z('outside', '离开璃月港…', (180,550),  )
+time=87
+outside_z.spn()

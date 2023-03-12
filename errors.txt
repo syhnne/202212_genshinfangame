@@ -1,0 +1,10 @@
+﻿I'm sorry, but errors were detected in your script. Please correct the
+errors listed below, and try again.
+
+
+File "game/01-definitions.rpy", line 246: invalid syntax
+    def FileScreenshotMod(name, empty=None, page=None)
+    
+
+Ren'Py Version: Ren'Py 8.0.3.22090809
+Sat Mar 11 18:42:35 2023
