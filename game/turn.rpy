@@ -353,11 +353,6 @@ screen map_liyuegang(spot_has_event=False):
 label turn:
 
     scene black with dissolve
-
-    if not persistent.playthrough == 1:
-        call test
-
-
         
     while time <= 90:
         # if config.developer:
@@ -459,6 +454,8 @@ label turn:
             jump ending2
     elif persistent.playthrough == 2:
         jump ending3
+    elif persistent.playthrough == 3:
+        jump ending4
 
 
 
@@ -612,6 +609,9 @@ label start:
     call screen pov_toggle(persistent.playthrough) with dissolve
     if config.developer:
         show screen developer_time
+
+    if not persistent.playthrough == 1:
+        call test
 
     if persistent.playthrough == 2:
         call start_z from _call_start_z_1
