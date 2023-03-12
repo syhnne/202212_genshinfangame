@@ -237,14 +237,16 @@ init python:
 
     ## 文件保存action
     def FileActionMod(name, page=None, **kwargs):
-        if persistent.playthrough != FileJson(name,'p') and renpy.current_screen().screen_name[0] == "load" and FileLoadable(name):
+        if persistent.playthrough == 5:
+            return Confirm('您未开启新游戏，无法打开存档。\n是否将整个游戏回调至存档时状态？\n（不好意思，这里还没写，我只写了从头开始（汗）', NullAction())
+        elif persistent.playthrough != FileJson(name,'p') and renpy.current_screen().screen_name[0] == "load" and FileLoadable(name):
             return Confirm('存档无法打开。', NullAction() )
         else:
             return FileAction(name)
 
     ## 修改截图（笑
     def FileScreenshotMod(name, empty=None, page=None):
-        if persistent.playthrough != FileJson(name,'p') and FileLoadable(name):
+        if persistent.playthrough != FileJson(name,'p') and persistent.playthrough != 5 and FileLoadable(name):
             return 'gui/button/slot_disabled.png'
         else:
             return FileScreenshot(name)

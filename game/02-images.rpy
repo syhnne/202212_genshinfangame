@@ -12,6 +12,9 @@ image solidgrey = Solid('#818181')
 image solidwhite = Solid('#e8ecf0')
 image solidblackbg = Solid('#00000099')
 
+image fake_exception = Text("An exception has occurred.", size=40, style="_default")
+image fake_exception2 = Text("File \"game/01-definitions.rpy\", line 31\nSee traceback.txt for details.", size=20, style="_default")
+
 image pov_toggle_c_i = 'gui/pov_toggle/c.png'
 image pov_toggle_c_h = Composite((1920,1080), (0,0), 'gui/pov_toggle/c.png', (0,0), 'gui/pov_toggle/c0.png')
 image pov_toggle_c_si = Composite((1920,1080), (0,0), 'gui/pov_toggle/c.png', (0,0), 'gui/pov_toggle/c1.png')

@@ -1001,6 +1001,9 @@ label test:
     '2'
     scene bg festival
     '3'
+    '测试报错'
+    $ renpy.error("File \"game/01-definitions.rpy\", line 31\nSee traceback.txt for details.")
+    pause 1.0
     '测试挪鼠标'
     python:
         madechoice = renpy.display_menu([("1111", 1), ("22", 2)], screen="rigged_choice")

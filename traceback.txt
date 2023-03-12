@@ -1,129 +1,36 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/screens.rpy", line 764, in execute
-    screen load():
-  File "game/screens.rpy", line 764, in execute
-    screen load():
-  File "game/screens.rpy", line 768, in execute
-    use file_slots(_("读取游戏"))
-  File "game/screens.rpy", line 771, in execute
-    screen file_slots(title):
-  File "game/screens.rpy", line 771, in execute
-    screen file_slots(title):
-  File "game/screens.rpy", line 775, in execute
-    use game_menu(title):
-  File "game/screens.rpy", line 594, in execute
-    screen game_menu(title, scroll=None, yinitial=0.0):
-  File "game/screens.rpy", line 594, in execute
-    screen game_menu(title, scroll=None, yinitial=0.0):
-  File "game/screens.rpy", line 603, in execute
-    frame:
-  File "game/screens.rpy", line 606, in execute
-    hbox:
-  File "game/screens.rpy", line 612, in execute
-    frame:
-  File "game/screens.rpy", line 615, in execute
-    if scroll == "viewport":
-  File "game/screens.rpy", line 645, in execute
-    transclude
-  File "game/screens.rpy", line 775, in execute
-    use game_menu(title):
-  File "game/screens.rpy", line 777, in execute
-    fixed:
-  File "game/screens.rpy", line 795, in execute
-    grid gui.file_slot_cols gui.file_slot_rows:
-  File "game/screens.rpy", line 803, in execute
-    for i in range(gui.file_slot_cols * gui.file_slot_rows):
-  File "game/screens.rpy", line 807, in execute
-    button:
-  File "game/screens.rpy", line 807, in keywords
-    button:
-  File "game/screens.rpy", line 808, in <module>
-    action FileActionMod(slot)
-  File "game/01-definitions.rpy", line 240, in FileActionMod
-    if persistent.playthrough != FileJson(slot,'p') and renpy.current_screen().screen_name[0] == "load" and FileLoadable(name):
-NameError: name 'slot' is not defined
+  File "game/turn.rpy", line 614, in script call
+    call test
+  File "game/script.rpy", line 1005, in script
+    $ renpy.error("File \"game/01-definitions.rpy\", line 31\nSee traceback.txt for details.")
+  File "game/script.rpy", line 1005, in <module>
+    $ renpy.error("File \"game/01-definitions.rpy\", line 31\nSee traceback.txt for details.")
+Exception: File "game/01-definitions.rpy", line 31
+See traceback.txt for details.
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "renpy/common/_layout/screen_main_menu.rpym", line 28, in script
-    python hide:
+  File "game/turn.rpy", line 614, in script call
+    call test
+  File "game/script.rpy", line 1005, in script
+    $ renpy.error("File \"game/01-definitions.rpy\", line 31\nSee traceback.txt for details.")
   File "D:\renpy-7.4.4-sdk\renpy\ast.py", line 1131, in execute
     renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
   File "D:\renpy-7.4.4-sdk\renpy\python.py", line 1061, in py_exec_bytecode
     exec(bytecode, globals, locals)
-  File "renpy/common/_layout/screen_main_menu.rpym", line 28, in <module>
-    python hide:
-  File "renpy/common/_layout/screen_main_menu.rpym", line 35, in _execute_python_hide
-    ui.interact()
-  File "D:\renpy-7.4.4-sdk\renpy\ui.py", line 299, in interact
-    rv = renpy.game.interface.interact(roll_forward=roll_forward, **kwargs)
-  File "D:\renpy-7.4.4-sdk\renpy\display\core.py", line 3377, in interact
-    repeat, rv = self.interact_core(preloads=preloads, trans_pause=trans_pause, pause=pause, pause_start=pause_start, pause_modal=pause_modal, **kwargs) # type: ignore
-  File "D:\renpy-7.4.4-sdk\renpy\display\core.py", line 3810, in interact_core
-    root_widget.visit_all(lambda i : i.per_interact())
-  File "D:\renpy-7.4.4-sdk\renpy\display\core.py", line 582, in visit_all
-    d.visit_all(callback, seen)
-  File "D:\renpy-7.4.4-sdk\renpy\display\core.py", line 582, in visit_all
-    d.visit_all(callback, seen)
-  File "D:\renpy-7.4.4-sdk\renpy\display\core.py", line 582, in visit_all
-    d.visit_all(callback, seen)
-  [Previous line repeated 2 more times]
-  File "D:\renpy-7.4.4-sdk\renpy\display\screen.py", line 451, in visit_all
-    callback(self)
-  File "D:\renpy-7.4.4-sdk\renpy\display\core.py", line 3810, in <lambda>
-    root_widget.visit_all(lambda i : i.per_interact())
-  File "D:\renpy-7.4.4-sdk\renpy\display\screen.py", line 462, in per_interact
-    self.update()
-  File "D:\renpy-7.4.4-sdk\renpy\display\screen.py", line 653, in update
-    self.screen.function(**self.scope)
-  File "game/screens.rpy", line 764, in execute
-    screen load():
-  File "game/screens.rpy", line 764, in execute
-    screen load():
-  File "game/screens.rpy", line 768, in execute
-    use file_slots(_("读取游戏"))
-  File "game/screens.rpy", line 771, in execute
-    screen file_slots(title):
-  File "game/screens.rpy", line 771, in execute
-    screen file_slots(title):
-  File "game/screens.rpy", line 775, in execute
-    use game_menu(title):
-  File "game/screens.rpy", line 594, in execute
-    screen game_menu(title, scroll=None, yinitial=0.0):
-  File "game/screens.rpy", line 594, in execute
-    screen game_menu(title, scroll=None, yinitial=0.0):
-  File "game/screens.rpy", line 603, in execute
-    frame:
-  File "game/screens.rpy", line 606, in execute
-    hbox:
-  File "game/screens.rpy", line 612, in execute
-    frame:
-  File "game/screens.rpy", line 615, in execute
-    if scroll == "viewport":
-  File "game/screens.rpy", line 645, in execute
-    transclude
-  File "game/screens.rpy", line 775, in execute
-    use game_menu(title):
-  File "game/screens.rpy", line 777, in execute
-    fixed:
-  File "game/screens.rpy", line 795, in execute
-    grid gui.file_slot_cols gui.file_slot_rows:
-  File "game/screens.rpy", line 803, in execute
-    for i in range(gui.file_slot_cols * gui.file_slot_rows):
-  File "game/screens.rpy", line 807, in execute
-    button:
-  File "game/screens.rpy", line 807, in keywords
-    button:
-  File "game/screens.rpy", line 808, in <module>
-    action FileActionMod(slot)
-  File "game/01-definitions.rpy", line 240, in FileActionMod
-    if persistent.playthrough != FileJson(slot,'p') and renpy.current_screen().screen_name[0] == "load" and FileLoadable(name):
-NameError: name 'slot' is not defined
+  File "game/script.rpy", line 1005, in <module>
+    $ renpy.error("File \"game/01-definitions.rpy\", line 31\nSee traceback.txt for details.")
+  File "D:\renpy-7.4.4-sdk\renpy\exports.py", line 2662, in error
+    _error_handlers[-1](msg)
+  File "D:\renpy-7.4.4-sdk\renpy\exports.py", line 2639, in _error
+    raise Exception(msg)
+Exception: File "game/01-definitions.rpy", line 31
+See traceback.txt for details.
 
-Windows-10-10.0.17763 AMD64
+Windows-10-10.0.22621 AMD64
 Ren'Py 8.0.3.22090809
 untitled 0.1
-Sat Mar 11 18:45:42 2023
+Sun Mar 12 23:18:27 2023
