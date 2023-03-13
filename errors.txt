@@ -2,10 +2,10 @@
 errors listed below, and try again.
 
 
-File "game/gui.rpy", line 19: invalid syntax
-    $ playthrough = 1
-     ^
+File "game/restore_playthrough.rpy", line 92: invalid syntax
+                8:['']
+                 ^
     
 
 Ren'Py Version: Ren'Py 8.0.3.22090809
-Mon Mar 13 23:00:49 2023
+Mon Mar 13 23:25:08 2023

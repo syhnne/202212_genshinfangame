@@ -605,6 +605,7 @@ label p02:
             '这是公子视角，你要提出挑战吗？）'
             '跟我切磋一下吧！':
                 python:
+                    c_p02_choice = True
                     favp(3,'p02')
                     persistent.p03enter = True
                     

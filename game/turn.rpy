@@ -157,7 +157,7 @@ screen map_options():
             frame:
                 modal True
                 has vbox
-                textbutton "（操作提示，还没写）" action [ ClearFocus("options_drop") ]
+                text "（操作提示，还没写）"
 
 screen days():
     zorder 50

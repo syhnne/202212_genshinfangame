@@ -1,8 +1,9 @@
 init python:
-    
+
     def restore_playthrough(p):
 
         global events_z, events_c, map_liyuegang_dict
+
         events_z = {
             8:['bgyh', 'p01'],
             10:[False, 'p00', 'persistent.p01enter', 'p02'],
@@ -37,7 +38,7 @@ init python:
             4:[False, 'c02'],
             8:[False, 'p01', 'persistent.p01enter'],
             10:[False, 'p02', 'persistent.p01enter' ],
-            13:[False, 'p03', 'persistent.p03enter'],
+            13:[False, 'p03', 'persistent.p03enter and c_p02_choice'],
             15:[False, 'c06', 'choice_history[13]==\'p03\''],
             21:['wjt', 'c07'],
             22:['wjt', 'c07'],
@@ -85,6 +86,11 @@ init python:
             'wjt':[ [False,[27,28,29]], False,    1339,366,'「玩具摊」', ],
             'c_home':[ False, [False,[69,70,71]],  510,470,'???', ],
             'z_home':[ [False], False,    200,400,'z_home', ],
+        }
+
+        official_cheating_mod = {
+            7:['切换到钟离视角', '',],
+            8:[''],
         }
 
         if p==2:

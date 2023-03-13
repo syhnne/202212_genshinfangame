@@ -48,7 +48,7 @@ default c_addon = 0
 default z_addon = 0
 default playthrough_mismatch = False
 
-
+default c_p02_choice = False
 define wanmintangmenu = ['香嫩椒椒鸡','凉拌薄荷','来来菜','扣三丝','四方和平','兽肉薄荷卷','龙须面','米窝窝'] ## 鱼应该不算在钟离讨厌的那种海鲜范围内吧…算了，保险起见，天知道奥赛尔扔没扔过鱼（
 
 
