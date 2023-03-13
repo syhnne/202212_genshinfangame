@@ -993,6 +993,16 @@ label test_memory:
     '只是一会是不是还得给改回来啊（汗'
     return
 
+label persistent5:
+    menu:
+        '您已经通关。是否重启游戏并从头开始？这会删除您的存档，但不会清除游戏数据。'
+        '是，从头开始':
+            call screen confirm('您确定重新开始吗？', Function(game_utter_restart), Return())
+            return
+        '否，返回主界面':
+            return
+    $ renpy.end_replay()
+
 label test:
     show shadow onlayer effects at slow_show
     scene bgtest

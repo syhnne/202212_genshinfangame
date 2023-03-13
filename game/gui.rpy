@@ -14,6 +14,15 @@ init python:
 ################################################################################
 ## GUI配置变量
 ################################################################################
+
+# init python:
+#     playthrough = 9
+#     def playthrough_mismatch():
+#         global playthrough
+#         if playthrough != 9 and playthrough != persistent.playthrough:
+#             renpy.error('Playthrough mismatch.')
+
+
 define config.save_directory = "game\saves"
 define config.developer = True ## 摇人来测试游戏的时候改成true，测试完成后改回auto或者注释掉这个语句
 define config.rollback_enabled = config.developer
@@ -30,6 +39,7 @@ define config.end_splash_transition = fade
 define config.enter_replay_transition = fade
 define config.enter_transition = fade
 define config.menu_include_disabled = True
+# define config.periodic_callback = playthrough_mismatch()
 # define config.minimum_presplash_time = 2.0
 # define config.replay_scope = { "_game_menu_screen" : "preferences" }
 define dissolve = Dissolve(0.3)

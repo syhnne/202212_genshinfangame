@@ -99,6 +99,14 @@ screen developer_options():
             textbutton 'CG画廊开关' action ToggleVariable('persistent.unlock_gallery')
         text '{color=#999999}p.s.cg画廊需要完整通关一次（进二周目且打完）才能解锁，但不一定非得是真结局。\n和它一起解锁的还有一个显示好感度数值的界面，我想在那里再做个操作提示界面之类的，因为进真结局的条件比较复杂'
         text ''
+        hbox:
+            spacing 20
+            text '快捷跳转：'
+            textbutton '1周目' action SetVariable('persistent.playthrough', 1)
+            textbutton '2周目' action SetVariable('persistent.playthrough', 2)
+            textbutton '3周目' action SetVariable('persistent.playthrough', 3)
+            textbutton '4周目' action SetVariable('persistent.playthrough', 4)
+            textbutton '5周目(调试)' action SetVariable('persistent.playthrough', 5)
         vbox:
             spacing 20
             $ x = persistent.gamedata['load_times']
@@ -486,7 +494,7 @@ screen navigation():
 
         textbutton _("设置") action ShowMenu("preferences")
 
-        if _in_replay:
+        if _in_replay and persistent.playthrough != 5:
 
             textbutton _("结束回放") action EndReplay(confirm=True)
 
@@ -1333,41 +1341,41 @@ screen confirm(message, yes_action, no_action):
     ## 右键点击退出并答复“no”（取消）。
     key "game_menu" action no_action
 
-screen confirm_countdown(message, yes_action, no_action, cd):
-    default allow_confirm = False
+# screen confirm_countdown(message, yes_action, no_action, cd):
+#     default allow_confirm = False
 
-    modal True
+#     modal True
 
-    zorder 200
+#     zorder 200
 
-    style_prefix "confirm"
+#     style_prefix "confirm"
 
-    add "gui/overlay/confirm.png"
+#     add "gui/overlay/confirm.png"
 
-    frame:
+#     frame:
 
-        vbox:
-            xalign .5
-            yalign .5
-            spacing 45
+#         vbox:
+#             xalign .5
+#             yalign .5
+#             spacing 45
             
-            timer cd action SetScreenVariable(allow_confirm, True)
+#             timer cd action SetScreenVariable(allow_confirm, True)
 
-            label _(message):
-                style "confirm_prompt"
-                xalign 0.5
+#             label _(message):
+#                 style "confirm_prompt"
+#                 xalign 0.5
 
-            hbox:
-                xalign 0.5
-                spacing 150
-                if allow_confirm:
-                    textbutton '确定' action yes_action
-                else:
-                    textbutton '（）确定' action yes_action sensitive False
-                textbutton _("取消") action no_action
+#             hbox:
+#                 xalign 0.5
+#                 spacing 150
+#                 if allow_confirm:
+#                     textbutton '确定' action yes_action
+#                 else:
+#                     textbutton '（）确定' action yes_action sensitive False
+#                 textbutton _("取消") action no_action
 
-    ## 右键点击退出并答复“no”（取消）。
-    key "game_menu" action no_action
+#     ## 右键点击退出并答复“no”（取消）。
+#     key "game_menu" action no_action
 
 style confirm_frame is gui_frame
 style confirm_prompt is gui_prompt

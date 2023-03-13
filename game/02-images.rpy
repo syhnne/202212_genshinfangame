@@ -84,9 +84,6 @@ image bgtest = Composite( (1920,1080),
     (0,0), 'gui/map/foreground.png',
 )
 
-
-image countdown = DynamicDisplayable(show_countdown)
-
 transform tc(x=0, z=1):
     subpixel True xpos x yanchor 1080 ypos 1080
     on show:

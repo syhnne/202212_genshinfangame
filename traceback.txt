@@ -1,26 +1,62 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/turn.rpy", line 387, in script
-    python:
-  File "game/turn.rpy", line 393, in <module>
-    restore_playthrough(persistent.playthrough)
-NameError: name 'restore_playthrough' is not defined
+  File "game/turn.rpy", line 322, in script
+    call screen map_liyuegang() with dissolve
+  File "renpy/common/000statements.rpy", line 609, in execute_call_screen
+    store._return = renpy.call_screen(name, *args, **kwargs)
+Exception: Switch could not choose a displayable.
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "game/turn.rpy", line 387, in script
-    python:
-  File "D:\renpy-7.4.4-sdk\renpy\ast.py", line 1131, in execute
-    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
-  File "D:\renpy-7.4.4-sdk\renpy\python.py", line 1061, in py_exec_bytecode
-    exec(bytecode, globals, locals)
-  File "game/turn.rpy", line 393, in <module>
-    restore_playthrough(persistent.playthrough)
-NameError: name 'restore_playthrough' is not defined
+  File "game/turn.rpy", line 322, in script
+    call screen map_liyuegang() with dissolve
+  File "D:\renpy-7.4.4-sdk\renpy\ast.py", line 2232, in execute
+    self.call("execute")
+  File "D:\renpy-7.4.4-sdk\renpy\ast.py", line 2220, in call
+    return renpy.statements.call(method, parsed, *args, **kwargs)
+  File "D:\renpy-7.4.4-sdk\renpy\statements.py", line 281, in call
+    return method(parsed, *args, **kwargs)
+  File "renpy/common/000statements.rpy", line 609, in execute_call_screen
+    store._return = renpy.call_screen(name, *args, **kwargs)
+  File "D:\renpy-7.4.4-sdk\renpy\exports.py", line 3181, in call_screen
+    rv = renpy.ui.interact(mouse="screen", type="screen", roll_forward=roll_forward)
+  File "D:\renpy-7.4.4-sdk\renpy\ui.py", line 299, in interact
+    rv = renpy.game.interface.interact(roll_forward=roll_forward, **kwargs)
+  File "D:\renpy-7.4.4-sdk\renpy\display\core.py", line 3377, in interact
+    repeat, rv = self.interact_core(preloads=preloads, trans_pause=trans_pause, pause=pause, pause_start=pause_start, pause_modal=pause_modal, **kwargs) # type: ignore
+  File "D:\renpy-7.4.4-sdk\renpy\display\core.py", line 3810, in interact_core
+    root_widget.visit_all(lambda i : i.per_interact())
+  File "D:\renpy-7.4.4-sdk\renpy\display\core.py", line 582, in visit_all
+    d.visit_all(callback, seen)
+  File "D:\renpy-7.4.4-sdk\renpy\display\core.py", line 582, in visit_all
+    d.visit_all(callback, seen)
+  File "D:\renpy-7.4.4-sdk\renpy\display\core.py", line 582, in visit_all
+    d.visit_all(callback, seen)
+  [Previous line repeated 1 more time]
+  File "D:\renpy-7.4.4-sdk\renpy\display\screen.py", line 456, in visit_all
+    self.child.visit_all(callback, seen=None)
+  File "D:\renpy-7.4.4-sdk\renpy\display\core.py", line 582, in visit_all
+    d.visit_all(callback, seen)
+  File "D:\renpy-7.4.4-sdk\renpy\display\core.py", line 582, in visit_all
+    d.visit_all(callback, seen)
+  File "D:\renpy-7.4.4-sdk\renpy\display\core.py", line 582, in visit_all
+    d.visit_all(callback, seen)
+  [Previous line repeated 3 more times]
+  File "D:\renpy-7.4.4-sdk\renpy\display\core.py", line 572, in visit_all
+    for d in self.visit():
+  File "D:\renpy-7.4.4-sdk\renpy\display\layout.py", line 1494, in visit
+    self.update(self.last_st, self.last_at)
+  File "D:\renpy-7.4.4-sdk\renpy\display\layout.py", line 1505, in update
+    raw_child, redraw = self.function(st, at, *self.args, **self.kwargs)
+  File "D:\renpy-7.4.4-sdk\renpy\display\layout.py", line 1596, in condition_switch_show
+    return condition_switch_pick(switch), None
+  File "D:\renpy-7.4.4-sdk\renpy\display\layout.py", line 1591, in condition_switch_pick
+    raise Exception("Switch could not choose a displayable.")
+Exception: Switch could not choose a displayable.
 
 Windows-10-10.0.22621 AMD64
 Ren'Py 8.0.3.22090809
 untitled 0.1
-Mon Mar 13 21:19:15 2023
+Mon Mar 13 23:04:45 2023

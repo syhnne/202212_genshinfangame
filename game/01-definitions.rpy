@@ -116,7 +116,7 @@ init python:
 
     ## 判断时间。因为time这个词被我用过了，所以换成clock，不要在意这些细节。
     def clock(time):
-        lock = time%3
+        clock = time%3
         return clock
 
     ## 返回时间段
@@ -203,19 +203,6 @@ init python:
         elif currentpos[1]>targetpos[1]:
             renpy.display.draw.set_mouse_pos((currentpos[0] * 9 + targetpos[0]) / 10.0, (currentpos[1] * 9 + targetpos[1]) / 10.0)
 
-    # ## 批量定义图像
-    # letters = 'abcdefghijklmnopqrstuvwxyz'
-    # def imageexec(character_name, maxposture=1, xoffset=0):
-    #     chr_name = character_name[0]
-    #     for posture in range(1, maxposture+1):
-    #         for pic in letters:
-    #             filename = 'images/'+ chr_name +'/'+ str(posture) + pic +'.png'
-    #             filename_a = 'images/'+ chr_name +'/'+ str(posture) +'a.png'
-    #             if renpy.exists(filename):
-    #                 image_name = character_name + ' ' + str(posture) + pic
-    #                 command = 'renpy.image(\''+image_name+'\', Composite((1920,1080),  (' + str(xoffset) + ',0), \''+ filename_a +'\', (' + str(xoffset) + ',0), \''+ filename +'\'))'
-    #                 exec(command)
-
     ## 批量定义图像
     def imageexec(chr_name, posmax=1777, xoffset=0):
         chr_name_first = chr_name[0]
@@ -251,13 +238,7 @@ init python:
         else:
             return FileScreenshot(name)
 
-    # 显示一个从5到0的倒计时，每十分之一秒更新直到计时结束。
-    def show_countdown(st, at):
-        if st > 5.0:
-            return Text("确定"), None
-        else:
-            d = Text("确定({:.1f})".format(5.0 - st))
-            return d, 0.1
+    
 
     
 

@@ -2,9 +2,10 @@
 errors listed below, and try again.
 
 
-File "game/turn.rpy", line 66: 'alpha' is not a keyword argument or valid child for the window statement.
-    foreground 'shadow' align (0,0) xysize(1920,1080) alpha 0.5
-                                                           ^
+File "game/gui.rpy", line 19: invalid syntax
+    $ playthrough = 1
+     ^
+    
 
 Ren'Py Version: Ren'Py 8.0.3.22090809
-Mon Mar 13 20:58:40 2023
+Mon Mar 13 23:00:49 2023

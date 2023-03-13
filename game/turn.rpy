@@ -402,12 +402,8 @@ label start:
         $ pov_enable_z = False
     elif persistent.playthrough == 5:
         $ time = -1
-        menu:
-            '您已经通关。是否重启游戏并从头开始？这会删除您的存档，但不会清除游戏数据。'
-            '是，从头开始':
-                $ game_utter_restart()
-            '否，返回主界面':
-                return
+        $ renpy.call_replay('persistent5', scope={})
+        return
     else:
         $ pov_enable_c = True
         $ pov_enable_z = True
