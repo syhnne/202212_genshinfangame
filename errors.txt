@@ -2,9 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/01-definitions.rpy", line 246: invalid syntax
-    def FileScreenshotMod(name, empty=None, page=None)
-    
+File "game/turn.rpy", line 66: 'alpha' is not a keyword argument or valid child for the window statement.
+    foreground 'shadow' align (0,0) xysize(1920,1080) alpha 0.5
+                                                           ^
 
 Ren'Py Version: Ren'Py 8.0.3.22090809
-Sat Mar 11 18:42:35 2023
+Mon Mar 13 20:58:40 2023

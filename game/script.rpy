@@ -67,6 +67,7 @@ label start_c:
     # 第不知道多少次手滑删了阅读记录被迫狂按空格之后，我决定注释掉这段，反正也得remake
     scene bg lyg 1
     show childe 1333 at tc
+    
     '测试表情'
     c 1245 '(1245)'
     c 1661 '(1661)'
@@ -902,7 +903,6 @@ label ending4:
     '三周目唯一结局，还没想好怎么写'
     '会直接进四周目'
     $ _history_list=[]
-    call endgame from _call_endgame_4
     jump start
     return
 
@@ -994,7 +994,7 @@ label test_memory:
     return
 
 label test:
-    show shadow onlayer effects
+    show shadow onlayer effects at slow_show
     scene bgtest
     '测试im'
     '1'

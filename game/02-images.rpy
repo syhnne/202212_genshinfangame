@@ -11,6 +11,9 @@ image locked_button = Text('locked')
 image solidgrey = Solid('#818181')
 image solidwhite = Solid('#e8ecf0')
 image solidblackbg = Solid('#00000099')
+image shadow:
+    'gui/shadow.png'
+    alpha 0.5
 
 image fake_exception = Text("An exception has occurred.", size=40, style="_default")
 image fake_exception2 = Text("File \"game/01-definitions.rpy\", line 31\nSee traceback.txt for details.", size=20, style="_default")
@@ -82,6 +85,8 @@ image bgtest = Composite( (1920,1080),
 )
 
 
+image countdown = DynamicDisplayable(show_countdown)
+
 transform tc(x=0, z=1):
     subpixel True xpos x yanchor 1080 ypos 1080
     on show:
@@ -102,14 +107,9 @@ transform hovered_animation:
         easein 0.5 yoffset 0
         repeat
     on idle:
-        pass
+        easein 0.3 yoffset 0
 
-
-
-
-
-image shadow:
-    'gui/shadow.png'
+transform slow_show:
     alpha 0.0
     linear 20 alpha 0.6
 

@@ -53,29 +53,31 @@ init python:
 ## 部分主控流程需要用到的东西，我懒得整理了 ######################################
 
 
-screen pov_toggle(stage=0):
-    ## stage：0为主界面，其他数字对应几周目
+screen pov_toggle(stage=True):
+    ## stage表示是否在地图中打开此界面
     tag quick_menu ## 别在这种时候显示quick menu啊，我是不打算让观众在这会儿保存的
     modal True
-    if stage==0:
+    if stage:
         roll_forward True
     zorder 100
     window:
         align (0,0)
+        if persistent.playthrough == 4:
+            foreground 'shadow' align (0,0) xysize(1920,1080)
         background 'gui/pov_toggle/bg.png'
+        # ConditionSwitch( 'persistent.playthrough == 4', 'gui/pov_toggle/p4.png',
+        # 'persistent.playthrough != 4', 'gui/pov_toggle/bg.png')
             ## 如何做到按钮的遮挡效果：你先写谁，renpy就先渲染哪个按钮，后来的会挡在先来的前面
-        if pov_enable_z:
-            imagebutton:
-                
-                idle 'pov_toggle_c_i'
-                hover 'pov_toggle_c_h'
-                selected_idle 'pov_toggle_c_si'
-                selected_hover 'pov_toggle_c_sh'
-                insensitive 'gui/pov_toggle/bg_insensitive_c.png'
-                action SetVariable('pov',False)
-                selected pov == False
-                sensitive pov_enable_c
-                focus_mask True
+        imagebutton:
+            idle 'pov_toggle_c_i'
+            hover 'pov_toggle_c_h'
+            selected_idle 'pov_toggle_c_si'
+            selected_hover 'pov_toggle_c_sh'
+            insensitive 'gui/pov_toggle/bg_insensitive_c.png'
+            action SetVariable('pov',False)
+            selected pov == False
+            sensitive pov_enable_c
+            focus_mask True
         imagebutton:
             idle 'pov_toggle_z_i'
             hover 'pov_toggle_z_h'
@@ -86,30 +88,32 @@ screen pov_toggle(stage=0):
             selected pov
             sensitive pov_enable_z
             focus_mask True
-        if not pov_enable_z:
+        if persistent.playthrough == 3:
             imagebutton:
                 idle 'pov_toggle_c_i'
                 hover 'pov_toggle_c_h'
                 selected_idle 'pov_toggle_c_si'
                 selected_hover 'pov_toggle_c_sh'
-                insensitive 'gui/pov_toggle/bg_insensitive_c.png'
                 action SetVariable('pov',False)
                 selected pov == False
                 sensitive pov_enable_c
                 focus_mask True
-        vbox:
-            xalign 0.5 ypos 30
-            if stage != 0:
-                text '请选择游戏视角…'
-            textbutton '确认':
-                xalign 0.5
-                if stage==0:
-                    action ToggleScreen('pov_toggle',dissolve)
-                elif stage==4:
-                    action Return()
-                else:
-                    action Return()
-                    sensitive pov!=None
+    vbox:
+        xalign 0.5 ypos 30
+        if persistent.playthrough == 4:
+            $ x = glitchtext(15)
+            text x+'…'
+        elif not stage:
+            text '请选择游戏视角…'
+        textbutton '确认':
+            xalign 0.5
+            if stage:
+                action ToggleScreen('pov_toggle',dissolve)
+            elif persistent.playthrough==4:
+                action Return()
+            else:
+                action Return()
+                sensitive pov!=None
                 
 screen beginner_guide():
     zorder 110
@@ -173,101 +177,6 @@ screen days():
                 text tooltip
             else:
                 text '去哪里看看…'
-
-
-
-init python:
-    ## [剧情地点，剧情label名称，进剧情条件，顶替2]
-    events_z = {
-    8:['bgyh', 'p01'],
-    10:[False, 'p00', 'persistent.p01enter', 'p02'],
-    13:[False, 'p03', 'persistent.p03enter'],
-    15:[False, 'z04', 'choice_history[13]==\'p03\''],
-    18:['mxjxh', 'z05', 'choice_history[13]==\'p03\''],
-    26:[False, 'p04'],
-    28:['lygmt', 'z06'],
-    30:[False, 'p05', 'persistent.p05enter'],
-    31:['bgyh', 'z07', 'choice_history[36]==\'p05\''],
-    ## 38以后也有，但我懒得写，而且我得斟酌一下是不是真的要写
-    36:['wmt', 'p06'],
-    39:['wwjs', 'p07'],
-    49:[False, 'z08'],
-    51:[False, 'p08', 'persistent.p08enter'],
-    57:[False, 'p09', 'persistent.p08enter'],
-    66:['outside', 'p13', 'fav>30'],
-    69:['c_home', 'z09'],
-    70:['c_home', 'z09'],
-    71:['c_home', 'z09'],
-    75:['mxjxh', 'z10'], 
-    76:['mxjxh', 'z10'], 
-    77:['mxjxh', 'z10'], 
-    80:[False, 'p10', 'persistent.p10enter'],
-    81:[False, 'p11', 'choice_history[13]==\'p03\''],
-    87:['outside', 'p12'],
-    }
-
-    events_c = {
-    0:[True, 'c01'],
-    1:[True, 'c01'],
-    2:[True, 'c01'],
-    4:[False, 'c02'],
-    8:[False, 'p01', 'persistent.p01enter'],
-    10:[False, 'p02', 'persistent.p01enter' ],
-    13:[False, 'p03', 'persistent.p03enter'],
-    15:[False, 'c06', 'choice_history[13]==\'p03\''],
-    21:['wjt', 'c07'],
-    22:['wjt', 'c07'],
-    23:['wjt', 'c07'],
-    26:[False, 'p04'],
-    28:[False, 'c08'],
-    30:[False, 'c09'],
-    30:[False, 'p05', 'persistent.p05enter'],
-    31:[False, 'c10', 'choice_history[13]==\'p03\''],
-    32:[True, 'c10', 'choice_history[13]==\'p03\''],
-    33:[True, 'c10', 'choice_history[13]==\'p03\''],
-    ## 本来也有很多重复的，准备砍，遂删之
-    36:['wmt', 'p06'],
-    39:['wwjs', 'p07'],
-    40:[False, 'c11', 'choice_history[13]==\'p03\''],
-    49:['wst', 'c12'],
-    50:['wst', 'c12'],
-    51:[False, 'p08', 'persistent.p08enter'],
-    57:[False, 'p09', 'persistent.p08enter'],
-    66:['outside', 'p13', 'fav>30'],
-    72:['wwjs', 'c15'],
-    73:['wwjs', 'c15'],
-    74:['wwjs', 'c15'],
-    75:['mxjxh', 'c13'], 
-    76:['mxjxh', 'c13'], 
-    77:['mxjxh', 'c13'], 
-    80:[False, 'p10', 'persistent.p10enter'],
-    81:[False, 'p11', 'choice_history[13]==\'p03\''],
-    86:[False, 'c14'],
-    87:['outside', 'p12'],
-    }
-
-
-    map_liyuegang_dict = {
-        'outside':[ True, True,  180,550,'离开璃月港…', ],
-        'stay':[ True, True,   10,29,'不出门…', ],
-        'wmt':[ True, True,  1565,339,'万民堂', ],
-        'mxjxh':[ [False,[15,16,17],[75,76,77],], [False,[15,16,17],24,[75,76,77],],  1478,221,'冒险家协会', ],
-        'bgyh':[ False, [False,6,7,8],    1010,441,'北国银行', ],
-        'wwjs':[ True, True,   459,660,'万文集舍', ],
-        'llt':[ True, True,  637,585,'琉璃亭', ],
-        'xyx':[ True, True,  835,538,'新月轩', ],
-        'yjt':[ True, True,  1246,785,'玉京台', ],
-        'lygmt':[ [False,13], [False,13,34],  1175,218,'璃月港码头', ],
-        'swbgg':[ [False,'range(7,62)', range(63,90),], True,    1470,360,'「三碗不过港」', ],
-        'wst':[ [False,55,56], False,   1202,496,'往生堂', ],
-        'wjt':[ [False,[27,28,29]], False,    1339,366,'「玩具摊」', ],
-        'c_home':[ False, [False,[69,70,71]],  510,470,'???', ],
-        'z_home':[ [False], False,    200,400,'z_home', ],
-    }
-
-
-
-
 
 screen map_liyuegang(spot_has_event=False):
     
@@ -458,128 +367,30 @@ label turn:
         jump ending4
 
 
-
-
-
-
-
-
-# label turn2:
-
-#     scene black with dissolve
-
-#     python:
-#         events_z[34] = ['mxjxh', 'z06_2']
-    
-#     if persistent.lores['p03_read']:
-
-#         $ time=8
-#         call screen map_liyuegang with dissolve
-#         call p01 from _call_p01
-#         scene black with dissolve
-
-#         $ time=10
-#         call p02_2 from _call_p02_2
-#         scene black with dissolve
-
-#         $ time=13
-#         call p03_2 from _call_p03_2
-#         scene black with dissolve
-
-#         $ time=15
-#         call z04_2 from _call_z04_2
-#         scene black with dissolve
-
-#     if persistent.lores['p05_read']:
+screen ctc(arg=None):
+    zorder 100
+    hbox:
+        xalign 0.98
+        yalign 0.98
+        style_prefix 'skip'
+        text "点击继续"
+        text "." at delayed_blink(0.0, 1.0)
+        text "." at delayed_blink(0.2, 1.0)
+        text "." at delayed_blink(0.4, 1.0)
         
-#         $ time=32
-#         call p04_2 from _call_p04_2
-#         scene black with dissolve
-
-#         $ time=34
-#         call screen map_liyuegang with dissolve
-#         call z06_2 from _call_z06_2
-#         scene black with dissolve
-
-#         $ time=36
-#         call p05_2 from _call_p05_2
-#         scene black with dissolve
-
-#     if persistent.lores['p08_read']:
         
-#         $ time=57
-#         call p08_2 from _call_p08_2
-#         scene black with dissolve
-
-#         $ time=60
-#         call p09_2 from _call_p09_2
-#         scene black with dissolve
-
-#     if persistent.lores['p10_read']:
-
-#         $ time=80
-#         call p10_2 from _call_p10_2
-#         scene black with dissolve
-
-
-#     $ time=87
-#     $ e = events_unlocked()
-#     if e<2:
-#         call screen map_liyuegang with dissolve
-#     call p12_2 from _call_p12_2
-#     scene black with dissolve
-
-#     $ time=91
-#     if e==2:
-#         jump ending3
-#     else:
-#         jump ending4
-
-
-
-
-# label turn3:
-
-#     if persistent.lores['p03_read']:
-
-#         $ time=10
-#         call p02_3 from _call_p02_3
-#         scene black with dissolve
-
-#         $ time=13
-#         call p03_3 from _call_p03_3
-#         scene black with dissolve
-
-#     if persistent.lores['p05_read']:
-
-#         $ time=34
-#         call c08 from _call_c08
-#         call c09_2 from _call_c09_2
-#         scene black with dissolve
-
-#     if persistent.lores['p08_read']:
-
-#         $ time=57
-#         call screen map_liyuegang with dissolve
-#         call p08_3 from _call_p08_3
-#         scene black with dissolve
-
-#     $ time=80
-#     call p10_3 from _call_p10_3
-#     scene black with dissolve
-
-#     $ time=91
-#     jump ending5
-
-
-
 
 
 ################################################
 
 label start:
-    $ playthrough = persistent.playthrough
-    $ _dismiss_pause = False
+    python:
+        pov = None
+        playthrough = persistent.playthrough
+        _dismiss_pause = False
+        z_name = '钟离'
+        c_name = '达达利亚'
+        restore_playthrough(persistent.playthrough)
     if persistent.playthrough == 2:
         $ pov_enable_c = False
         $ pov_enable_z = True
@@ -589,7 +400,6 @@ label start:
     elif persistent.playthrough == 4:
         $ pov_enable_c = False
         $ pov_enable_z = False
-        $ pov = None
     elif persistent.playthrough == 5:
         $ time = -1
         menu:
@@ -599,20 +409,14 @@ label start:
             '否，返回主界面':
                 return
     else:
-        $ z_name = '钟离'
-        $ c_name = '达达利亚'
         $ pov_enable_c = True
         $ pov_enable_z = True
 
     call before_start from _call_before_start
     scene black with dissolve
-    call screen pov_toggle(persistent.playthrough) with dissolve
+    call screen pov_toggle(False) with dissolve
     if config.developer:
         show screen developer_time
-
-    if not persistent.playthrough == 1:
-        call test
-
     if persistent.playthrough == 2:
         call start_z from _call_start_z_1
     elif persistent.playthrough == 3:

@@ -104,18 +104,19 @@ init python:
 
     ## 判断日期。举个例子，time的0,1,2分别指代第一天的早晨，下午，晚上；3,4,5分别指代第二天的早晨，下午，晚上……
     def date(time):
-        if time>=0:
+        if persistent.playthrough == 5:
+            return '??'
+        elif time >= 0:
             date = (time//3)+1
+            return date
         else:
-            date = glitchtext(4)
-        return date
+            date = time//3
+            return date
+            
 
     ## 判断时间。因为time这个词被我用过了，所以换成clock，不要在意这些细节。
     def clock(time):
-        if time>=0:
-            clock = time%3
-        else:
-            clock = glitchtext(4)
+        lock = time%3
         return clock
 
     ## 返回时间段
@@ -133,7 +134,6 @@ init python:
     def jsoncallback(d):
         d["pov"] = pov
         d['timetext'] = '第'+str(date(time))+'天 '+clocktext(time)
-        d['p.p'] = persistent.playthrough
         d['p'] = playthrough
     config.save_json_callbacks.append(jsoncallback)
 
@@ -237,7 +237,7 @@ init python:
 
     ## 文件保存action
     def FileActionMod(name, page=None, **kwargs):
-        if persistent.playthrough == 5:
+        if persistent.playthrough == 5 and renpy.current_screen().screen_name[0] == "load":
             return Confirm('您未开启新游戏，无法打开存档。\n是否将整个游戏回调至存档时状态？\n（不好意思，这里还没写，我只写了从头开始（汗）', NullAction())
         elif persistent.playthrough != FileJson(name,'p') and renpy.current_screen().screen_name[0] == "load" and FileLoadable(name):
             return Confirm('存档无法打开。', NullAction() )
@@ -250,6 +250,17 @@ init python:
             return 'gui/button/slot_disabled.png'
         else:
             return FileScreenshot(name)
+
+    # 显示一个从5到0的倒计时，每十分之一秒更新直到计时结束。
+    def show_countdown(st, at):
+        if st > 5.0:
+            return Text("确定"), None
+        else:
+            d = Text("确定({:.1f})".format(5.0 - st))
+            return d, 0.1
+
+    
+
 
     
 

@@ -1,36 +1,26 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/turn.rpy", line 614, in script call
-    call test
-  File "game/script.rpy", line 1005, in script
-    $ renpy.error("File \"game/01-definitions.rpy\", line 31\nSee traceback.txt for details.")
-  File "game/script.rpy", line 1005, in <module>
-    $ renpy.error("File \"game/01-definitions.rpy\", line 31\nSee traceback.txt for details.")
-Exception: File "game/01-definitions.rpy", line 31
-See traceback.txt for details.
+  File "game/turn.rpy", line 387, in script
+    python:
+  File "game/turn.rpy", line 393, in <module>
+    restore_playthrough(persistent.playthrough)
+NameError: name 'restore_playthrough' is not defined
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "game/turn.rpy", line 614, in script call
-    call test
-  File "game/script.rpy", line 1005, in script
-    $ renpy.error("File \"game/01-definitions.rpy\", line 31\nSee traceback.txt for details.")
+  File "game/turn.rpy", line 387, in script
+    python:
   File "D:\renpy-7.4.4-sdk\renpy\ast.py", line 1131, in execute
     renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
   File "D:\renpy-7.4.4-sdk\renpy\python.py", line 1061, in py_exec_bytecode
     exec(bytecode, globals, locals)
-  File "game/script.rpy", line 1005, in <module>
-    $ renpy.error("File \"game/01-definitions.rpy\", line 31\nSee traceback.txt for details.")
-  File "D:\renpy-7.4.4-sdk\renpy\exports.py", line 2662, in error
-    _error_handlers[-1](msg)
-  File "D:\renpy-7.4.4-sdk\renpy\exports.py", line 2639, in _error
-    raise Exception(msg)
-Exception: File "game/01-definitions.rpy", line 31
-See traceback.txt for details.
+  File "game/turn.rpy", line 393, in <module>
+    restore_playthrough(persistent.playthrough)
+NameError: name 'restore_playthrough' is not defined
 
 Windows-10-10.0.22621 AMD64
 Ren'Py 8.0.3.22090809
 untitled 0.1
-Sun Mar 12 23:18:27 2023
+Mon Mar 13 21:19:15 2023

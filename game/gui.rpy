@@ -20,6 +20,7 @@ define config.rollback_enabled = config.developer
 define config.save_json_callbacks = [ ] ##创建一个list，这是在存档界面能够显示出这个是谁的视角的存档的关键步骤
 define config.autosave_on_quit = True
 define config.has_quicksave = False
+define config.has_autosave = False
 define config.mouse = {}
 define config.window_show_transition = { "screens" : Dissolve(.1) }
 define config.window_hide_transition = { "screens" : Dissolve(.1) }
@@ -165,14 +166,14 @@ define gui.accent_color = '#ffffff'
 define gui.idle_color = '#8a8a8a'
 
 ## 小颜色用于小文本，需要更亮/更暗才能达到相同的效果。
-define gui.idle_small_color = '#929eac'
+define gui.idle_small_color = '#dddddd'
 
 ## 用于悬停的按钮和滑条的颜色。
 define gui.hover_color = '#babcc2'
 
 ## 用于选中但非焦点的文本按钮的颜色。当一个按钮为当前屏幕或设置选项值时，会处于
 ## 选中状态。
-define gui.selected_color = '#cde5f5'
+define gui.selected_color = '#d4dbe0'
 
 ## 用于无法选择的文本按钮的颜色。
 define gui.insensitive_color = '#8888887f'

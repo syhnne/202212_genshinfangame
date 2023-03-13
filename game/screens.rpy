@@ -826,8 +826,8 @@ screen file_slots(title):
                                 color '#ffffff'
                         if FileJson(slot,'timetext'):
                             text FileJson(slot,'timetext') style "slot_time_text"
-                        if config.developer and FileJson(slot,'p') and FileJson(slot, 'p.p'):
-                            text 'p=' +str(FileJson(slot,'p'))+ '  p.p='+str(FileJson(slot,'p.p')) style "slot_time_text"
+                        if persistent.unlock_gallery and FileJson(slot,'p') and FileJson(slot,'p') != 5:
+                            text '阶段' +str(FileJson(slot,'p'))+'…' style "slot_time_text" color '#777777' italic True
                 
                         key "save_delete" action FileDelete(slot)
 
@@ -1333,6 +1333,41 @@ screen confirm(message, yes_action, no_action):
     ## 右键点击退出并答复“no”（取消）。
     key "game_menu" action no_action
 
+screen confirm_countdown(message, yes_action, no_action, cd):
+    default allow_confirm = False
+
+    modal True
+
+    zorder 200
+
+    style_prefix "confirm"
+
+    add "gui/overlay/confirm.png"
+
+    frame:
+
+        vbox:
+            xalign .5
+            yalign .5
+            spacing 45
+            
+            timer cd action SetScreenVariable(allow_confirm, True)
+
+            label _(message):
+                style "confirm_prompt"
+                xalign 0.5
+
+            hbox:
+                xalign 0.5
+                spacing 150
+                if allow_confirm:
+                    textbutton '确定' action yes_action
+                else:
+                    textbutton '（）确定' action yes_action sensitive False
+                textbutton _("取消") action no_action
+
+    ## 右键点击退出并答复“no”（取消）。
+    key "game_menu" action no_action
 
 style confirm_frame is gui_frame
 style confirm_prompt is gui_prompt
