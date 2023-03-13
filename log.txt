@@ -46,3 +46,102 @@ Version: b'4.6.0 NVIDIA 516.94'
 Display Info: None
 Screen sizes: virtual=(1920, 1080) physical=(1280, 720) drawable=(1280, 720)
 Maximum texture size: 4096x4096
+
+Full traceback:
+  File "game/turn.rpy", line 322, in script
+    call screen map_liyuegang() with dissolve
+  File "D:\renpy-7.4.4-sdk\renpy\ast.py", line 2232, in execute
+    self.call("execute")
+  File "D:\renpy-7.4.4-sdk\renpy\ast.py", line 2220, in call
+    return renpy.statements.call(method, parsed, *args, **kwargs)
+  File "D:\renpy-7.4.4-sdk\renpy\statements.py", line 281, in call
+    return method(parsed, *args, **kwargs)
+  File "renpy/common/000statements.rpy", line 609, in execute_call_screen
+    store._return = renpy.call_screen(name, *args, **kwargs)
+  File "D:\renpy-7.4.4-sdk\renpy\exports.py", line 3181, in call_screen
+    rv = renpy.ui.interact(mouse="screen", type="screen", roll_forward=roll_forward)
+  File "D:\renpy-7.4.4-sdk\renpy\ui.py", line 299, in interact
+    rv = renpy.game.interface.interact(roll_forward=roll_forward, **kwargs)
+  File "D:\renpy-7.4.4-sdk\renpy\display\core.py", line 3377, in interact
+    repeat, rv = self.interact_core(preloads=preloads, trans_pause=trans_pause, pause=pause, pause_start=pause_start, pause_modal=pause_modal, **kwargs) # type: ignore
+  File "D:\renpy-7.4.4-sdk\renpy\display\core.py", line 3810, in interact_core
+    root_widget.visit_all(lambda i : i.per_interact())
+  File "D:\renpy-7.4.4-sdk\renpy\display\core.py", line 582, in visit_all
+    d.visit_all(callback, seen)
+  File "D:\renpy-7.4.4-sdk\renpy\display\core.py", line 582, in visit_all
+    d.visit_all(callback, seen)
+  File "D:\renpy-7.4.4-sdk\renpy\display\core.py", line 582, in visit_all
+    d.visit_all(callback, seen)
+  [Previous line repeated 1 more time]
+  File "D:\renpy-7.4.4-sdk\renpy\display\screen.py", line 456, in visit_all
+    self.child.visit_all(callback, seen=None)
+  File "D:\renpy-7.4.4-sdk\renpy\display\core.py", line 582, in visit_all
+    d.visit_all(callback, seen)
+  File "D:\renpy-7.4.4-sdk\renpy\display\core.py", line 582, in visit_all
+    d.visit_all(callback, seen)
+  File "D:\renpy-7.4.4-sdk\renpy\display\core.py", line 582, in visit_all
+    d.visit_all(callback, seen)
+  [Previous line repeated 3 more times]
+  File "D:\renpy-7.4.4-sdk\renpy\display\core.py", line 572, in visit_all
+    for d in self.visit():
+  File "D:\renpy-7.4.4-sdk\renpy\display\layout.py", line 1494, in visit
+    self.update(self.last_st, self.last_at)
+  File "D:\renpy-7.4.4-sdk\renpy\display\layout.py", line 1505, in update
+    raw_child, redraw = self.function(st, at, *self.args, **self.kwargs)
+  File "D:\renpy-7.4.4-sdk\renpy\display\layout.py", line 1596, in condition_switch_show
+    return condition_switch_pick(switch), None
+  File "D:\renpy-7.4.4-sdk\renpy\display\layout.py", line 1591, in condition_switch_pick
+    raise Exception("Switch could not choose a displayable.")
+Exception: Switch could not choose a displayable.
+
+While running game code:
+  File "game/turn.rpy", line 322, in script
+    call screen map_liyuegang() with dissolve
+  File "renpy/common/000statements.rpy", line 609, in execute_call_screen
+    store._return = renpy.call_screen(name, *args, **kwargs)
+Exception: Switch could not choose a displayable.
+Resetting cache.
+Bootstrap to the start of init.init took 69.05s
+Early init took 0.00s
+Loader init took 0.03s
+Loading error handling took 0.02s
+Loading script took 0.11s
+Loading save slot metadata. took 0.01s
+Loading persistent took 0.00s
+Faled to initialize steam: FileNotFoundError("Could not find module 'D:\\renpy-7.4.4-sdk\\lib\\py3-windows-x86_64\\steam_api64.dll' (or one of its dependencies). Try using the full path with constructor syntax.")
+Running init code took 0.05s
+Loading analysis data took 0.01s
+Analyze and compile ATL took 0.00s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\emily\\AppData\\Roaming/RenPy/backups\\test 202212':
+Dump and make backups. took 0.04s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc. took 0.03s
+DPI scale factor: 1.000000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.17s
+Cleaning stores took 0.00s
+Init translation took 0.03s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.01s
+Save screen analysis took 0.02s
+Prepare screens took 0.04s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.02s
+Running _start took 0.00s
+Performance test:
+Interface start took 0.05s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce GTX 745/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 516.94'
+Display Info: None
+Screen sizes: virtual=(1920, 1080) physical=(1280, 720) drawable=(1280, 720)
+Maximum texture size: 4096x4096
