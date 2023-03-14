@@ -138,7 +138,7 @@ screen beginner_guide():
 screen beginner_guide1():
     text '每天有3次机会，可以在地图上选择要去的地点，触发不同的剧情。\n也可以点击左上角，选择不出门。\n有些地点会触发特殊的事件，有些则不会每天都显示。' 
 screen beginner_guide2():
-    text '另外，在游戏中做出的选项不仅会影响当前存档的剧情推进，\n还可能{u}在其他的游戏视角中{/u}触发新的事件……\n请善用存档功能，在不同的游戏视角中尽可能触发更多的事件吧。'
+    text '另外，在游戏中做出的选项不仅会影响当前存档的剧情推进，\n还可能{u}在其他的游戏视角中{/u}触发新的事件……\n请善用存档功能，在不同的游戏视角中尽可能触发更多的事件吧。（可能要改）'
 
 
 screen map_options():
@@ -182,7 +182,6 @@ screen map_liyuegang(spot_has_event=False):
     
     zorder 0    
     window:
-        ## window是一款高血压神器，他诞生之初就是为了做对话框，所以一旦把它拿去做别的东西，他就会满屏乱飘逼你手搓pos，于是弃之用frame
         ypos 277 xpos 960
         background 'map_bg'
         use days
@@ -192,9 +191,7 @@ screen map_liyuegang(spot_has_event=False):
             use developer_time_set
 
         for key,value in map_liyuegang_dict.items():
-
             python:
-                
                 x = map_liyuegang_dict.get(key)
                 map_clist = x[int(pov)]
                 if type(map_clist) == type(True):
@@ -264,9 +261,6 @@ label turn:
     scene black with dissolve
         
     while time <= 90:
-        # if config.developer:
-        #     $ renpy.profile_screen('map_liyuegang', predict=False, show=True, update=False, request=False, time=True, debug=True, const=True)
-        #     $ renpy.profile_memory(fraction=1.0, minimum=0, skip_constants=False)
         
         $ rand=renpy.random.randint(1,6)
         $ d = '（第'+str(date(time))+'天  '+clocktext(time)+'）'

@@ -139,27 +139,30 @@ init python:
     g.transition = dissolve
     g.locked_button = 'locked_button'
 
+    g.button('cg01')
+    g.unlock_image('cg01')
+
+    g.button('cg02')
+    g.unlock_image('cg02')
+
+    g.button('cg03')
+    g.unlock_image('cg03')
+
+    g.button('cg04')
+    g.unlock_image('cg04')
+
 screen thegallery():
     tag menu
     use game_menu(_('画廊'), scroll='viewport'):
         grid 3 2:
-            spacing 30
-            python:
-                g.button('cg01')
-                g.unlock_image('cg01', 'cg01p')
-                g.button('cg02')
-                g.unlock_image('cg02', 'cg02p')
-                g.button('cg03')
-                g.unlock_image('cg03', 'cg03p')
-                g.button('cg04')
-                g.unlock_image('cg04', 'cg04p')
+            xfill True spacing 50
 
             # 调用make_button显示具体的按钮。
-            add g.make_button('cg01', "cg01", xalign=0.5, yalign=0.5)
-            add g.make_button('cg02', "cg02", xalign=0.5, yalign=0.5)
-            add g.make_button('cg03', "cg03", xalign=0.5, yalign=0.5)
+            add g.make_button('cg01', "cg01p", xalign=0.5, yalign=0.5, xysize=(384,216))
+            add g.make_button('cg02', "cg02p", xalign=0.5, yalign=0.5, xysize=(384,216))
+            add g.make_button('cg03', "cg03p", xalign=0.5, yalign=0.5, xysize=(384,216))
 
-            add g.make_button('cg04', "cg04", xalign=0.5, yalign=0.5)
+            add g.make_button('cg04', "cg04p", xalign=0.5, yalign=0.5, xysize=(384,216))
             null
             null
 

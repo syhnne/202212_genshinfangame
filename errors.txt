@@ -2,10 +2,10 @@
 errors listed below, and try again.
 
 
-File "game/restore_playthrough.rpy", line 92: invalid syntax
-                8:['']
-                 ^
+File "game/restore_playthrough.rpy", line 105: cannot assign to literal
+            [80] = [False, 'p10', 'renpy.seen_label(\'p10\')']
+              ^
     
 
 Ren'Py Version: Ren'Py 8.0.3.22090809
-Mon Mar 13 23:25:08 2023
+Tue Mar 14 23:10:15 2023

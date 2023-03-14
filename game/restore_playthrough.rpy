@@ -13,7 +13,7 @@ init python:
             26:[False, 'p04'],
             28:['lygmt', 'z06'],
             30:[False, 'p05', 'persistent.p05enter'],
-            31:['bgyh', 'z07', 'choice_history[36]==\'p05\''],
+            31:['bgyh', 'z07', 'choice_history[30]==\'p05\''],
             36:['wmt', 'p06'],
             39:['wwjs', 'p07'],
             49:[False, 'z08'],
@@ -45,8 +45,7 @@ init python:
             23:['wjt', 'c07'],
             26:[False, 'p04'],
             28:[False, 'c08'],
-            30:[False, 'c09'],
-            30:[False, 'p05', 'persistent.p05enter'],
+            30:[False, 'c09', 'persistent.p05enter', 'p05'],
             31:[False, 'c10', 'choice_history[13]==\'p03\''],
             32:[True, 'c10', 'choice_history[13]==\'p03\''],
             33:[True, 'c10', 'choice_history[13]==\'p03\''],
@@ -89,9 +88,23 @@ init python:
         }
 
         official_cheating_mod = {
-            7:['切换到钟离视角', '',],
-            8:[''],
+            # 7:['切换到钟离视角', '',],
+            # 8:[''],
         }
 
         if p==2:
-            pass
+            events_z[10] = [False, 'p00', 'renpy.seen_label(\'p02\')', 'p02_2']
+            events_z[13] = [False, 'p03_2', 'renpy.seen_label(\'p03\')']
+            events_z[15] = [False, 'z04_2', 'renpy.seen_label(\'p03\')']
+            events_z[26] = [False, 'p04_2', 'renpy.seen_label(\'p04\')']
+            events_z[28] = ['lygmt', 'z06_2']
+            events_z[30] = [False, 'p05_2', 'choice_history[28] == \'z06_2\'']
+            events_z[49] = [False, 'z08_2']
+            events_z[51] = [False, 'p08_2', 'renpy.seen_label(\'p08\')']
+            events_z[57] = [False, 'p09_2', 'renpy.seen_label(\'p09\')']
+            events_z[80] = [False, 'p10', 'renpy.seen_label(\'p10\')']
+            events_z[87] = ['outside', 'p12_2']
+
+
+        elif p==3:
+            events_c[10] = [False, 'p02', 'renpy.seen_label(\'p02\')' ]

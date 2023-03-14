@@ -10,7 +10,11 @@ label splashscreen:
 
 
 label before_start:
-    '（这是选择视角之前的部分）'
+    '我修改了一下游戏玩法，现在触发剧情的条件变得有些刁钻，需要在不同的视角上操作，而且选项造成的影响是存档之间共享的。'
+    '但是现在我又觉得我改得不是很好，这样的做法一是会引发逻辑漏洞，二是很难让人理解。'
+    '所以我在思考要不要改回第一版——也就是我去lofter发求助之前的最初版本，那个时候玩家是可以自由切换视角的，它不是一个只有开发者才能用的功能（'
+    '这样就避免了跨存档修改变量引发的很多逻辑漏洞……而且这种手段同样能达到逼迫玩家sl大法的目的'
+    '视情况决定要不要改吧'
     
     return
 
@@ -84,6 +88,7 @@ label start_c:
     '现在姿势只有一种，但是我大概不会加太多姿势，最常用的就是这个1了罢'
     '因为眼睛眉毛嘴分别有7种不一样的，也就是说一个姿势就可以组成7*7*7种表情'
     '我写了个函数批量定义图像，我倒是工作量不大，但是电脑他工作量很大，如果再这样做别的姿势，我怕内存爆炸（。'
+    '虽然但是，这些表情我准备重新渲染了，周日晚上让我刷到真·仿原神渲染教程了，准备本周末或者下周末安排一个（'
     ## 虽然有layeredimage这种好东西可以避免多次定义图片，但我就是不用，诶嘿，因为那样我就不能拿数字指代表情了
     
 
@@ -143,7 +148,6 @@ label start_c:
 
 
 label start_c_3:
-    '，，，，，，，，，'
     '这是三周目的开头部分。'
     '，我本来特别想看凡人钟离和公子打架，但是现在我莫名觉得这不太合理'
     '可能是这样，我两周前才意识到我剧本里一个重大失误：由于我主线核心是“这个世界是梦”，为了和主线关联，最好是每一个梦里的剧情都能在现实中找到对应的事件。'
@@ -425,7 +429,7 @@ label c09:
         '实际上他现在伤得挺重的，但由于没有触发剧情，还是没有人来帮他'
     return
 
-label c09_2:
+label c09_3:
     '没触发被救了的剧情，但那是因为这是三周目'
     return
 
@@ -549,6 +553,11 @@ label z08:
     '我得想个办法多扯两句，尽量把传说任务和后面那事扯上关系吧'
     return
 
+label z08_2:
+    scene expression 'bg wst '+str(clock(time)) with dissolve
+    'z08_2'
+    return
+
 label z09:
     scene bg c
     $ persistent.lores['z09_read'] = True
@@ -581,9 +590,6 @@ label p01:
     scene bg bgyh inside with dissolve
     '钟离来找公子是为了商量和旅行者吃饭的事，但是两人没有多说话。'
     '现在两个人感情不是很深，还在致力于互损，大概。'
-    # python:
-        # events_c[10] = [False, 'p02']
-        # events_z[10] = [False, 'p02']
     return
 
 
@@ -624,6 +630,9 @@ label p02_2:
     $ favp(3,'p02_2')
     '饭局，但是二周目'
     '这次不提供选项了，反正能看到这里的肯定触发剧情了，且这只有钟离视角'
+    if choice_history[8] != 'p01':
+        '我这样绑架玩家进剧情真的好吗？加个判定以表诚意吧'
+        
     return
 
 label p02_3:
@@ -744,8 +753,6 @@ label p08:
     ## 有空的时候上号重拍一张璃月郊外的背景
     scene bg p03 1 with wipeleft
     '这一天俩人是睡在外面的，可能上哪个客栈借宿去了吧'
-    # if pov:
-    #     '然后可以塞一段心理活动描写'
     $ tp(2)
     return
 
@@ -877,7 +884,6 @@ label ending1:
     ## 这个是进真结局的条件，注意！！等我写完大纲，别忘了来这里加东西！！！
     $ persistent.playthrough = 2
     $ persistent.gamedata['playthrough1_fav'] = fav
-    # $ delete_all_saves()
     $ _history_list=[]
     call endgame from _call_endgame
     return
@@ -892,9 +898,7 @@ label ending3:
     '海灯节'
     '二周目唯一结局，对应的是现实中钟离（为公子挡下了致命的一击，或者在他受伤之后消耗自己的力量去救他？）'
     '但我没想好要怎么在游戏里体现这点'
-    
     $ persistent.playthrough = 3
-    # $ delete_all_saves()
     $ _history_list=[]
     call endgame from _call_endgame_3
     return
@@ -958,7 +962,6 @@ label endgame(pause_length=4.0):
 
 ## 其他剧情 ################################################
 
-# 重新加载游戏后的label，用来在某些情况下恐吓玩家（？
 label after_load:
     python:
         renpy.block_rollback()

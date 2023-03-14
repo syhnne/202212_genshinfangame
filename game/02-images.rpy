@@ -1,12 +1,12 @@
-image cg01 = Text('cg01')
-image cg02 = Text('cg02')
-image cg03 = Text('cg03')
-image cg04 = Text('cg04')
-image cg01p = Text('cg01p')
-image cg02p = Text('cg02p')
-image cg03p = Text('cg03p')
-image cg04p = Text('cg04p')
-image locked_button = Text('locked')
+image cg01 = 'images/cg01.png'
+image cg02 = 'images/cg02.png'
+image cg03 = 'images/cg03.png'
+image cg04 = 'images/cg04.png'
+image cg01p = At('images/cg01.png', cgzoom)
+image cg02p = At('images/cg02.png', cgzoom)
+image cg03p = At('images/cg03.png', cgzoom)
+image cg04p = At('images/cg04.png', cgzoom)
+image locked_button = 'images/locked.png'
 
 image solidgrey = Solid('#818181')
 image solidwhite = Solid('#e8ecf0')
@@ -109,6 +109,10 @@ transform hovered_animation:
 transform slow_show:
     alpha 0.0
     linear 20 alpha 0.6
+
+transform cgzoom:
+    zoom 0.2
+
 
 image ctc:
     xpos 10 ypos 10 alpha 0.0 subpixel True
