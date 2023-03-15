@@ -301,7 +301,7 @@ label turn:
         ## 特殊事件+不允许打开地图
         if event and type(event[0])==type(True) and event[0] == False:
             $ choice_history.append(event_label_name)
-            call expression event_label_name from _call_expression
+            call expression event_label_name
             $ time = time + 1 
             
 
@@ -330,20 +330,20 @@ label turn:
                 ## 特殊事件，与选项无关
                 if event and type(event[0])==type(True):
                     $ choice_history.append(event_label_name)
-                    call expression event_label_name from _call_expression_1
+                    call expression event_label_name
                     $ time = time + 1
                     
                 ## 特殊事件，选对才能进
                 elif event and type(event[0])==type('') and event[0] == _return:
                     $ choice_history.append(event_label_name)
-                    call expression event_label_name from _call_expression_2
+                    call expression event_label_name
                     $ time = time + 1
                     
                 ## 无特殊事件
                 else:
                     if _return:
                         $ choice_history.append(_return)
-                    call expression _return from _call_expression_3
+                    call expression _return
                     $ time = time + 1
                     
                     
