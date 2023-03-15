@@ -98,7 +98,7 @@ init python:
             events_z[15] = [False, 'z04_2', 'renpy.seen_label(\'p03\')']
             events_z[26] = [False, 'p04_2', 'renpy.seen_label(\'p04\')']
             events_z[28] = ['lygmt', 'z06_2']
-            events_z[30] = [False, 'p05_2', 'choice_history[28] == \'z06_2\'']
+            events_z[30] = [False, 'p05_2', 'True']
             events_z[49] = [False, 'z08_2']
             events_z[51] = [False, 'p08_2', 'renpy.seen_label(\'p08\')']
             events_z[57] = [False, 'p09_2', 'renpy.seen_label(\'p09\')']

@@ -287,7 +287,12 @@ label turn:
 
             ## 判定是否满足触发的条件。这个条件需要是个字符串，并且返回一个布尔值
             if len(event)>2:
-                $ cond = eval(event[2])
+                python:
+                    try:
+                        cond = eval(event[2])
+                    except:
+                        x=event[2]
+                        renpy.error(str(time)+'你输入的字符串【'+x+'】条件有误，请检查')
                 if cond != True:
                     $ event = None
                 elif len(event)>3:

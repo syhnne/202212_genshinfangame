@@ -2,32 +2,29 @@
 
 While running game code:
   File "game/turn.rpy", line 290, in script
-    $ cond = eval(event[2])
-  File "game/turn.rpy", line 290, in <module>
-    $ cond = eval(event[2])
-IndexError: list index out of range
+    python:
+  File "game/turn.rpy", line 295, in <module>
+    renpy.error(str(time)+'你输入的字符串【'+x+'】条件有误，请检查')
+Exception: 31你输入的字符串【choice_history[36]=='p05'】条件有误，请检查
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
   File "game/turn.rpy", line 290, in script
-    $ cond = eval(event[2])
+    python:
   File "D:\renpy-7.4.4-sdk\renpy\ast.py", line 1131, in execute
     renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
   File "D:\renpy-7.4.4-sdk\renpy\python.py", line 1061, in py_exec_bytecode
     exec(bytecode, globals, locals)
-  File "game/turn.rpy", line 290, in <module>
-    $ cond = eval(event[2])
-  File "D:\renpy-7.4.4-sdk\renpy\python.py", line 1092, in py_eval
-    return py_eval_bytecode(code, globals, locals)
-  File "D:\renpy-7.4.4-sdk\renpy\python.py", line 1085, in py_eval_bytecode
-    return eval(bytecode, globals, locals)
-  File "<none>", line 1, in <module>
-  File "D:\renpy-7.4.4-sdk\renpy\revertable.py", line 217, in __getitem__
-    rv = list.__getitem__(self, index)
-IndexError: list index out of range
+  File "game/turn.rpy", line 295, in <module>
+    renpy.error(str(time)+'你输入的字符串【'+x+'】条件有误，请检查')
+  File "D:\renpy-7.4.4-sdk\renpy\exports.py", line 2662, in error
+    _error_handlers[-1](msg)
+  File "D:\renpy-7.4.4-sdk\renpy\exports.py", line 2639, in _error
+    raise Exception(msg)
+Exception: 31你输入的字符串【choice_history[36]=='p05'】条件有误，请检查
 
 Windows-10-10.0.22621 AMD64
 Ren'Py 8.0.3.22090809
 untitled 0.1
-Tue Mar 14 23:15:46 2023
+Wed Mar 15 19:27:41 2023
