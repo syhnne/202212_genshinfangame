@@ -2,10 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/restore_playthrough.rpy", line 105: cannot assign to literal
-            [80] = [False, 'p10', 'renpy.seen_label(\'p10\')']
-              ^
-    
+File "game/turn.rpy", line 183: end of line expected.
+    if pov:
+    ^
 
 Ren'Py Version: Ren'Py 8.0.3.22090809
-Tue Mar 14 23:10:15 2023
+Sun Mar 19 19:35:53 2023

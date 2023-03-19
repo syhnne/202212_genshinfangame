@@ -71,7 +71,7 @@ init python:
 
         map_liyuegang_dict = {
             'outside':[ True, True,  180,550,'离开璃月港…', ],
-            'stay':[ True, True,   10,29,'不出门…', ],
+            'stay':[ True, True,   800,200,'不出门…', ],
             'wmt':[ True, True,  1565,339,'万民堂', ],
             'mxjxh':[ [False,[15,16,17],[75,76,77],], [False,[15,16,17],24,[75,76,77],],  1478,221,'冒险家协会', ],
             'bgyh':[ False, [False,6,7,8],    1010,441,'北国银行', ],
