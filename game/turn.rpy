@@ -271,12 +271,12 @@ label turn:
         $ add_history(d)
         
 
-        ## 特殊剧情判断
-        if time == 9 and pov and choice_history[-1] != 'p01':
-            $ persistent.p01enter = False
-            $ persistent.p03enter = False
-        elif time == 30 and not pov and not 'c07' in choice_history[-3:]:
-            $ persistent.p04enter = False
+        # ## 特殊剧情判断
+        # if time == 9 and pov and choice_history[-1] != 'p01':
+        #     $ persistent.p01enter = False
+        #     $ persistent.p03enter = False
+        # elif time == 30 and not pov and not 'c07' in choice_history[-3:]:
+        #     $ persistent.p04enter = False
         
         ## 获得列表中特殊事件
         if pov:
