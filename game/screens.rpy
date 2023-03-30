@@ -42,43 +42,33 @@ style prompt_text is gui_text:
 
 style bar:
     ysize gui.bar_size
-    left_bar 'solidwhite'
-    right_bar 'solidgrey'
-    # left_bar Frame("gui/bar/left.png", gui.bar_borders, tile=gui.bar_tile)
-    # right_bar Frame("gui/bar/right.png", gui.bar_borders, tile=gui.bar_tile)
+    left_bar Frame("gui/bar/left.png", gui.bar_borders, tile=gui.bar_tile)
+    right_bar Frame("gui/bar/right.png", gui.bar_borders, tile=gui.bar_tile)
 
 style vbar:
     xsize gui.bar_size
-    top_bar 'solidwhite'
-    bottom_bar 'solidgrey'
+    top_bar Frame("gui/bar/top.png", gui.bar_borders, tile=gui.bar_tile)
+    bottom_bar Frame("gui/bar/bottom.png", gui.bar_borders, tile=gui.bar_tile)
 
 style scrollbar:
     ysize gui.scrollbar_size
-    base_bar 'solidgrey'
-    thumb 'solidwhite'
-    # base_bar Frame("gui/scrollbar/horizontal_[prefix_]bar.png", gui.scrollbar_borders, tile=gui.scrollbar_tile)
-    # thumb Frame("gui/scrollbar/horizontal_[prefix_]thumb.png", gui.scrollbar_borders, tile=gui.scrollbar_tile)
+    base_bar Frame("gui/scrollbar/horizontal_[prefix_]bar.png", gui.scrollbar_borders, tile=gui.scrollbar_tile)
+    thumb Frame("gui/scrollbar/horizontal_[prefix_]thumb.png", gui.scrollbar_borders, tile=gui.scrollbar_tile)
 
 style vscrollbar:
     xsize gui.scrollbar_size
-    base_bar 'solidgrey'
-    thumb 'solidwhite'
-    # base_bar Frame("gui/scrollbar/vertical_[prefix_]bar.png", gui.vscrollbar_borders, tile=gui.scrollbar_tile)
-    # thumb Frame("gui/scrollbar/vertical_[prefix_]thumb.png", gui.vscrollbar_borders, tile=gui.scrollbar_tile)
+    base_bar Frame("gui/scrollbar/vertical_[prefix_]bar.png", gui.vscrollbar_borders, tile=gui.scrollbar_tile)
+    thumb Frame("gui/scrollbar/vertical_[prefix_]thumb.png", gui.vscrollbar_borders, tile=gui.scrollbar_tile)
 
 style slider:
     ysize gui.slider_size
-    base_bar 'solidgrey'
-    thumb 'solidwhite'
-    # base_bar Frame("gui/slider/horizontal_[prefix_]bar.png", gui.slider_borders, tile=gui.slider_tile)
-    # thumb "gui/slider/horizontal_[prefix_]thumb.png"
+    base_bar Frame("gui/slider/horizontal_[prefix_]bar.png", gui.slider_borders, tile=gui.slider_tile)
+    thumb "gui/slider/horizontal_[prefix_]thumb.png"
 
 style vslider:
     xsize gui.slider_size
-    base_bar 'solidgrey'
-    thumb 'solidwhite'
-    # base_bar Frame("gui/slider/vertical_[prefix_]bar.png", gui.vslider_borders, tile=gui.slider_tile)
-    # thumb "gui/slider/vertical_[prefix_]thumb.png"
+    base_bar Frame("gui/slider/vertical_[prefix_]bar.png", gui.vslider_borders, tile=gui.slider_tile)
+    thumb "gui/slider/vertical_[prefix_]thumb.png"
 
 
 style frame:
@@ -651,6 +641,10 @@ screen game_menu(title, scroll=None, yinitial=0.0):
 
                         transclude
 
+                elif scroll == 'fixed':
+                    vbox:
+                        transclude
+
                 else:
 
                     transclude
@@ -907,6 +901,55 @@ style slot_button_text:
 init python:
     textseencolor = False
 
+screen wtf(apargs, ypos):
+    $ y = renpy.get_mouse_pos()
+    zorder 199
+    dismiss action ToggleScreen('wtf')
+    frame:
+        xpos 1470 ypos y[1]+20 xsize 320
+        modal True
+        has vbox
+        for op in apargs:
+            $ t=op[0]
+            $ a=op[1]
+            button:
+                action [a, ToggleScreen('wtf'),SetLocalVariable('choice',t)]
+                vbox:
+                    xfill True
+                    text t  xalign 0.5
+
+screen apref(name, ypos, *args):
+    
+    button:
+        xysize (1328,65)
+        action Show('wtf', None, args, ypos)
+        imagebutton:
+            action Show('wtf', None, args, ypos)
+            idle 'gui/button/settings_choice_idle.png'
+            hover 'gui/button/settings_choice_hover.png'
+        text name xalign 0.03 yalign 0.8
+        fixed:
+            style_prefix 'genshinpref'
+            xpos 980 xysize (347,65)
+            transclude
+            text '▼' xalign 0.9 size 20
+        
+screen bpref(name, ypos, value):
+    fixed:
+        xysize (1328,65)
+        imagebutton:
+            action NullAction()
+            idle 'gui/button/settings_bar_idle.png'
+            hover 'gui/button/settings_bar_hover.png'
+        text name xalign 0.03 yalign 0.6
+        fixed:
+            style_prefix 'genshinpref'
+            xpos 980 xysize (347,65)
+            bar style_prefix "slider" value value xsize 330 yalign 0.5
+            
+
+
+
 screen preferences():
 
     tag menu
@@ -914,87 +957,87 @@ screen preferences():
     use game_menu(_("设置"), scroll="viewport"):
 
         vbox:
-
-            hbox:
-                box_wrap True
-
-                if renpy.variant("pc") or renpy.variant("web"):
-
-                    vbox:
-                        style_prefix "radio"
-                        label _("显示")
-                        textbutton _("窗口") action Preference("display", "any window")
-                        textbutton _("全屏") action Preference("display", "fullscreen")
-                        
-                    vbox:
-                        style_prefix "radio"
-                        label _("窗口大小")
-                        textbutton '1920x1080' action Function(renpy.set_physical_size,(1920,1080)) style_prefix None
-                        textbutton '1280x720' action Function(renpy.set_physical_size,(1280,720)) style_prefix None
-
-                vbox:
-                    style_prefix "check"
-                    label _("快进")
-                    textbutton _("未读文本") action Preference("skip", "toggle")
-                    textbutton _("选项后继续") action Preference("after choices", "toggle")
-                    textbutton _("忽略转场") action InvertSelected(Preference("transitions", "toggle"))
-
-
-                ## 可以在此处添加类型为“radio_pref”或“check_pref”的其他“vbox”，
-                ## 以添加其他创建者定义的首选项设置。
-
-            null height 60
+            style_prefix 'genshinpref'
+            $ y = renpy.focus_coordinates()
+            label '显示'
+            use apref('显示模式', 315, ('窗口',Preference("display", "any window")), ('全屏',Preference("display", "fullscreen"))):
+                # style_prefix 'genshinpref'
+                if preferences.fullscreen:
+                    text '全屏'
+                else:
+                    text '窗口'
+            use apref('窗口大小', 380, ('1920x1080',Function(renpy.set_physical_size,(1920,1080))), ('1280x720',Function(renpy.set_physical_size,(1280,720)))):
+                $ wdsize = renpy.get_physical_size()
+                if wdsize == (1280,720):
+                    text '1280x720'
+                elif wdsize == (1920,1080):
+                    text '1920x1080'
+                else:
+                    text '自定义'
+            null height 20
+            label '快进选项'
+            use apref('跳过未读文本', 515, ("只跳过已读文本",Preference("skip", "seen")), ("跳过所有文本",Preference("skip", "all"))):
+                if preferences.skip_unseen:
+                    text '跳过所有文本'
+                else:
+                    text "只跳过已读文本"
+            use apref('选项后继续跳过', 580, ('跳过',Preference("after choices", "skip")), ('不跳过',Preference("after choices", "stop"))):
+                if preferences.skip_after_choices:
+                    text '跳过'
+                else:
+                    text '不跳过'
+            use apref('跳过转场', 645, ('跳过',Preference("transitions", "none")), ('不跳过',Preference("transitions", "all"))):
+                if preferences.transitions == 2:
+                    text '不跳过'
+                elif preferences.transitions == 0:
+                    text '跳过'
+                else:
+                    text '--'
+            null height 20
+            label '速度'
+            use bpref('文字速度',800,Preference("text speed"))
+            use bpref('自动前进时间',880,Preference("auto-forward time"))
+            null height 20
+            label '声音'
+            if config.has_music:
+                use bpref('音乐音量',950,Preference("music volume"))
+            if config.has_sound:
+                use bpref('音效音量',1000,Preference("sound volume"))
+            if config.has_music or config.has_sound or config.has_voice:
+                use apref('全部静音', 1100, ('开启',Preference('all mute', 'enable')), ('关闭',Preference('all mute', 'disable')))
+            text str(y)
 
             hbox:
                 style_prefix "slider"
                 box_wrap True
 
                 vbox:
-
-                    label _("文字速度")
-
-                    bar value Preference("text speed")
-
-                    label _("自动前进时间")
-
-                    bar value Preference("auto-forward time")
-
-                vbox:
-
                     if config.has_music:
                         label _("音乐音量")
-
                         hbox:
                             bar value Preference("music volume")
 
                     if config.has_sound:
-
                         label _("音效音量")
-
                         hbox:
                             bar value Preference("sound volume")
-
                             if config.sample_sound:
                                 textbutton _("测试") action Play("sound", config.sample_sound)
-
-
                     if config.has_voice:
                         label _("语音音量")
-
                         hbox:
                             bar value Preference("voice volume")
-
                             if config.sample_voice:
                                 textbutton _("测试") action Play("voice", config.sample_voice)
-
                     if config.has_music or config.has_sound or config.has_voice:
                         null height 15
-
                         textbutton _("全部静音"):
                             action Preference("all mute", "toggle")
                             style "mute_all_button"
-            
 
+style genshinpref_text is text:
+    color '#495366'
+    align (0.5,0.5)
 
 style pref_label is gui_label
 style pref_label_text is gui_label_text

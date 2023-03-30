@@ -343,19 +343,19 @@ define gui.scrollbar_size = 18
 define gui.slider_size = 30
 
 ## 如果条图应平铺，则为 True。 如果应该线性缩放，则为 False。
-# define gui.bar_tile = False
-# define gui.scrollbar_tile = False
-# define gui.slider_tile = False
+define gui.bar_tile = False
+define gui.scrollbar_tile = False
+define gui.slider_tile = False
 
 ## 水平边框。
-# define gui.bar_borders = Borders(6, 6, 6, 6)
-# define gui.scrollbar_borders = Borders(6, 6, 6, 6)
-# define gui.slider_borders = Borders(6, 6, 6, 6)
+define gui.bar_borders = Borders(6, 6, 6, 6)
+define gui.scrollbar_borders = Borders(6, 6, 6, 6)
+define gui.slider_borders = Borders(6, 6, 6, 6)
 
 ## 垂直边框。
-# define gui.vbar_borders = Borders(6, 6, 6, 6)
-# define gui.vscrollbar_borders = Borders(6, 6, 6, 6)
-# define gui.vslider_borders = Borders(6, 6, 6, 6)
+define gui.vbar_borders = Borders(6, 6, 6, 6)
+define gui.vscrollbar_borders = Borders(6, 6, 6, 6)
+define gui.vslider_borders = Borders(6, 6, 6, 6)
 
 ## 如何处理 GUI 中不可滚动的滚动条。“hide”隐藏，“None”显示。
 define gui.unscrollable = "hide"
