@@ -1,16 +1,16 @@
 
 # folders
 
-game/saves/
-game/cache/
-backup/
-.vscode/
-.git/
+/game/saves/
+/game/cache/
+/backup/
+/.vscode/
+/.git/
 
 # files
 
-.gitignore.txt
-errors.txt
-log.txt
-README.md
-traceback.txt
+/.gitignore.txt
+/errors.txt
+/log.txt
+/README.md
+/traceback.txt
