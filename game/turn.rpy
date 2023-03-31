@@ -366,16 +366,12 @@ label turn:
         jump ending4
 
 
-screen ctc(arg=None):
+screen ctc():
     zorder 100
     hbox:
-        xalign 0.98
-        yalign 0.98
-        style_prefix 'skip'
-        text "点击继续"
-        text "." at delayed_blink(0.0, 1.0)
-        text "." at delayed_blink(0.2, 1.0)
-        text "." at delayed_blink(0.4, 1.0)
+        xalign 0.5
+        yalign 0.94
+        imagebutton action NullAction() idle 'genshinctc' hover 'genshinctc'
         
         
 

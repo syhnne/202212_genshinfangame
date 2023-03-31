@@ -59,6 +59,8 @@ style vscrollbar:
     xsize gui.scrollbar_size
     base_bar Frame("gui/scrollbar/vertical_[prefix_]bar.png", gui.vscrollbar_borders, tile=gui.scrollbar_tile)
     thumb Frame("gui/scrollbar/vertical_[prefix_]thumb.png", gui.vscrollbar_borders, tile=gui.scrollbar_tile)
+    top_gutter 8
+    bottom_gutter 8
 
 style slider:
     ysize gui.slider_size
@@ -75,6 +77,15 @@ style frame:
     padding gui.frame_borders.padding
     background Frame("gui/frame.png", gui.frame_borders, tile=gui.frame_tile)
 
+
+
+
+
+style genshingui_text is text:
+    color '#495366'
+    align (0.5,0.5)
+style genshingui_prompt is gui_prompt:
+    color '#495366'
 
 
 ################################################################################
@@ -197,7 +208,6 @@ screen say(who, what):
     tag wthit
 
     window:
-        yoffset -10
         id "window"
 
         if who is not None:
@@ -901,7 +911,7 @@ style slot_button_text:
 init python:
     textseencolor = False
 
-screen wtf(apargs, ypos):
+screen wtf(apargs):
     $ y = renpy.get_mouse_pos()
     zorder 199
     dismiss action ToggleScreen('wtf')
@@ -918,36 +928,23 @@ screen wtf(apargs, ypos):
                     xfill True
                     text t  xalign 0.5
 
-screen apref(name, ypos, *args):
+screen apref(name, *args):
     
     button:
         xysize (1328,65)
-        # action CaptureFocus('opt')
-        action Show('wtf', None, args, ypos)
+        action Show('wtf', None, args)
         imagebutton:
-            action Show('wtf', None, args, ypos)
-            # action CaptureFocus('opt')
+            action Show('wtf', None, args)
             idle 'gui/button/settings_choice_idle.png'
             hover 'gui/button/settings_choice_hover.png'
         text name xalign 0.03 yalign 0.8
         fixed:
-            style_prefix 'genshinpref'
+            style_prefix 'genshingui'
             xpos 980 xysize (347,65)
             transclude
             text '▼' xalign 0.9 size 20
-
-    # if GetFocusRect("opt"):
-    #     dismiss action ClearFocus("opt")
-    #     nearrect:
-    #         focus "opt"
-    #         ysize 1
-    #         frame:
-    #             modal True
-    #             has vbox
-    #             for option in args:
-    #                 textbutton option[0] action [option[1], ClearFocus("opt")]
         
-screen bpref(name, ypos, value):
+screen bpref(name, value):
     fixed:
         xysize (1328,65)
         imagebutton:
@@ -956,7 +953,7 @@ screen bpref(name, ypos, value):
             hover 'gui/button/settings_bar_hover.png'
         text name xalign 0.03 yalign 0.6
         fixed:
-            style_prefix 'genshinpref'
+            style_prefix 'genshingui'
             xpos 980 xysize (347,65)
             bar style_prefix "slider" value value xsize 330 yalign 0.5
             
@@ -971,87 +968,66 @@ screen preferences():
 
         vbox:
             # box_reverse True
-            style_prefix 'genshinpref'
+            style_prefix 'genshingui'
             $ y = renpy.focus_coordinates()
             label '显示'
-            use apref('显示模式', 315, ('窗口',Preference("display", "any window")), ('全屏',Preference("display", "fullscreen"))):
-                # style_prefix 'genshinpref'
+            use apref('显示模式', ('窗口',Preference("display", "any window")), ('全屏',Preference("display", "fullscreen"))):
+                # style_prefix 'genshingui'
                 if preferences.fullscreen:
                     text '全屏'
                 else:
                     text '窗口'
-            use apref('窗口大小', 380, ('1920x1080',Function(renpy.set_physical_size,(1920,1080))), ('1280x720',Function(renpy.set_physical_size,(1280,720)))):
+            use apref('窗口大小', ('1920x1080',Function(renpy.set_physical_size,(1920,1080))), ('1600x900',Function(renpy.set_physical_size,(1600,900))), ('1280x720',Function(renpy.set_physical_size,(1280,720)))):
                 $ wdsize = renpy.get_physical_size()
                 if wdsize == (1280,720):
                     text '1280x720'
+                elif wdsize == (1600,900):
+                    text '1600x900'
                 elif wdsize == (1920,1080):
                     text '1920x1080'
                 else:
                     text '自定义'
-            null height 20
+            null height 40
             label '快进选项'
-            use apref('跳过未读文本', 515, ("只跳过已读文本",Preference("skip", "seen")), ("跳过所有文本",Preference("skip", "all"))):
+            use apref('跳过未读文本', ("只跳过已读文本",Preference("skip", "seen")), ("跳过所有文本",Preference("skip", "all"))):
                 if preferences.skip_unseen:
                     text '跳过所有文本'
                 else:
                     text "只跳过已读文本"
-            use apref('选项后继续跳过', 580, ('跳过',Preference("after choices", "skip")), ('不跳过',Preference("after choices", "stop"))):
+            use apref('选项后继续跳过', ('跳过',Preference("after choices", "skip")), ('不跳过',Preference("after choices", "stop"))):
                 if preferences.skip_after_choices:
                     text '跳过'
                 else:
                     text '不跳过'
-            use apref('跳过转场', 645, ('跳过',Preference("transitions", "none")), ('不跳过',Preference("transitions", "all"))):
+            use apref('跳过转场', ('跳过',Preference("transitions", "none")), ('不跳过',Preference("transitions", "all"))):
                 if preferences.transitions == 2:
                     text '不跳过'
                 elif preferences.transitions == 0:
                     text '跳过'
                 else:
                     text '--'
-            null height 20
+            null height 40
             label '速度'
-            use bpref('文字速度',800,Preference("text speed"))
-            use bpref('自动前进时间',880,Preference("auto-forward time"))
-            null height 20
+            use bpref('文字速度', Preference("text speed"))
+            use bpref('自动前进时间', Preference("auto-forward time"))
+            null height 40
             label '声音'
             if config.has_music:
-                use bpref('音乐音量',950,Preference("music volume"))
+                use bpref('音乐音量', Preference("music volume"))
             if config.has_sound:
-                use bpref('音效音量',1000,Preference("sound volume"))
+                use bpref('音效音量', Preference("sound volume"))
             if config.has_music or config.has_sound or config.has_voice:
-                use apref('全部静音', 1100, ('开启',Preference('all mute', 'enable')), ('关闭',Preference('all mute', 'disable')))
-            text str(y)
+                use apref('全部静音', ('开启',Preference('all mute', 'enable')), ('关闭',Preference('all mute', 'disable'))):
+                    $ m = preferences.get_mute('main')
+                    if m:
+                        text '开启'
+                    else:
+                        text '关闭'
+            null height 120
 
-            hbox:
-                style_prefix "slider"
-                box_wrap True
 
-                vbox:
-                    if config.has_music:
-                        label _("音乐音量")
-                        hbox:
-                            bar value Preference("music volume")
 
-                    if config.has_sound:
-                        label _("音效音量")
-                        hbox:
-                            bar value Preference("sound volume")
-                            if config.sample_sound:
-                                textbutton _("测试") action Play("sound", config.sample_sound)
-                    if config.has_voice:
-                        label _("语音音量")
-                        hbox:
-                            bar value Preference("voice volume")
-                            if config.sample_voice:
-                                textbutton _("测试") action Play("voice", config.sample_voice)
-                    if config.has_music or config.has_sound or config.has_voice:
-                        null height 15
-                        textbutton _("全部静音"):
-                            action Preference("all mute", "toggle")
-                            style "mute_all_button"
 
-style genshinpref_text is text:
-    color '#495366'
-    align (0.5,0.5)
 
 style pref_label is gui_label
 style pref_label_text is gui_label_text
@@ -1378,70 +1354,53 @@ screen confirm(message, yes_action, no_action):
 
     style_prefix "confirm"
 
-    add "gui/overlay/confirm.png"
+    
 
-    frame:
+    window:
+        background "gui/overlay/confirm.png" xysize (950,611) align (0.5, 0.5)
+        
 
-        vbox:
-            xalign .5
-            yalign .5
-            spacing 45
+        label _(message):
+            style "confirm_prompt"
+            style_prefix 'genshingui'
+            
+            align (0.5,0.45)
 
-            label _(message):
-                style "confirm_prompt"
-                xalign 0.5
-
-            hbox:
-                xalign 0.5
-                spacing 150
-
-                textbutton _("确定") action yes_action
-                textbutton _("取消") action no_action
+        hbox:
+            style_prefix 'genshingui'
+            align (0.5,0.9)
+            button:
+                xysize (386,79) action no_action
+                imagebutton:
+                    hover 'gui/button/confirm_no_hover.png'
+                    idle 'gui/button/confirm_no_idle.png'
+                    action no_action
+                fixed:
+                    xysize (386,79)
+                    text '取消' color '#ffffff'
+            button:
+                xysize (386,79) action yes_action
+                imagebutton:
+                    hover 'gui/button/confirm_yes_hover.png'
+                    idle 'gui/button/confirm_yes_idle.png'
+                    action yes_action
+                fixed:
+                    xysize (386,79)
+                    text '确定' color '#ffffff'
+                
 
     ## 右键点击退出并答复“no”（取消）。
     key "game_menu" action no_action
 
-# screen confirm_countdown(message, yes_action, no_action, cd):
-#     default allow_confirm = False
-
-#     modal True
-
-#     zorder 200
-
-#     style_prefix "confirm"
-
-#     add "gui/overlay/confirm.png"
-
-#     frame:
-
-#         vbox:
-#             xalign .5
-#             yalign .5
-#             spacing 45
-            
-#             timer cd action SetScreenVariable(allow_confirm, True)
-
-#             label _(message):
-#                 style "confirm_prompt"
-#                 xalign 0.5
-
-#             hbox:
-#                 xalign 0.5
-#                 spacing 150
-#                 if allow_confirm:
-#                     textbutton '确定' action yes_action
-#                 else:
-#                     textbutton '（）确定' action yes_action sensitive False
-#                 textbutton _("取消") action no_action
-
-#     ## 右键点击退出并答复“no”（取消）。
-#     key "game_menu" action no_action
 
 style confirm_frame is gui_frame
 style confirm_prompt is gui_prompt
-style confirm_prompt_text is gui_prompt_text
+style confirm_prompt_text is gui_prompt_text:
+    color '#495366'
 style confirm_button is gui_medium_button
 style confirm_button_text is gui_medium_button_text
+
+
 
 style confirm_frame:
     background 'solidblackbg'

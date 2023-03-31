@@ -208,7 +208,7 @@ define gui.interface_text_font = "SourceHanSansSC-Normal.otf"
 define gui.interface_text_size = 30
 
 ## 游戏用户界面中标签的大小。
-define gui.label_text_size = 33
+define gui.label_text_size = 36
 
 ## 游戏标题的大小。
 define gui.title_text_size = 60
@@ -354,7 +354,7 @@ define gui.slider_borders = Borders(6, 6, 6, 6)
 
 ## 垂直边框。
 define gui.vbar_borders = Borders(6, 6, 6, 6)
-define gui.vscrollbar_borders = Borders(6, 6, 6, 6)
+define gui.vscrollbar_borders = Borders(2, 14, 2, 14)
 define gui.vslider_borders = Borders(6, 6, 6, 6)
 
 ## 如何处理 GUI 中不可滚动的滚动条。“hide”隐藏，“None”显示。

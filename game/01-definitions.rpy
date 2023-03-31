@@ -26,14 +26,10 @@ default npc1_name = '叶卡捷琳娜'
 default npc2_name = '???'
 default npc3_name = '??'
 define test = Character('test')
-define narrator = Character('', ctc = 'ctc')
-define z = Character('z_name', image ='zhongli', dynamic=True, ctc='ctc') ## 搞立绘的时候加个callback，那个角色回调函数，作出说话人高亮的效果
-define c = Character('c_name', image ='childe', dynamic=True, ctc='ctc')
-define t = Character('旅行者', ctc = 'ctc')
-define p = Character('派蒙', ctc = 'ctc')
-define npc1 = Character('npc1_name', dynamic=True, ctc='ctc')
-define npc2 = Character('npc2_name', dynamic=True, ctc='ctc')
-define npc3 = Character('npc3_name', dynamic=True, ctc='ctc')
+define z = Character('z_name', image ='zhongli', dynamic=True) ## 搞立绘的时候加个callback，那个角色回调函数，作出说话人高亮的效果
+define c = Character('c_name', image ='childe', dynamic=True)
+define t = Character('旅行者')
+define p = Character('派蒙')
 
 default playthrough = 0
 default pov = None ##方便起见，这东西是个布尔值，True是钟离视角，False是公子视角，一般理性而言，只有一周目开始前和四周目才会出现None

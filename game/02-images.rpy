@@ -113,15 +113,26 @@ transform slow_show:
 transform cgzoom:
     zoom 0.2
 
+transform ctcmove:
+    subpixel True
+    easeout 0.5 yoffset 5
+    easein 0.5 yoffset 0
+    repeat
+
 
 image ctc:
     xpos 10 ypos 10 alpha 0.0 subpixel True
     "gui/ctc.png"
     block:
-        easeout 0.75 alpha 1.0 yoffset 5
-        easein 0.75 alpha 0.5 yoffset 0
+        ease_bounce 0.75 alpha 1.0 yoffset 10
+        ease_bounce 0.75 alpha 0.5 yoffset 0
         repeat
 
+image genshinctc = Composite((31,39),
+    (31,39), 'gui/ctc1.png',
+    (31,39), At('gui/ctc2.png', ctcmove),
+    (31,39), At('gui/ctc3.png', ctcmove),
+)
 
 image choice_foreground2:
     xpos 15
