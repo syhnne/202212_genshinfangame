@@ -147,13 +147,13 @@ screen map_options():
         xsize 500 ysize 80 xpos 1400 ypos 20
         hbox:
             spacing 20 yalign 0.5
-            textbutton '好感度 : [fav]' action CaptureFocus("options_drop")
+            textbutton '好感度 : [fav]' action CaptureFocus("tips")
             bar value fav range 100 yalign 0.5
-    if GetFocusRect("options_drop"):
-        dismiss action ClearFocus("options_drop")
+    if GetFocusRect("tips"):
+        dismiss action ClearFocus("tips")
         nearrect:
             xoffset -15 yoffset 20
-            focus "options_drop"
+            focus "tips"
             frame:
                 modal True
                 has vbox

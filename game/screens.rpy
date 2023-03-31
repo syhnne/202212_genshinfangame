@@ -922,9 +922,11 @@ screen apref(name, ypos, *args):
     
     button:
         xysize (1328,65)
+        # action CaptureFocus('opt')
         action Show('wtf', None, args, ypos)
         imagebutton:
             action Show('wtf', None, args, ypos)
+            # action CaptureFocus('opt')
             idle 'gui/button/settings_choice_idle.png'
             hover 'gui/button/settings_choice_hover.png'
         text name xalign 0.03 yalign 0.8
@@ -933,6 +935,17 @@ screen apref(name, ypos, *args):
             xpos 980 xysize (347,65)
             transclude
             text '▼' xalign 0.9 size 20
+
+    # if GetFocusRect("opt"):
+    #     dismiss action ClearFocus("opt")
+    #     nearrect:
+    #         focus "opt"
+    #         ysize 1
+    #         frame:
+    #             modal True
+    #             has vbox
+    #             for option in args:
+    #                 textbutton option[0] action [option[1], ClearFocus("opt")]
         
 screen bpref(name, ypos, value):
     fixed:
@@ -957,6 +970,7 @@ screen preferences():
     use game_menu(_("设置"), scroll="viewport"):
 
         vbox:
+            # box_reverse True
             style_prefix 'genshinpref'
             $ y = renpy.focus_coordinates()
             label '显示'
