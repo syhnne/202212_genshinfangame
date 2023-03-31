@@ -15,3 +15,7 @@
 /README.md
 /traceback.txt
 /persistent
+game/saves/persistent
+log.txt
+
+.gitignore

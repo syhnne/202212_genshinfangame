@@ -4,7 +4,6 @@ screen developer_time_set():
     frame:
         xpos 1700 ypos 120
         has vbox
-        textbutton '切换视角' action Show('pov_toggle',dissolve)
         textbutton 'time=90'action Jump('developer_90')
         textbutton 'p03' action SelectedIf(ToggleDict(persistent.lores, 'p03_read'))
         textbutton 'p05' action SelectedIf(ToggleDict(persistent.lores, 'p05_read'))
@@ -374,7 +373,7 @@ screen ctc():
     zorder 100
     hbox:
         xalign 0.5
-        yalign 0.94
+        yalign 0.95
         imagebutton action NullAction() idle 'genshinctc' hover 'genshinctc'
         
         

@@ -119,20 +119,25 @@ transform ctcmove:
     easein 0.5 yoffset 0
     repeat
 
-
-image ctc:
-    xpos 10 ypos 10 alpha 0.0 subpixel True
-    "gui/ctc.png"
-    block:
-        ease_bounce 0.75 alpha 1.0 yoffset 10
-        ease_bounce 0.75 alpha 0.5 yoffset 0
-        repeat
+transform ctcmoveright:
+    subpixel True
+    easeout 0.5 xoffset 5
+    easein 0.5 xoffset 0
+    repeat
 
 image genshinctc = Composite((31,39),
-    (31,39), 'gui/ctc1.png',
-    (31,39), At('gui/ctc2.png', ctcmove),
-    (31,39), At('gui/ctc3.png', ctcmove),
+    (0,0), 'gui/ctc1.png',
+    (0,0), At('gui/ctc2.png', ctcmove),
+    (0,0), At('gui/ctc3.png', ctcmove),
 )
+
+image navibutton_s = Composite((100,49),
+    (0,12),'gui/navi1.png',
+    (0,12), At('gui/navi2.png', ctcmoveright),
+    (0,12), At('gui/navi3.png', ctcmoveright),
+)
+image navibutton_i = Composite((100,49), (0,12),'gui/navi4.png' )
+image navibutton_h = Composite((100,49), (0,12),'gui/navi1.png', (0,11),'gui/navi4.png' )
 
 image choice_foreground2:
     xpos 15

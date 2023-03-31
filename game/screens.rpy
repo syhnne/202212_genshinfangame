@@ -206,6 +206,9 @@ $ textseencolor = False
 screen say(who, what):
     style_prefix "say"
     tag wthit
+    frame:
+        xpos 1800 ypos 30
+        textbutton _("自动") action Preference("auto-forward", "toggle")
 
     window:
         id "window"
@@ -213,14 +216,15 @@ screen say(who, what):
         if who is not None:
 
             window:
+                xalign 0.5 
                 id "namebox"
                 style "namebox"
-                text who id "who"
+                text who id "who" xalign 0.5 
 
         if renpy.is_seen(ever = True) and textseencolor: # ever 为false时对本次运行起效，此处需要对过去所有阅读起效
-            text what id "what" color "#FC9F4D" # 标记颜色
+            text what id "what" xalign 0.5 color "#FC9F4D" # 标记颜色 xalign 
         else:
-            text what id "what" color "#FFFFFF" # 未读颜色
+            text what id "what" xalign 0.5 color "#FFFFFF" # 未读颜色
 
         
 
@@ -271,7 +275,7 @@ style namebox:
 define gui.text_size = 30
 
 ## 角色名称的大小。
-define gui.name_text_size = 40
+define gui.name_text_size = 35
 
 ## 包含对话的文本框的高度。
 define gui.textbox_height = 278
@@ -420,12 +424,9 @@ screen quick_menu():
 
     if quick_menu:
         frame:
-            xpos -30 ypos 800
-            xysize (146,267)
+            ypos 740
             vbox:
-                style_prefix "quick"
-                ypos -15 xpos 10
-                textbutton _("自动") action Preference("auto-forward", "toggle")
+                
                 textbutton _("保存") action ShowMenu('save')
                 textbutton _("读取") action ShowMenu('load') 
                 textbutton _("历史") action ShowMenu('history')
@@ -468,7 +469,7 @@ screen navigation():
     
 
     vbox:
-        style_prefix "navigation"
+        style_prefix "radio"
 
         xpos gui.navigation_xpos
         yalign 0.5
@@ -607,9 +608,9 @@ screen game_menu(title, scroll=None, yinitial=0.0):
     style_prefix "game_menu"
 
     if main_menu:
-        add 'main_menu_background' blur 10
+        add 'main_menu_background' blur 20
     elif in_map:
-        add 'map_bg' blur 10
+        add 'map_bg' blur 20
 
     frame:
         style "game_menu_outer_frame"
@@ -1070,7 +1071,9 @@ style radio_vbox:
 
 style radio_button:
     properties gui.button_properties("radio_button")
-    foreground "gui/button/radio_[prefix_]foreground.png"
+    hover_foreground "navibutton_h"
+    idle_foreground 'navibutton_i'
+    selected_foreground 'navibutton_s'
 
 style radio_button_text:
     properties gui.button_text_properties("radio_button")
@@ -1369,15 +1372,7 @@ screen confirm(message, yes_action, no_action):
         hbox:
             style_prefix 'genshingui'
             align (0.5,0.9)
-            button:
-                xysize (386,79) action no_action
-                imagebutton:
-                    hover 'gui/button/confirm_no_hover.png'
-                    idle 'gui/button/confirm_no_idle.png'
-                    action no_action
-                fixed:
-                    xysize (386,79)
-                    text '取消' color '#ffffff'
+            spacing 20
             button:
                 xysize (386,79) action yes_action
                 imagebutton:
@@ -1387,6 +1382,16 @@ screen confirm(message, yes_action, no_action):
                 fixed:
                     xysize (386,79)
                     text '确定' color '#ffffff'
+            button:
+                xysize (386,79) action no_action
+                imagebutton:
+                    hover 'gui/button/confirm_no_hover.png'
+                    idle 'gui/button/confirm_no_idle.png'
+                    action no_action
+                fixed:
+                    xysize (386,79)
+                    text '取消' color '#ffffff'
+            
                 
 
     ## 右键点击退出并答复“no”（取消）。

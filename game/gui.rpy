@@ -173,20 +173,20 @@ define config.keymap = dict(
 define gui.accent_color = '#ffffff'
 
 ## 当既未选中也未悬停时用于文本按钮的颜色。
-define gui.idle_color = '#8a8a8a'
+define gui.idle_color = '#dbdbdbc4'
 
 ## 小颜色用于小文本，需要更亮/更暗才能达到相同的效果。
-define gui.idle_small_color = '#dddddd'
+define gui.idle_small_color = '#e7e7e7'
 
 ## 用于悬停的按钮和滑条的颜色。
-define gui.hover_color = '#babcc2'
+define gui.hover_color = '#e4e4e4'
 
 ## 用于选中但非焦点的文本按钮的颜色。当一个按钮为当前屏幕或设置选项值时，会处于
 ## 选中状态。
 define gui.selected_color = '#d4dbe0'
 
 ## 用于无法选择的文本按钮的颜色。
-define gui.insensitive_color = '#8888887f'
+define gui.insensitive_color = '#afafaf7f'
 
 ## 用于对话和菜单选择文本的颜色。
 define gui.text_color = '#e0e0e0'
@@ -202,7 +202,7 @@ define gui.text_font = "SourceHanSansSC-Normal.otf"
 define gui.name_text_font = "SourceHanSansSC-Normal.otf"
 
 ## 用于游戏外文本的字体。
-define gui.interface_text_font = "SourceHanSansSC-Normal.otf"
+define gui.interface_text_font = "SourceHanSansSC-Normal.otf" #'genshinimpact.ttf' "SourceHanSansSC-Normal.otf"
 
 ## 游戏用户界面中文本的大小。
 define gui.interface_text_size = 30
@@ -249,7 +249,7 @@ define gui.button_text_xalign = 0.0
 ##
 ## 这些定制由默认界面使用：
 
-define gui.radio_button_borders = Borders(27, 6, 6, 6)
+define gui.radio_button_borders = Borders(39, 6, 6, 6)
 
 define gui.check_button_borders = Borders(27, 6, 6, 6)
 
@@ -287,7 +287,7 @@ define gui.file_slot_rows = 2
 ## 这些变量控制各种用户界面元素的位置和间距。
 
 ## 导航按钮左侧相对于屏幕左侧的位置。
-define gui.navigation_xpos = 60
+define gui.navigation_xpos = 80
 
 ## 快进指示器的垂直位置。
 define gui.skip_ypos = 15
@@ -299,7 +299,7 @@ define gui.notify_ypos = 68
 define gui.choice_spacing = 0
 
 ## 标题菜单和游戏菜单的导航部分中的按钮。
-define gui.navigation_spacing = 6
+define gui.navigation_spacing = 12
 
 ## 控制设置按钮之间的间距。
 define gui.pref_button_spacing = 0
