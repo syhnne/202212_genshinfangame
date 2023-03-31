@@ -408,14 +408,14 @@ label c07:
     $ favp(2,'c07')
     '在玩具摊给家里人买点风车拨浪鼓啥的，那个信里写的，然后考虑一下给钟离买什么礼物'
     '我一开始想的时候这和后续剧情有关，但是后来忘了）可以之后再改，大不了重写一个或者删掉（'
-    $ persistent.p04enter = True
+    $ p04enter = True
     $ map_liyuegang_dict['wjt'][int(pov)].remove([27,28,29])
     return
 
 label c08:
     '本来准备坐船回至冬了，但是旅行者带着托克过来了，只能陪他玩（也就是传说任务'
     '在打完独眼小宝之后就在秘境门口晕过去了（因为按理来说，他完全可以跟托克一起坐船回去，所以只能稍微改一下原传说任务剧情（'
-    if persistent.p05enter:
+    if p05enter:
         $ nightlore = False
         $ tp(1)
         $ favp(3, 'c08saved')
@@ -445,7 +445,7 @@ label c11:
 label c12:
     $ favp(1,'c12')
     '去往生堂找钟离，发现他不在。这是触发后续剧情的一个关键。'
-    $ persistent.p08enter = True
+    $ p08enter = True
     return
 
 label c13:
@@ -460,7 +460,7 @@ label c14:
 label c15:
     python:
         favp(3,'c15')
-        persistent.p10enter = True
+        p10enter = True
         del events_c[72]
         del events_c[73]
         del events_c[74]
@@ -513,7 +513,7 @@ label z06:
         $ favp(3,'z06')
         '发现了晕倒在遗迹门口的公子，把他捡回自己家了'
         python:
-            persistent.p05enter = True
+            p05enter = True
             tp(1)
             nightlore = False
     else:
@@ -547,7 +547,7 @@ label z08:
         '触发':
             python:
                 favp(2,'z08')
-                persistent.p08enter = True
+                p08enter = True
         '不触发':
             pass
     '我得想个办法多扯两句，尽量把传说任务和后面那事扯上关系吧'
@@ -586,7 +586,7 @@ label p00:
 
 label p01:
     $ favp(2,'p01')
-    $ persistent.p01enter=True
+    $ p01enter=True
     scene bg bgyh inside with dissolve
     '钟离来找公子是为了商量和旅行者吃饭的事，但是两人没有多说话。'
     '现在两个人感情不是很深，还在致力于互损，大概。'
@@ -603,7 +603,7 @@ label p02:
     '公子尝试征服筷子；派蒙表示“要不是收了你的摩拉，绝不跟你一起吃饭”；'
     '公子尝试用介绍饭桌上的食物来使派蒙闭嘴，然后因为说错而被钟离打断；然后瞎扯一些有关璃月食物的废话吧。。'
     '之后旅行者为避免付账，拉着派蒙溜了，公子就开始说打架的事'
-    if pov and persistent.p03enter:
+    if pov and p03enter:
         '钟离视角触发了打架剧情会看到这段话，实际上就是公子视角那里去掉选项的版本'
         
     elif pov == False:
@@ -613,12 +613,12 @@ label p02:
                 python:
                     c_p02_choice = True
                     favp(3,'p02')
-                    persistent.p03enter = True
+                    p03enter = True
                     
                 '触发剧情'
                 '其实我没必要设置这个选项，我只是想阻止观众看到真结局，并展示一下我花了一晚上还原的选择界面'
             '……':
-                $ persistent.p03enter = False
+                $ p03enter = False
                 '不触发剧情'
     '（这是一个契约：公子来付饭钱，钟离则要跟他打一架，或者可以把这个契约改成永久性的，作为他俩同行的线索）'
     '另外，为了水时长，我决定让这场饭局持续到晚上（'
@@ -684,7 +684,7 @@ label p04:
     $ favp(2,'p04')
     '公子准备回国了，要去找钟离告别'
     '他对于不能再和钟离打一架这件事表示惋惜，这里可以暗示一些剧情啥的'
-    if persistent.p04enter:
+    if p04enter:
         '送了一些礼物（前面公子视角那里选过玩具摊才会有这个，另外我真不应该改成这个机制，现在我思考哪里该加多少好感度快把我cpu干烧了（）'
         if pov:
             $ favp(4,'p04enter')

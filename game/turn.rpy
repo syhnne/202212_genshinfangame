@@ -138,7 +138,7 @@ screen beginner_guide():
 screen beginner_guide1():
     text '每天有3次机会，可以在地图上选择要去的地点，触发不同的剧情。\n也可以点击左上角，选择不出门。\n有些地点会触发特殊的事件，有些则不会每天都显示。' 
 screen beginner_guide2():
-    text '另外，在游戏中做出的选项不仅会影响当前存档的剧情推进，\n还可能{u}在其他的游戏视角中{/u}触发新的事件……\n请善用存档功能，在不同的游戏视角中尽可能触发更多的事件吧。（可能要改）'
+    text '另外，某些特殊剧情的触发条件较为特殊，\n可能需要{u}在其他的游戏视角中{/u}先完成某些事件，才会触发相应的剧情。\n请善用存档功能，在不同的游戏视角中尽可能触发更多的事件吧。'
 
 
 screen map_options():
@@ -164,9 +164,14 @@ screen days():
     $ tooltip = GetTooltip('map_liyuegang')
     frame:
         xysize (350,80) xpos -34 ypos 20
+        textbutton '切换视角…' yalign 0.5 xpos 44 action Show('pov_toggle',dissolve)
     frame:
         xysize (472,80) xpos 328 ypos 20
         hbox:
+            # if pov:
+            #     style_prefix 'mapui1'
+            # elif pov == False:
+            #     style_prefix 'mapui2'
             yalign 0.5 xpos 20 spacing 25
             $ dddate=date(time)
             $ ccclock=clocktext(time)
@@ -177,6 +182,11 @@ screen days():
                 text tooltip
             else:
                 text '去哪里看看…'
+
+# style mapui1_text:
+#     color '#ddaa55'
+# style mapui2_text:
+#     color '#1188dd'
 
 screen map_liyuegang(spot_has_event=False):
     
@@ -215,16 +225,10 @@ screen map_liyuegang(spot_has_event=False):
 
             if showspot:
                 imagebutton:
-                    if key != 'stay':
-                        at hovered_animation
+                    at hovered_animation
                     xpos value[2] ypos value[3]
-                    if key == 'stay':
-                        idle Text(value[4], xpos=65, ypos=8, color=gui.idle_color)
-                        hover Text(value[4], xpos=65, ypos=8)
-                        xsize 300
-                    else:
-                        idle 'gui/map/spot.png'
-                        hover 'gui/map/spot_hover.png'
+                    idle 'gui/map/spot.png'
+                    hover 'gui/map/spot_hover.png'
                     if spot_has_event == key:
                         foreground 'gui/map/spot_foreground_event.png'
                     else:
@@ -233,7 +237,7 @@ screen map_liyuegang(spot_has_event=False):
                     tooltip value[4]
                     
         $ tooltip = GetTooltip()            
-        if tooltip and tooltip!='不出门…':
+        if tooltip:
             nearrect:
                 focus "tooltip"
                 prefer_top True
@@ -267,12 +271,12 @@ label turn:
         $ add_history(d)
         
 
-        ## 特殊剧情判断
-        if time == 9 and pov and choice_history[-1] != 'p01':
-            $ persistent.p01enter = False
-            $ persistent.p03enter = False
-        elif time == 30 and not pov and not 'c07' in choice_history[-3:]:
-            $ persistent.p04enter = False
+        # ## 特殊剧情判断
+        # if time == 9 and pov and choice_history[-1] != 'p01':
+        #     $ persistent.p01enter = False
+        #     $ persistent.p03enter = False
+        # elif time == 30 and not pov and not 'c07' in choice_history[-3:]:
+        #     $ persistent.p04enter = False
         
         ## 获得列表中特殊事件
         if pov:

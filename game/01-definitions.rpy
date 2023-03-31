@@ -5,18 +5,20 @@
 default persistent.playthrough = 1
 default persistent.lores = {'p03_read':False, 'p05_read':False, 'p08_read':False, 'p10_read':False, }
 default persistent.unlock_gallery = False
-default persistent.p01enter = False
-default persistent.p03enter = False
-default persistent.p04enter = False
-default persistent.p05enter = False
-default persistent.p08enter = False
-default persistent.p10enter = False
+
 default persistent.gamedata = {'load_times':0, 'playthrough1_fav':0, }
 default persistent.seen_beginner_guide = False
 
 
 
 ## 定义角色和变量 ###############################################################
+
+default p01enter = False
+default p03enter = False
+default p04enter = False
+default p05enter = False
+default p08enter = False
+default p10enter = False
 
 default pov_enable_c = True
 default pov_enable_z = True
@@ -149,11 +151,11 @@ init python:
         delete_all_saves()
         persistent.playthrough = 1
         persistent.lores = {'p03_read':False, 'p05_read':False, 'p08_read':False, 'p10_read':False, }
-        persistent.p01enter = False
-        persistent.p03enter = False
-        persistent.p04enter = False
-        persistent.p05enter = False
-        persistent.p08enter = False
+        p01enter = False
+        p03enter = False
+        p04enter = False
+        p05enter = False
+        p08enter = False
         persistent.p10enter = False
         persistent.seen_beginner_guide = False
         renpy.quit(relaunch=True)
