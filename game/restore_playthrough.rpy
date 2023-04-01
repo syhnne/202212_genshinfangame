@@ -71,7 +71,7 @@ init python:
 
         map_liyuegang_dict = {
             'outside':[ True, True,  180,550,'离开璃月港…', ],
-            'stay':[ True, True,   800,200,'不出门…', ],
+            'stay':[ True, True,   250,200,'不出门…', ],
             'wmt':[ True, True,  1565,339,'万民堂', ],
             'mxjxh':[ [False,[15,16,17],[75,76,77],], [False,[15,16,17],24,[75,76,77],],  1478,221,'冒险家协会', ],
             'bgyh':[ False, [False,6,7,8],    1010,441,'北国银行', ],
@@ -82,9 +82,9 @@ init python:
             'lygmt':[ [False,13], [False,13,34],  1175,218,'璃月港码头', ],
             'swbgg':[ [False,'range(7,62)', range(63,90),], True,    1470,360,'「三碗不过港」', ],
             'wst':[ [False,55,56], False,   1202,496,'往生堂', ],
-            'wjt':[ [False,[27,28,29]], False,    1339,366,'「玩具摊」', ],
+            'wjt':[ [False,[21,22,23]], False,    1339,366,'「玩具摊」', ],
             'c_home':[ False, [False,[69,70,71]],  510,470,'???', ],
-            'z_home':[ [False], False,    200,400,'z_home', ],
+            'z_home':[ [False], False,    200,400,'???', ],
         }
 
         official_cheating_mod = {
@@ -97,8 +97,8 @@ init python:
             events_z[13] = [False, 'p03_2', 'renpy.seen_label(\'p03\')']
             events_z[15] = [False, 'z04_2', 'renpy.seen_label(\'p03\')']
             events_z[26] = [False, 'p04_2', 'renpy.seen_label(\'p04\')']
-            events_z[28] = ['lygmt', 'z06_2']
-            events_z[30] = [False, 'p05_2', 'True']
+            events_z[28] = ['lygmt', 'z06_2','renpy.seen_label(\'p05\')']
+            events_z[30] = [False, 'p05_2', 'renpy.seen_label(\'p05\') and choice_history[28]==\'z06_2\'']
             events_z[49] = [False, 'z08_2']
             events_z[51] = [False, 'p08_2', 'renpy.seen_label(\'p08\')']
             events_z[57] = [False, 'p09_2', 'renpy.seen_label(\'p09\')']
@@ -107,4 +107,14 @@ init python:
 
 
         elif p==3:
+            map_liyuegang_dict['wjt'] [ [False,[21,22,23]], False,    1339,366,'「玩具摊」', ]
+
+            events_c[8] = [False, 'p01', 'renpy.seen_label(\'p01\')' ]
             events_c[10] = [False, 'p02', 'renpy.seen_label(\'p02\')' ]
+            events_c[13] = [False, 'p03_3', 'renpy.seen_label(\'p03\')']
+            events_c[21] = ['wjt', 'c07', 'renpy.seen_label(\'c07\')']
+            events_c[22] = ['wjt', 'c07']
+            events_c[23] = ['wjt', 'c07']
+            d=renpy.random.ranint(21,23)
+            events_c[d] = [False, 'c07', 'renpy.seen_label(\'c07\')']
+

@@ -4,6 +4,10 @@
 ##「」
 
 label splashscreen:
+    python:
+        if not persistent.firstrun:
+            ## 在此加入firstrun需要的代码。我总觉得我一定会需要这东西，但是一直没想出在这写点啥。。
+            persistent.firstrun = True
     '这东西占内存竟有100mb，我是不是不应该挨个定义图像？'
     ## 噢噢 renpy给的那个简单的要死的示范游戏也有95mb 那没事了
     return
@@ -266,6 +270,8 @@ label mxjxh:
         $ map_liyuegang_dict['mxjxh'][int(pov)].remove([15,16,17])
         '在冒险家协会看到了旅行者'
         '至今没有人知道旅行者是怎么在一天之内从万里之遥的稻妻回来的。。其实他用了锚点'
+    elif time==24 and pov:
+        '这里好像有剧情？但我忘了我这写的啥了'
     return
 
 
@@ -555,7 +561,8 @@ label z08:
 
 label z08_2:
     scene expression 'bg wst '+str(clock(time)) with dissolve
-    'z08_2'
+    '这里放传说任务，或者随便放一些什么其他的事件，占走下午晚上'
+    $ tp(1)
     return
 
 label z09:
@@ -580,7 +587,7 @@ label z10:
 
 label p00:
     scene bg xyx 2 with dissolve
-    '假如饭局没邀请公子，就会看到这个事件，只有旅行者派蒙和钟离。很短，反正我也写不出来（'
+    '假如饭局没邀请公子，就会看到这个事件，只有旅行者派蒙和钟离，而且很短'
     return
 
 
@@ -661,7 +668,7 @@ label p03:
 
 label p03_2:
     scene bg p03 1 with dissolve
-    $ favp(8,'p03_3')
+    $ favp(8,'p03_2')
     '打架，但是二周目'
     scene bg p03 3
     '实际上跟原来变化不大，只是公子没开魔王武装'
@@ -721,6 +728,7 @@ label p05:
 label p05_2:
     scene bg z with dissolve
     'p05-2'
+    '公子一觉醒来发现自己在一个陌生的地方，吓了一跳，其实这是钟离他家……后略'
     return
 
 label p06:
@@ -759,12 +767,14 @@ label p08:
 label p08_2:
     scene bg p03 1 with dissolve
     $ favp(4,'p08')
+    $ tp(2)
     '二周目，大事件的第一天部分'
     return
 
 label p08_3:
     scene bg p03 1 with dissolve
     $ favp(4,'p08')
+    $ tp(2)
     '三周目的那个事件。公子说他不知怎么地就来到了这个地方。'
     return
 
@@ -786,11 +796,19 @@ label p09:
 label p09_2:
     scene bg p03 1 with dissolve
     $ favp(5,'p09')
+    $ tp(2)
     '二周目，大事件的第二天部分'
     '我非得写一个冒险家小孩是因为我想在二周目做这样一个效果：'
     '在最后给那个孩子送行的时候，伴随着一些花屏特效，那个孩子忽然变成了阿贾克斯的模样'
     '然后游戏弹出一个假的报错界面，点击底下的‘忽略’之后，一切又忽然恢复正常了'
     '噢 我改主意了 报错界面这种东西要用就用真的，只要事先说明我是故意的而不是不小心的就行了'
+    return
+
+label p09_3:
+    scene bg p03 1 with dissolve
+    $ favp(5,'p09')
+    $ tp(2)
+    '3周目，大事件的第二天部分'
     return
 
 label p10:
@@ -837,6 +855,7 @@ label p12_2:
     scene bg p03 1 with dissolve
     $ favp(3,'p12')
     '海灯节之前的一些个准备工作。但是二周目'
+    $ tp(1)
     return
 
 label p13:

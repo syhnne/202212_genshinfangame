@@ -9,19 +9,12 @@ init offset = -2
 init python:
     gui.init(1920, 1080)
     _autosave = False
+    
 
 
 ################################################################################
 ## GUI配置变量
 ################################################################################
-
-# init python:
-#     playthrough = 9
-#     def playthrough_mismatch():
-#         global playthrough
-#         if playthrough != 9 and playthrough != persistent.playthrough:
-#             renpy.error('Playthrough mismatch.')
-
 
 define config.save_directory = "game\saves"
 define config.developer = True ## 摇人来测试游戏的时候改成true，测试完成后改回auto或者注释掉这个语句
@@ -33,25 +26,24 @@ define config.has_autosave = False
 define config.mouse = {}
 define config.window_show_transition = { "screens" : Dissolve(.1) }
 define config.window_hide_transition = { "screens" : Dissolve(.1) }
-# define config.mode_callbacks = []
 define config.after_load_transition = fade
 define config.end_splash_transition = fade
 define config.enter_replay_transition = fade
 define config.enter_transition = fade
 define config.menu_include_disabled = True
-# define config.periodic_callback = playthrough_mismatch()
-# define config.minimum_presplash_time = 2.0
 # define config.replay_scope = { "_game_menu_screen" : "preferences" }
 define dissolve = Dissolve(0.3)
 # define config.missing_image_callback = None 若非None，当加载图片失败时会调用这个函数。函数可能返回None，也可能返回一个图像操作器(manipulator)。如果返回的是图像操作器，可以使用图像操作器代替丢失的图片。创作者可能需要同时配置 config.loadable_callback 的值，特别是使用 DynamicImage() 对象的情况。
 # define config.mouse['default']=[('gui/mouse/default.png',0,0)]
 define config.keymap = dict(
     # 除非明确禁用，各处都能使用的绑定快捷键。
-    rollback = [ 'K_PAGEUP', 'repeat_K_PAGEUP', 'K_AC_BACK', 'mousedown_4' ],
+    # 'mousedown_4'：鼠标滚轮上
+
+    rollback = [ 'K_PAGEUP', 'repeat_K_PAGEUP', 'K_AC_BACK'],
     screenshot = [ ],
     toggle_afm = [ ],
     toggle_fullscreen = [ 'f', 'alt_K_RETURN', 'alt_K_KP_ENTER', 'K_F11', 'noshift_K_f' ],
-    game_menu = [ 'K_ESCAPE', 'K_MENU', 'K_PAUSE'],
+    game_menu = [],
     hide_windows = [ 'mouseup_2', 'h', 'noshift_K_h' ],
     launch_editor = [ 'E', 'shift_K_e' ],
     dump_styles = [ ],
@@ -123,7 +115,7 @@ define config.keymap = dict(
     # 这些按键控制跳过。
     skip = [ 'K_LCTRL', 'K_RCTRL' ],
     stop_skipping = [ ],
-    toggle_skip = [ 'K_TAB' ],
+    toggle_skip = [  ],
     fast_skip = [ '>', 'shift_K_PERIOD' ],
 
     # Bar。
@@ -165,6 +157,7 @@ define config.keymap = dict(
 
 
 
+
 ## 颜色 ##########################################################################
 ##
 ## 界面中文本的颜色。
@@ -181,6 +174,8 @@ define gui.idle_small_color = '#e7e7e7'
 ## 用于悬停的按钮和滑条的颜色。
 define gui.hover_color = '#e4e4e4'
 
+define gui.read_color = gui.preference("read_color", '#ffffff')
+
 ## 用于选中但非焦点的文本按钮的颜色。当一个按钮为当前屏幕或设置选项值时，会处于
 ## 选中状态。
 define gui.selected_color = '#d4dbe0'
@@ -192,26 +187,86 @@ define gui.insensitive_color = '#afafaf7f'
 define gui.text_color = '#e0e0e0'
 define gui.interface_text_color = '#e0e0e0'
 
+define gui.low_performance_mode = gui.preference("low_performance_mode", False)
 
-## 字体和字体大小 #####################################################################
+default gui.povcolor = gui.preference('povcolor', '#ffffff')
+
+## 普通对话文本的大小。
+define gui.text_size = gui.preference("interface_text_size", 30)
+
+## 角色名称的大小。
+define gui.name_text_size = 35
 
 ## 用于游戏内文本的字体。
-define gui.text_font = "SourceHanSansSC-Normal.otf"
+define gui.text_font = gui.preference("text_font", "SourceHanSansSC-Normal.otf")
 
 ## 用于角色名称的字体。
-define gui.name_text_font = "SourceHanSansSC-Normal.otf"
+define gui.name_text_font = gui.preference("text_font", "SourceHanSansSC-Normal.otf")
 
 ## 用于游戏外文本的字体。
-define gui.interface_text_font = "SourceHanSansSC-Normal.otf" #'genshinimpact.ttf' "SourceHanSansSC-Normal.otf"
+define gui.interface_text_font = gui.preference("text_font", "SourceHanSansSC-Normal.otf") #'genshinimpact.ttf' "SourceHanSansSC-Normal.otf"
+# gui.SetPreference("text_font", 'genshinimpact.ttf')
 
 ## 游戏用户界面中文本的大小。
-define gui.interface_text_size = 30
+define gui.interface_text_size = gui.preference("interface_text_size", 30)
 
 ## 游戏用户界面中标签的大小。
 define gui.label_text_size = 36
 
 ## 游戏标题的大小。
 define gui.title_text_size = 60
+
+## 通知屏幕上文本的大小。
+define gui.notify_text_size = 20
+
+define gui.quick_button_text_size = 21
+
+define gui.quick_button_text_idle_color = gui.idle_small_color
+define gui.quick_button_text_selected_color = gui.accent_color
+
+
+
+
+
+## 包含对话的文本框的高度。
+define gui.textbox_height = 278
+
+## 文本框在屏幕上的垂直位置。0.0 是顶部，0.5 是正中，1.0 是底部。
+define gui.textbox_yalign = 1.0
+
+## 叙述角色名称相对文本框的位置。可以是从左侧或顶部起的整数像素，或设为“0.5”来放
+## 置到正中。
+define gui.name_xpos = 0.5
+define gui.name_ypos = 15
+
+## 角色名称的水平对齐方式。0.0 为左侧对齐，0.5 为居中显示，而 1.0 为右侧对齐。
+define gui.name_xalign = 0.5
+
+## 包含角色名称的框的宽度，高度和边界尺寸，或设为“None”以自动调整其大小。
+define gui.namebox_width = 450
+define gui.namebox_height = 54
+
+## 包含角色名称的框的边界尺寸，以左、上、右、下顺序排列。
+define gui.namebox_borders = Borders(0, 0, 0, 0)
+
+## 若为True，则名称框的背景将被平铺；若为False，则将缩放名称框的背景。
+define gui.namebox_tile = True
+
+## 对话框相对于文本框的位置。可以是相对于文本框从左侧或顶部起的整数像素，或设
+## 为“0.5”来放置到正中。
+define gui.dialogue_xpos = 0.5
+define gui.dialogue_ypos = 75
+
+## 对话文本的最大宽度（以像素为单位）。
+define gui.dialogue_width = 1300
+
+## 对话文本的水平对齐方式。0.0 为左侧对齐，0.5 为居中显示，而 1.0 为右侧对齐。
+define gui.dialogue_text_xalign = 0.5
+
+
+
+## 用于标题菜单和游戏菜单的图像。
+define gui.main_menu_background = "gui/main_menu.png"
 
 ## 按钮 ##########################################################################
 ##
@@ -253,9 +308,30 @@ define gui.radio_button_borders = Borders(39, 6, 6, 6)
 
 define gui.check_button_borders = Borders(27, 6, 6, 6)
 
+define gui.auto_button_borders = Borders(60, 6, 6, 6)
+
 define gui.confirm_button_text_xalign = 0.5
 
 define gui.page_button_borders = Borders(15, 6, 15, 6)
+
+
+## Ren'Py 将保留的对话历史块数。
+define config.history_length = gui.preference("history_length", 250)
+
+## 历史屏幕条目的高度，或设置为“None”以使高度变量自适应。
+define gui.history_height = None
+
+## 所指定叙述角色的标签的坐标、宽度和对齐方式。
+define gui.history_name_xpos = 233
+define gui.history_name_ypos = 0
+define gui.history_name_width = 233
+define gui.history_name_xalign = 1.0
+
+## 对话文本的坐标、宽度和对齐方式。
+define gui.history_text_xpos = 255
+define gui.history_text_ypos = 3
+define gui.history_text_width = 1110
+define gui.history_text_xalign = 0.0
 
 
 ## 存档按钮 ########################################################################
@@ -290,10 +366,10 @@ define gui.file_slot_rows = 2
 define gui.navigation_xpos = 80
 
 ## 快进指示器的垂直位置。
-define gui.skip_ypos = 15
+define gui.skip_ypos = 120
 
 ## 通知界面的垂直位置。
-define gui.notify_ypos = 68
+define gui.notify_ypos = 120
 
 ## 菜单选项之间的间距。
 define gui.choice_spacing = 0

@@ -41,7 +41,6 @@ init 2 python:
 
 
 
-
 init python:
 
     def shake_function(trans, st, at):
@@ -106,6 +105,10 @@ transform hovered_animation:
     on idle:
         easein 0.3 yoffset 0
 
+transform buttont:
+    on hover:
+        linear 0.5 alpha 1
+
 transform slow_show:
     alpha 0.0
     linear 20 alpha 0.6
@@ -125,6 +128,10 @@ transform ctcmoveright:
     easein 0.5 xoffset 0
     repeat
 
+transform ctc_appear:
+    alpha 0.0
+    linear 0.75 alpha 1.0
+
 image genshinctc = Composite((31,39),
     (0,0), 'gui/ctc1.png',
     (0,0), At('gui/ctc2.png', ctcmove),
@@ -138,6 +145,53 @@ image navibutton_s = Composite((100,49),
 )
 image navibutton_i = Composite((100,49), (0,12),'gui/navi4.png' )
 image navibutton_h = Composite((100,49), (0,12),'gui/navi1.png', (0,11),'gui/navi4.png' )
+    
+
+image autobutton1:
+    animation
+    subpixel True rotate_pad True
+    around (25,25)
+    xoffset -10 yoffset -10
+    'gui/button/autoforwardbutton_s.png'
+    block:
+        linear 1.0 rotate 360
+        pause 0 alpha 0
+        linear 1.0 rotate 0
+        pause 0 alpha 1
+        repeat
+
+image autobutton2:
+    animation
+    subpixel True rotate_pad True
+    around (25,25)
+    xoffset -10 yoffset -10
+    'gui/button/autoforwardbutton_s.png'
+    alpha 0
+    linear 1.0 rotate 0
+    block:
+        alpha 1
+        linear 1.0 rotate 360
+        pause 0 alpha 0
+        linear 1.0 rotate 0
+        pause 0 alpha 1
+        repeat
+
+image autobutton_i = Composite((100,54), 
+    (0,5),'gui/button/autoforwardbutton_i.png',
+)
+image autobutton_h = Composite((100,54), 
+    (0,5),'gui/button/autoforwardbutton_h.png',
+)
+image autobutton_si = Composite((100,54), 
+    (0,5),'gui/button/autoforwardbutton_si.png',
+    (0,5),'autobutton1',
+    (0,5),'autobutton2',
+)
+image autobutton_sh = Composite((100,54), 
+    (0,5),'gui/button/autoforwardbutton_sh.png',
+    (0,5),'autobutton1',
+    (0,5),'autobutton2',
+)
 
 image choice_foreground2:
     xpos 15
@@ -178,3 +232,79 @@ image map_bg = Composite(
     (0, 0), 'gui/map/foreground.png'
     )
 
+image main_menu_bg_blur:
+    'main_menu_background'
+    blur 20
+
+image map_bg_blur:
+    'map_bg'
+    blur 20
+    
+image icon_z = ConditionSwitch(
+    'map_random_picture==1', 'gui/map/icon/z1.png',
+    'map_random_picture==2', 'gui/map/icon/z2.png',
+    'map_random_picture==3', 'gui/map/icon/z3.png',
+    'map_random_picture==4', 'gui/map/icon/z4.png',
+    'map_random_picture==5', 'gui/map/icon/z6.png',
+    'True', 'gui/map/icon/z7.png',
+)
+image icon_c = ConditionSwitch(
+    'map_random_picture==1', 'gui/map/icon/c1.png',
+    'map_random_picture==2', 'gui/map/icon/c2.png',
+    'map_random_picture==3', 'gui/map/icon/c3.png',
+    'map_random_picture==4', 'gui/map/icon/c4.png',
+    'map_random_picture==5', 'gui/map/icon/c5.png',
+    'True', 'gui/map/icon/c6.png',
+)
+image mapicon = ConditionSwitch(
+    'pov', 'icon_z',
+    'pov==False', 'icon_c',
+    'pov==None', Null()
+)
+image maptogglebutton_i = Composite((150,150),
+    (0,0), 'gui/map/chrtoggle_bg_i.png',
+    (0,0), 'mapicon',
+    (0,0), 'gui/map/chrtoggle_fg_i.png',
+)
+image maptogglebutton_h = Composite((150,150),
+    (0,0), 'gui/map/chrtoggle_bg_h.png',
+    (0,0), 'mapicon',
+    (0,0), 'gui/map/chrtoggle_fg_h.png',
+)
+
+image maptooltip2:
+    'gui/map/maptooltip.png'
+    alpha 0.75
+
+image save_button_i = Composite((76,76),
+    (0,0),'gui/button/quickbutton_i.png',
+    (0,0),'gui/button/save.png',
+)
+image save_button_h = Composite((76,76),
+    (0,0),'gui/button/quickbutton_h.png',
+    (0,0),'gui/button/save.png',
+)
+image load_button_i = Composite((76,76),
+    (0,0),'gui/button/quickbutton_i.png',
+    (0,0),'gui/button/load.png',
+)
+image load_button_h = Composite((76,76),
+    (0,0),'gui/button/quickbutton_h.png',
+    (0,0),'gui/button/load.png',
+)
+image settings_button_i = Composite((76,76),
+    (0,0),'gui/button/quickbutton_i.png',
+    (0,0),'gui/button/settings.png',
+)
+image settings_button_h = Composite((76,76),
+    (0,0),'gui/button/quickbutton_h.png',
+    (0,0),'gui/button/settings.png',
+)
+image back_button_i = Composite((76,76),
+    (0,0),'gui/button/quickbutton_i.png',
+    (0,0),'gui/button/back.png',
+)
+image back_button_h = Composite((76,76),
+    (0,0),'gui/button/quickbutton_h.png',
+    (0,0),'gui/button/back.png',
+)

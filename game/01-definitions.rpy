@@ -9,9 +9,13 @@ default persistent.unlock_gallery = False
 default persistent.gamedata = {'load_times':0, 'playthrough1_fav':0, }
 default persistent.seen_beginner_guide = False
 
+default persistent.firstrun = False
+
 
 
 ## 定义角色和变量 ###############################################################
+
+define wanmintangmenu = ['香嫩椒椒鸡','凉拌薄荷','来来菜','扣三丝','四方和平','兽肉薄荷卷','龙须面','米窝窝']
 
 default p01enter = False
 default p03enter = False
@@ -19,35 +23,33 @@ default p04enter = False
 default p05enter = False
 default p08enter = False
 default p10enter = False
+default wmt63_read = False
+default c_p02_choice = False
 
 default pov_enable_c = True
 default pov_enable_z = True
 default z_name = '钟离'
 default c_name = '达达利亚'
-default npc1_name = '叶卡捷琳娜'
-default npc2_name = '???'
-default npc3_name = '??'
-define test = Character('test')
+default c_addon = 0
+default z_addon = 0
 define z = Character('z_name', image ='zhongli', dynamic=True) ## 搞立绘的时候加个callback，那个角色回调函数，作出说话人高亮的效果
 define c = Character('c_name', image ='childe', dynamic=True)
 define t = Character('旅行者')
 define p = Character('派蒙')
 
 default playthrough = 0
-default pov = None ##方便起见，这东西是个布尔值，True是钟离视角，False是公子视角，一般理性而言，只有一周目开始前和四周目才会出现None
-default time = 0 ## 由于时间那个dict不能用list作为value，只好把它做成一个整数，需要判断日期或者时间（指的是上午，下午，晚上那个时间），要用一个函数
-default fav = 0 ## 这是好感度……这不是好感度，大概
+default pov = None ##一般理性而言，只有一周目开始前和四周目才会出现None
+default time = 0
+default fav = 0
 default fav_history = []
-default wmt63_read = False
-default nightlore = True ## 某些特殊剧情里面，晚上最好不要显示一天结束了睡个好觉那种画面，就把这个关掉。
-default in_map = False
 default choice_history = []
-default c_addon = 0
-default z_addon = 0
+default nightlore = True
+default in_map = False
+
+default map_random_picture = 1
+default menuscrsdata = None
 default playthrough_mismatch = False
 
-default c_p02_choice = False
-define wanmintangmenu = ['香嫩椒椒鸡','凉拌薄荷','来来菜','扣三丝','四方和平','兽肉薄荷卷','龙须面','米窝窝'] ## 鱼应该不算在钟离讨厌的那种海鲜范围内吧…算了，保险起见，天知道奥赛尔扔没扔过鱼（
 
 
 
@@ -128,20 +130,8 @@ init python:
         persistent.seen_beginner_guide = False
         renpy.quit(relaunch=True)
 
-    def events_unlocked():
-        events_n = 0
-        for key,value in persistent.lores.items():
-            if value:
-                events_n += 1
-        if events_n == 0:
-            return 0
-        elif events_n < len(persistent.lores):
-            return 1
-        else:
-            return 2
-
-    ## 增加对话历史，虽然有现成的函数但是我要做一个稍微简单一点的
-    def add_history(what='', who=None, kind='adv'):
+    ## 增加对话历史，修改who保证界面上出现灰色字体
+    def add_history(what='', who='__add', kind='adv'):
         narrator.add_history(kind, who, what)
 
     ## 好感度增加，不要直接加在变量上
@@ -191,19 +181,23 @@ init python:
     ## 文件保存action
     def FileActionMod(name, page=None, **kwargs):
         if persistent.playthrough == 5 and renpy.current_screen().screen_name[0] == "load":
-            return Confirm('您未开启新游戏，无法打开存档。\n是否将整个游戏回调至存档时状态？\n（不好意思，这里还没写，我只写了从头开始（汗）', NullAction())
+            return Confirm('您未开启新游戏，无法打开存档。\n是否将整个游戏回调至存档时状态？\n（不好意思，这里还没写，这得等游戏剧本整完（', NullAction())
         elif persistent.playthrough != FileJson(name,'p') and renpy.current_screen().screen_name[0] == "load" and FileLoadable(name):
             return Confirm('存档无法打开。', NullAction() )
         else:
             return FileAction(name)
 
-    ## 修改截图（笑
+    ## 修改截图
     def FileScreenshotMod(name, empty=None, page=None):
         if persistent.playthrough != FileJson(name,'p') and persistent.playthrough != 5 and FileLoadable(name):
             return 'gui/button/slot_disabled.png'
         else:
             return FileScreenshot(name)
 
+    # 打开菜单时存储一个二进制图片，用作模糊背景。renpy你就不能做一个不是二进制的函数吗？害得我每次打开菜单都要加载0.5秒，最后不得不写了个低功耗模式，我宣布这是整个工程中最粪的代码
+    def menuscrs():
+        global menuscrsdata
+        menuscrsdata = renpy.screenshot_to_bytes((1920, 1080))
     
 
     

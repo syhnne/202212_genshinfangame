@@ -5,15 +5,8 @@ screen developer_time_set():
         xpos 1700 ypos 120
         has vbox
         textbutton 'time=90'action Jump('developer_90')
-        textbutton 'p03' action SelectedIf(ToggleDict(persistent.lores, 'p03_read'))
-        textbutton 'p05' action SelectedIf(ToggleDict(persistent.lores, 'p05_read'))
-        textbutton 'p08' action SelectedIf(ToggleDict(persistent.lores, 'p08_read'))
-        textbutton 'p10' action SelectedIf(ToggleDict(persistent.lores, 'p10_read'))
         textbutton '好感+100' action Function(favp, 100, 'magic')
-        # textbutton 'z09' action SelectedIf(ToggleDict(persistent.lores, 'z09_read'))
         textbutton 'night' action SelectedIf(ToggleVariable('nightlore'))
-
-
 
 label developer_90:
     python:
@@ -26,13 +19,9 @@ label developer_90:
 screen developer_time():
     zorder 101
     frame:
-        xpos -30 ypos 120
-        hbox:
-            spacing 30
-            $ x=len(choice_history)
-            text '       len ch:[x]'
-            text 'time:[time]'
-            text '好感度:[fav]'
+        xalign 0.9
+        has hbox
+        text 't:[time] f:[fav]'
 
 init python:
     if config.developer:
@@ -48,17 +37,14 @@ init python:
 
 
 
-
-## 部分主控流程需要用到的东西，我懒得整理了 ######################################
-
-
 screen pov_toggle(stage=True):
     ## stage表示是否在地图中打开此界面
-    tag quick_menu ## 别在这种时候显示quick menu啊，我是不打算让观众在这会儿保存的
+    tag quick_menu
     modal True
     if stage:
         roll_forward True
-    zorder 100
+        key 'K_TAB' action ToggleScreen('pov_toggle',dissolve)
+    zorder 100  
     window:
         align (0,0)
         if persistent.playthrough == 4:
@@ -73,7 +59,7 @@ screen pov_toggle(stage=True):
             selected_idle 'pov_toggle_c_si'
             selected_hover 'pov_toggle_c_sh'
             insensitive 'gui/pov_toggle/bg_insensitive_c.png'
-            action SetVariable('pov',False)
+            action [SetVariable('pov',False)]
             selected pov == False
             sensitive pov_enable_c
             focus_mask True
@@ -83,7 +69,7 @@ screen pov_toggle(stage=True):
             selected_idle 'pov_toggle_z_si'
             selected_hover 'pov_toggle_z_sh'
             insensitive 'gui/pov_toggle/z_insensitive.png'
-            action SetVariable('pov',True)
+            action [SetVariable('pov',True)]
             selected pov
             sensitive pov_enable_z
             focus_mask True
@@ -93,26 +79,29 @@ screen pov_toggle(stage=True):
                 hover 'pov_toggle_c_h'
                 selected_idle 'pov_toggle_c_si'
                 selected_hover 'pov_toggle_c_sh'
-                action SetVariable('pov',False)
+                action [SetVariable('pov',False)]
                 selected pov == False
                 sensitive pov_enable_c
                 focus_mask True
-    vbox:
-        xalign 0.5 ypos 30
-        if persistent.playthrough == 4:
-            $ x = glitchtext(15)
+    if persistent.playthrough == 4:
+        $ x = glitchtext(15)
+        vbox:
+            xalign 0.5 ypos 30
             text x+'…'
-        elif not stage:
+            textbutton '确定' action Return() xalign 0.5
+    elif not stage:
+        vbox:
+            xalign 0.5 ypos 30
             text '请选择游戏视角…'
-        textbutton '确认':
-            xalign 0.5
-            if stage:
-                action ToggleScreen('pov_toggle',dissolve)
-            elif persistent.playthrough==4:
-                action Return()
-            else:
-                action Return()
-                sensitive pov!=None
+            textbutton '确定' action Return() sensitive pov!=None xalign 0.5
+    else:
+        imagebutton:
+            xpos 30 ypos 30
+            idle 'back_button_i'
+            hover 'back_button_h'
+            action ToggleScreen('pov_toggle',dissolve)
+            
+                
                 
 screen beginner_guide():
     zorder 110
@@ -161,26 +150,60 @@ screen map_options():
 screen days():
     zorder 50
     $ tooltip = GetTooltip('map_liyuegang')
-    frame:
-        xysize (350,80) xpos -34 ypos 20
-        textbutton '切换视角…' yalign 0.5 xpos 44 action Show('pov_toggle',dissolve)
-    frame:
-        xysize (472,80) xpos 328 ypos 20
+    $ dddate=date(time)
+    $ ccclock=clocktext(time)
+
+    key 'K_TAB' action Show('pov_toggle',dissolve)
+    button:
+        xpos 20 ypos 20 xysize (400,84)
+        style_prefix 'genshingui'
+        idle_background 'gui/map/clock_i.png'
+        hover_background 'gui/map/clock_h.png'
+        action NullAction()
         hbox:
-            # if pov:
-            #     style_prefix 'mapui1'
-            # elif pov == False:
-            #     style_prefix 'mapui2'
-            yalign 0.5 xpos 20 spacing 25
-            $ dddate=date(time)
-            $ ccclock=clocktext(time)
-            text '第[dddate]天'
-            text '[ccclock]'
-            null xsize 60
-            if tooltip:
-                text tooltip
-            else:
-                text '去哪里看看…'
+            xpos 120 ypos 18 xsize 240
+            text '第[dddate]天     [ccclock]' xalign 0.5
+        
+    imagebutton:
+        ypos 30 xalign 0.5
+        hover 'gui/map/maptooltip.png'
+        idle 'maptooltip2'
+        action NullAction()
+    hbox:
+        ypos 36 xalign 0.5
+        if tooltip:
+            text tooltip size gui.text_size-2
+        else:
+            text '去哪里看看…' size gui.text_size-2
+
+    imagebutton:
+        xpos 20 ypos 120
+        idle 'maptogglebutton_i'
+        hover 'maptogglebutton_h'
+        action Show('pov_toggle',dissolve)
+        tooltip '切换视角…(Tab)'
+    
+
+    # frame:
+    #     xysize (350,80) xpos -34 ypos 20
+    #     textbutton '切换视角…' yalign 0.5 xpos 44 action Show('pov_toggle',dissolve)
+    # frame:
+    #     xysize (472,80) xpos 328 ypos 20
+    #     hbox:
+    #         # if pov:
+    #         #     style_prefix 'mapui1'
+    #         # elif pov == False:
+    #         #     style_prefix 'mapui2'
+    #         yalign 0.5 xpos 20 spacing 25
+    #         $ dddate=date(time)
+    #         $ ccclock=clocktext(time)
+    #         text '第[dddate]天'
+    #         text '[ccclock]'
+    #         null xsize 60
+    #         if tooltip:
+    #             text tooltip
+    #         else:
+    #             text '去哪里看看…'
 
 # style mapui1_text:
 #     color '#ddaa55'
@@ -190,6 +213,11 @@ screen days():
 screen map_liyuegang(spot_has_event=False):
     
     zorder 0    
+    
+    key "mousedown_4" action ShowMenu('history')
+    key 'K_ESCAPE' action ShowMenu('save')
+    key 's' action ShowMenu('save')
+
     window:
         ypos 277 xpos 960
         background 'map_bg'
@@ -236,7 +264,7 @@ screen map_liyuegang(spot_has_event=False):
                     tooltip value[4]
                     
         $ tooltip = GetTooltip()            
-        if tooltip:
+        if tooltip and tooltip in ['离开璃月港…','不出门…','万民堂','冒险家协会','北国银行','万文集舍','琉璃亭','新月轩','玉京台','璃月港码头','「三碗不过港」','往生堂','「玩具摊」','???']:
             nearrect:
                 focus "tooltip"
                 prefer_top True
@@ -265,9 +293,9 @@ label turn:
         
     while time <= 90:
         
+        $ menuscrsdata = None
         $ rand=renpy.random.randint(1,6)
-        $ d = '（第'+str(date(time))+'天  '+clocktext(time)+'）'
-        $ add_history(d)
+        $ historyadd = '（第'+str(date(time))+'天  '+clocktext(time)
         
 
         # ## 特殊剧情判断
@@ -304,6 +332,7 @@ label turn:
         ## 特殊事件+不允许打开地图
         if event and type(event[0])==type(True) and event[0] == False:
             $ choice_history.append(event_label_name)
+            $ add_history(historyadd+'）')
             call expression event_label_name from _call_expression
             $ time = time + 1 
             
@@ -311,6 +340,9 @@ label turn:
         ## 允许打开地图
         else:
             
+            # 给地图上的小人头像摇个随机数
+            $ map_random_picture = renpy.random.randint(1,6)
+
             ## 新手教程
             if persistent.seen_beginner_guide == False:
                 show screen beginner_guide
@@ -328,7 +360,7 @@ label turn:
 
                 ## 加入历史记录
                 $ choice=map_liyuegang_dict.get(_return)
-                $ narrator.add_history('adv', '', choice[4])
+                $ add_history(historyadd+'，'+choice[4]+'）')
 
                 ## 特殊事件，与选项无关
                 if event and type(event[0])==type(True):
@@ -372,8 +404,8 @@ label turn:
 screen ctc():
     zorder 100
     hbox:
-        xalign 0.5
-        yalign 0.95
+        at ctc_appear
+        xalign 0.5 yalign 0.96
         imagebutton action NullAction() idle 'genshinctc' hover 'genshinctc'
         
         
@@ -423,11 +455,8 @@ label start:
             call start_z from _call_start_z_2
         else:
             call start_c from _call_start_c
-    
 
     scene black with dissolve
-    
-    # jump expression 'turn' + str(persistent.playthrough)
     jump turn
     return
 

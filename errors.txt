@@ -2,9 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/turn.rpy", line 183: end of line expected.
-    if pov:
-    ^
+File "game/turn.rpy", line 168: 'yops' is not a keyword argument or valid child for the imagebutton statement.
+    yops 20 xalign 0.5
+        ^
 
 Ren'Py Version: Ren'Py 8.0.3.22090809
-Sun Mar 19 19:35:53 2023
+Sat Apr  1 22:54:15 2023
