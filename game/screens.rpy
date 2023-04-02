@@ -225,15 +225,10 @@ screen say(who, what):
         else:
             text what id "what" color "#FFFFFF"
 
-        
-    if not gui.preference("low_performance_mode"):
-        key "mousedown_4" action [Function(menuscrs), ShowMenu('history')]
-        key 'K_ESCAPE' action [Function(menuscrs), ShowMenu('save')]
-        key 's' action [Function(menuscrs), ShowMenu('save')]
-    else:
-        key "mousedown_4" action ShowMenu('history')
-        key 'K_ESCAPE' action ShowMenu('save')
-        key 's' action ShowMenu('save')
+
+    key "mousedown_4" action If( gui.preference("low_performance_mode"), ShowMenu('history'), MenuHideInterface('history') )
+    key 'K_ESCAPE' action If( gui.preference("low_performance_mode"), ShowMenu('save'), MenuHideInterface('save') )
+    key 's' action If( gui.preference("low_performance_mode"), ShowMenu('save'), MenuHideInterface('save') )
 
 
     ## 如果有对话框头像，会将其显示在文本之上。请不要在手机界面下显示这个，因为没有空间。
@@ -386,14 +381,9 @@ screen quick_menu():
     if quick_menu:
         vbox:
             xpos 30 ypos 830
-            if not gui.preference("low_performance_mode"):
-                imagebutton idle 'save_button_i' hover 'save_button_h'  action [Function(menuscrs), ShowMenu('save'),] tooltip '保存'
-                imagebutton idle 'load_button_i' hover 'load_button_h'  action [Function(menuscrs), ShowMenu('load')] tooltip '读取'
-                imagebutton idle 'settings_button_i' hover 'settings_button_h'  action [Function(menuscrs), ShowMenu('preferences')] tooltip '设置'
-            else:
-                imagebutton idle 'save_button_i' hover 'save_button_h'  action ShowMenu('save') tooltip '保存'
-                imagebutton idle 'load_button_i' hover 'load_button_h'  action ShowMenu('load') tooltip '读取'
-                imagebutton idle 'settings_button_i' hover 'settings_button_h'  action ShowMenu('preferences') tooltip '设置'
+            imagebutton idle 'save_button_i' hover 'save_button_h'  tooltip '保存' action If( gui.preference("low_performance_mode"), ShowMenu('save'), MenuHideInterface('save') )
+            imagebutton idle 'load_button_i' hover 'load_button_h'  tooltip '读取' action If( gui.preference("low_performance_mode"), ShowMenu('load'), MenuHideInterface('load') )
+            imagebutton idle 'settings_button_i' hover 'settings_button_h'  tooltip '设置' action If( gui.preference("low_performance_mode"), ShowMenu('preferences'), MenuHideInterface('preferences') )
             # textbutton _("快进") action Skip() alternate Skip(fast=True, confirm=True)
     $ tooltip = GetTooltip()
     if tooltip and tooltip in ['保存','读取','设置']:
@@ -583,7 +573,9 @@ screen game_menu(title, scroll=None, yinitial=0.0):
         elif in_map:
             add 'map_bg' blur 10
         elif menuscrsdata:
-            add im.Blur(im.Data(menuscrsdata, "screenshot.png"), 10)
+            $ s = im.Data(menuscrsdata, "screenshot.png")
+            add Transform(s, zoom=6, blur=10)
+            # 
         frame:
             style "game_menu_outer_frame"
 

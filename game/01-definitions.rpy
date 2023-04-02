@@ -126,7 +126,6 @@ init python:
         p04enter = False
         p05enter = False
         p08enter = False
-        persistent.p10enter = False
         persistent.seen_beginner_guide = False
         renpy.quit(relaunch=True)
 
@@ -197,11 +196,27 @@ init python:
     # 打开菜单时存储一个二进制图片，用作模糊背景。renpy你就不能做一个不是二进制的函数吗？害得我每次打开菜单都要加载0.5秒，最后不得不写了个低功耗模式，我宣布这是整个工程中最粪的代码
     def menuscrs():
         global menuscrsdata
-        menuscrsdata = renpy.screenshot_to_bytes((1920, 1080))
-    
+        menuscrsdata = renpy.screenshot_to_bytes((320,180))
 
-    
+    ## 为了方便起见，重做了一个action列表，依次隐藏用户界面0.1秒，截屏，显示菜单
+    def MenuHideInterface(menu):
+        if type(menu) != type(''):
+            renpy.error('打引号')
+        return [HideInterfaceMod(), Function(menuscrs), ShowMenu(menu),]
 
+    ## 重写的一个方法，我试过直接运行下面那个函数，好像不行，估计renpy在里面加了些什么东西
+    class HideInterfaceMod(Action, DictEquality):
+        def __call__(self):
+            renpy.call_in_new_context("_hide_windows_mod")
+            
+## 原label名为_hide_windows，删去了python语句块的第三句话，让用户无法使用点击事件，然后在ui.interact中加入pause参数，使隐藏ui事件自动结束
+label _hide_windows_mod:
+    python:
+        _windows_hidden = True
+        voice_sustain()
+        ui.interact(pause=0.02, suppress_overlay=True, suppress_window=True)
+        _windows_hidden = False
+    return
 
     
 

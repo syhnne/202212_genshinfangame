@@ -2,9 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/turn.rpy", line 168: 'yops' is not a keyword argument or valid child for the imagebutton statement.
-    yops 20 xalign 0.5
-        ^
+File "game/01-definitions.rpy", line 244: expected statement.
+    def interact_mod(type='misc', roll_forward=None, **kwargs): 
+                    ^
 
 Ren'Py Version: Ren'Py 8.0.3.22090809
-Sat Apr  1 22:54:15 2023
+Sun Apr  2 12:06:06 2023
