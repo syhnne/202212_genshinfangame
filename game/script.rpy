@@ -9,7 +9,8 @@ label splashscreen:
         if not persistent.firstrun:
             ## 在此加入firstrun需要的代码。我总觉得我一定会需要这东西，但是一直没想出在这写点啥。。
             persistent.firstrun = True
-    'splash'
+    centered 'splash'
+    vcentered '?'
     $ in_splash = False
     return
 

@@ -46,9 +46,11 @@ default choice_history = []
 default nightlore = True
 default in_map = False
 default in_splash = False
+default now_displaying_text = None
 
 default map_random_picture = 1
 default menuscrsdata = None
+default savescrsdata = None
 default playthrough_mismatch = False
 
 
@@ -104,6 +106,7 @@ init python:
         d["pov"] = pov
         d['timetext'] = '第'+str(date(time))+'天 '+clocktext(time)
         d['p'] = playthrough
+        d['say_attr'] = renpy.game.context().say_attributes
     config.save_json_callbacks.append(jsoncallback)
 
     ## 删存档
@@ -191,13 +194,26 @@ init python:
     def FileScreenshotMod(name, empty=None, page=None):
         if persistent.playthrough != FileJson(name,'p') and persistent.playthrough != 5 and FileLoadable(name):
             return 'gui/button/slot_disabled.png'
+        # elif savescrsdata and renpy.slot_screenshot(__slotname(name, page, slot=slot)):
+        #     return savescrsdata
         else:
             return FileScreenshot(name)
 
     # 打开菜单时存储一个二进制图片，用作模糊背景。renpy你就不能做一个不是二进制的函数吗？害得我每次打开菜单都要加载0.5秒，最后不得不写了个低功耗模式，我宣布这是整个工程中最粪的代码
     def menuscrs():
         global menuscrsdata
+        # Figure out the scene list we want to show.
+        scene_lists = renpy.game.context().scene_lists
+
+        # Remove the now-hidden things.
+        scene_lists.remove_hidden()
         menuscrsdata = renpy.screenshot_to_bytes((320,180))
+        menuscrsdata = im.Data(menuscrsdata,'menuscrs.png')
+
+    def savescrs():
+        global savescrsdata
+        savescrsdata = renpy.screenshot_to_bytes((384,216))
+        savescrsdata = im.Data(savescrsdata,'savescrs.png')
 
     ## 为了方便起见，重做了一个action列表，依次隐藏用户界面0.1秒，截屏，显示菜单
     def MenuHideInterface(menu):
@@ -206,24 +222,184 @@ init python:
         if in_map:
             return ShowMenu(menu)
         else:
-            return [HideInterfaceMod(), Function(menuscrs), ShowMenu(menu),]
+            return ShowMenuMod(menu)
 
-    ## 重写的一个方法，我试过直接运行下面那个函数，好像不行，估计renpy在里面加了些什么东西
-    class HideInterfaceMod(Action, DictEquality):
+    # ## 我试过直接运行下面那个函数，好像不行，估计renpy在里面加了些什么东西
+    # class HideInterfaceMod(Action, DictEquality):
+    #     def __call__(self):
+    #         renpy.call_in_new_context("_hide_windows_mod")
+
+    class ShowMenuMod(Action, DictEquality):
+        def __init__(self, screen=None, *args, **kwargs):
+            self.screen = screen
+            self.transition = kwargs.pop("_transition", None)
+            self.args = args
+            self.kwargs = kwargs
         def __call__(self):
-            renpy.call_in_new_context("_hide_windows_mod")
+            if not self.get_sensitive():
+                return
+            orig_screen = screen = self.screen or store._game_menu_screen
+            if not (renpy.has_screen(screen) or renpy.has_label(screen)):
+                screen = screen + "_screen"
+            renpy.call_in_new_context("_game_menu_mod", *self.args, _game_menu_screen=screen, **self.kwargs)
+
+    # def _enter_menu_mod():
+    #     config.skipping = None
+
+    #     renpy.movie_stop(only_fullscreen=True)
+    #     if not renpy.context()._menu:
+    #         renpy.take_screenshot((config.thumbnail_width, config.thumbnail_height))
+
+    #     for i in config.menu_clear_layers:
+    #         renpy.scene(layer=i)
+
+    #     renpy.context()._menu = True
+    #     renpy.context()._main_menu = main_menu
+        
+    #     renpy.context_dynamic("main_menu")
+    #     renpy.context_dynamic("_window_subtitle")
+    #     renpy.context_dynamic("_window")
+    #     renpy.context_dynamic("_history")
+    #     renpy.context_dynamic("_menu")
+
+    #     renpy.context_dynamic("_side_image_old")
+    #     renpy.context_dynamic("_side_image_raw")
+    #     renpy.context_dynamic("_side_image")
+
+    #     store._window_subtitle = config.menu_window_subtitle
+    #     store._window = False
+    #     store._history = False
+    #     store._menu = True
+
+    #     store.mouse_visible = True
+    #     store.suppress_overlay = True
+    
+    #     ui.clear()
+        
+    #     for i in config.clear_layers:
+    #         renpy.scene(layer=i)
+
+    def interact_mod(type='misc', roll_forward=None, **kwargs): # @ReservedAssignment
+        if stack is None:
+            raise Exception("Interaction not allowed during init phase.")
+
+        if renpy.config.skipping == "fast":
+            renpy.config.skipping = None
+
+        if len(stack) != 1:
+            raise Exception("ui.interact called with non-empty widget/layer stack. Did you forget a ui.close() somewhere?\nStack was " + ('\n'.join([str(item) for item in stack])))
+
+        if at_stack:
+            raise Exception("ui.interact called with non-empty at stack.")
+
+        renpy.game.context().info._current_interact_type = type
+        rv = renpy.game.interface.interact(roll_forward=roll_forward, **kwargs) ###这是关键
+        renpy.game.context().info._last_interact_type = type
+
+        if renpy.exports.in_fixed_rollback() and roll_forward is not None:
+            return roll_forward
+        else:
+            return rv
+
+    def hidescreenmod():
+        for i in renpy.config.overlay_screens:
+            if get_screen(i) is not None:
+                hide_screen(i)
+        for i in renpy.config.always_shown_screens:
+            if get_screen(i) is None:
+                show_screen(i)
+
+                
+    def get_screen_variant(name, candidates=None):
+        """
+        Get a variant screen object for `name`.
+
+        `candidates`
+            A list of candidate variants.
+        """
+
+        if candidates is None:
+            candidates = renpy.config.variants
+
+        for i in candidates:
+            rv = screens.get((name, i), None)
+            if rv is not None:
+                return rv
+
+        return None
+    def get_screen_layer(name):
+        if not isinstance(name, basestring):
+            name = name[0]
+
+        screen = get_screen_variant(name)
+
+        if screen is None:
+            return "screens"
+        else:
+            return screen.layer
+    def get_screen(name, layer=None):
+        if layer is None:
+            layer = get_screen_layer(name)
+
+        if isinstance(name, basestring):
+            name = (name,)
+
+            sl = renpy.exports.scene_lists()
+
+            for tag in name:
+
+                sd = sl.get_displayable_by_tag(layer, tag)
+                if sd is not None:
+                    return sd
+
+            for tag in name:
+
+                sd = sl.get_displayable_by_name(layer, (tag,))
+                if sd is not None:
+                    return sd
+
+            return None
+        
 
 ## 原label名为_hide_windows，删去了python语句块的第三句话，让用户无法使用点击事件，然后在ui.interact中加入pause参数，使隐藏ui事件自动结束
 ## core.py line 3552
-label _hide_windows_mod:
-    python:
-        _windows_hidden = True
-        voice_sustain()
-        ui.interact(pause=0.02, suppress_overlay=True, suppress_window=True)
-        _windows_hidden = False
-    return
+# label _hide_windows_mod:
+#     python:
+#         _windows_hidden = True
+#         voice_sustain()
+#         ui.interact(pause=0.02, suppress_overlay=True, suppress_window=True)
+#         _windows_hidden = False
+#     return
 
-    
+label _game_menu_mod(*args, _game_menu_screen=_game_menu_screen, **kwargs):
+    if not _game_menu_screen:
+        return
+
+    $ renpy.play(config.enter_sound)
+
+    $ _enter_menu()
+
+    $ renpy.transition(config.enter_transition)
+
+    if renpy.has_label("enter_game_menu"):
+        call expression "enter_game_menu"
+
+    if config.game_menu_music:
+        $ renpy.music.play(config.game_menu_music, if_changed=True)
+
+    if renpy.has_label("game_menu"):
+        jump expression "game_menu"
+
+    if renpy.has_screen(_game_menu_screen):
+        
+        $ renpy.show_screen(_game_menu_screen, *args, _transient=True, **kwargs)
+        $ show_overlay_screens(True)
+        $ menuscrs()########
+        $ ui.interact(suppress_overlay=True, suppress_window=True) ##这是关键
+        
+        jump _noisy_return
+
+    jump expression _game_menu_screen
 
             
 

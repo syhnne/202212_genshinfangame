@@ -183,7 +183,7 @@ define gui.read_color = gui.preference("read_color", '#ffffff')
 define gui.selected_color = '#d4dbe0'
 
 ## 用于无法选择的文本按钮的颜色。
-define gui.insensitive_color = '#afafaf7f'
+define gui.insensitive_color = '#cececed5'
 
 ## 用于对话和菜单选择文本的颜色。
 define gui.text_color = '#e0e0e0'

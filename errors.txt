@@ -2,9 +2,10 @@
 errors listed below, and try again.
 
 
-File "game/turn.rpy", line 114: 'sensitive' is not a keyword argument or valid child for the dismiss statement.
-    dismiss action Hide('beginner_guide',dissolve) sensitive allow_dismiss
-                                                            ^
+File "game/01-definitions.rpy", line 340: expected an indented block
+        layer = get_screen_layer(name)
+         ^
+    
 
 Ren'Py Version: Ren'Py 8.0.3.22090809
-Sun Apr  2 18:30:20 2023
+Sun Apr  2 23:32:27 2023

@@ -215,22 +215,6 @@ screen say(who, what):
     if not renpy.variant("small"):
         add SideImage() xalign 0.0 yalign 1.0
 
-screen say_middle(who,what):
-    style_prefix "say"
-    window:
-        id "window"
-
-        if who is not None:
-
-            window:
-                id "namebox"
-                style "namebox"
-                text who id "who" 
-
-        text what id "what" color "#FFFFFF"
-
-
-
 
 ## 通过 Character 对象使名称框可用于样式化。
 init python:
@@ -528,8 +512,7 @@ screen game_menu(title, scroll=None, yinitial=0.0):
         elif in_map:
             add 'map_bg' blur 10
         elif menuscrsdata:
-            $ s = im.Data(menuscrsdata, "screenshot.png")
-            add Transform(s, zoom=6, blur=10)
+            add Transform(menuscrsdata, zoom=6, blur=10)
         frame:
             style "game_menu_outer_frame"
 
@@ -720,25 +703,30 @@ screen file_slots(title):
 
                 for i in range(gui.file_slot_cols * gui.file_slot_rows):
                     $ slot = i + 1
-                    button:
-                        foreground 'gui/button/slot_idle_foreground.png'
-                        action FileActionMod(slot)
-                        alternate FileDelete(slot)
-                        has vbox
-                        add FileScreenshotMod(slot) xalign 0.5
-                        text FileTime(slot, format=_("{#file_time}%Y-%m-%d %H:%M"), empty=_("空存档位")):
-                            style "slot_time_text"
-                            if FileJson(slot,'pov') == True:
-                                color '#f1c16d'
-                            elif FileJson(slot,'pov') == False:
-                                color '#73bbff'
-                            else:
-                                color '#ffffffcc'
-                        if FileJson(slot,'timetext'):
-                            text FileJson(slot,'timetext') style "slot_time_text"
-                        if persistent.unlock_gallery and FileJson(slot,'p') and FileJson(slot,'p') != 5:
-                            text '阶段' +str(FileJson(slot,'p'))+'…' style "slot_time_text" color '#ffffffde' italic True
-                        key "save_delete" action FileDelete(slot)
+                    vbox:
+                        text FileTime(slot, format="{#file_time}%Y-%m-%d %H:%M", empty="") style "slot_time_text" yoffset 10
+                        button:
+                            foreground 'gui/button/slot_idle_foreground.png'
+                            action FileActionMod(slot)
+                            alternate FileDelete(slot)
+                            has vbox
+                            add FileScreenshotMod(slot) xalign 0.5
+                            if FileJson(slot,'timetext'):
+                                text FileJson(slot,'timetext'):
+                                    style "slot_time_text"
+                                    if FileJson(slot,'pov') == True:
+                                        color '#f1c16d'
+                                    elif FileJson(slot,'pov') == False:
+                                        color '#73bbff'
+                                    else:
+                                        color '#ffffffcc'
+                            if FileJson(slot,'say_attr'):
+                                text '!!!'
+                            if persistent.unlock_gallery and FileJson(slot,'p') and FileJson(slot,'p') != 5:
+                                text '阶段' +str(FileJson(slot,'p'))+'…' style "slot_time_text" color '#ffffffde' italic True
+
+                            
+                            key "save_delete" action FileDelete(slot)
 
             imagebutton:
                 yalign 0.45 xpos 10

@@ -22,6 +22,8 @@ screen developer_time():
         xalign 0.9
         has hbox
         text 't:[time] f:[fav]'
+        $ t = renpy.get_say_attributes()
+        text str(t)
 
 
 
