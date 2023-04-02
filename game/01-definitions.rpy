@@ -301,64 +301,64 @@ init python:
         else:
             return rv
 
-    def hidescreenmod():
-        for i in renpy.config.overlay_screens:
-            if get_screen(i) is not None:
-                hide_screen(i)
-        for i in renpy.config.always_shown_screens:
-            if get_screen(i) is None:
-                show_screen(i)
+    # def hidescreenmod():
+    #     for i in renpy.config.overlay_screens:
+    #         if get_screen(i) is not None:
+    #             hide_screen(i)
+    #     for i in renpy.config.always_shown_screens:
+    #         if get_screen(i) is None:
+    #             show_screen(i)
 
                 
-    def get_screen_variant(name, candidates=None):
-        """
-        Get a variant screen object for `name`.
+    # def get_screen_variant(name, candidates=None):
+    #     """
+    #     Get a variant screen object for `name`.
 
-        `candidates`
-            A list of candidate variants.
-        """
+    #     `candidates`
+    #         A list of candidate variants.
+    #     """
 
-        if candidates is None:
-            candidates = renpy.config.variants
+    #     if candidates is None:
+    #         candidates = renpy.config.variants
 
-        for i in candidates:
-            rv = screens.get((name, i), None)
-            if rv is not None:
-                return rv
+    #     for i in candidates:
+    #         rv = screens.get((name, i), None)
+    #         if rv is not None:
+    #             return rv
 
-        return None
-    def get_screen_layer(name):
-        if not isinstance(name, basestring):
-            name = name[0]
+    #     return None
+    # def get_screen_layer(name):
+    #     if not isinstance(name, basestring):
+    #         name = name[0]
 
-        screen = get_screen_variant(name)
+    #     screen = get_screen_variant(name)
 
-        if screen is None:
-            return "screens"
-        else:
-            return screen.layer
-    def get_screen(name, layer=None):
-        if layer is None:
-            layer = get_screen_layer(name)
+    #     if screen is None:
+    #         return "screens"
+    #     else:
+    #         return screen.layer
+    # def get_screen(name, layer=None):
+    #     if layer is None:
+    #         layer = get_screen_layer(name)
 
-        if isinstance(name, basestring):
-            name = (name,)
+    #     if isinstance(name, basestring):
+    #         name = (name,)
 
-            sl = renpy.exports.scene_lists()
+    #         sl = renpy.exports.scene_lists()
 
-            for tag in name:
+    #         for tag in name:
 
-                sd = sl.get_displayable_by_tag(layer, tag)
-                if sd is not None:
-                    return sd
+    #             sd = sl.get_displayable_by_tag(layer, tag)
+    #             if sd is not None:
+    #                 return sd
 
-            for tag in name:
+    #         for tag in name:
 
-                sd = sl.get_displayable_by_name(layer, (tag,))
-                if sd is not None:
-                    return sd
+    #             sd = sl.get_displayable_by_name(layer, (tag,))
+    #             if sd is not None:
+    #                 return sd
 
-            return None
+    #         return None
         
 
 ## 原label名为_hide_windows，删去了python语句块的第三句话，让用户无法使用点击事件，然后在ui.interact中加入pause参数，使隐藏ui事件自动结束
@@ -393,7 +393,8 @@ label _game_menu_mod(*args, _game_menu_screen=_game_menu_screen, **kwargs):
     if renpy.has_screen(_game_menu_screen):
         
         $ renpy.show_screen(_game_menu_screen, *args, _transient=True, **kwargs)
-        $ show_overlay_screens(True)
+        # $ show_overlay_screens(True)
+        $ renpy.run(HideInterfaceMod())
         $ menuscrs()########
         $ ui.interact(suppress_overlay=True, suppress_window=True) ##这是关键
         

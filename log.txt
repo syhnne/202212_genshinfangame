@@ -1,4 +1,4 @@
-Sun Apr  2 23:32:27 2023
+Sun Apr  2 23:51:40 2023
 Windows-10-10.0.22621
 Ren'Py 8.0.3.22090809
  
@@ -6,36 +6,8 @@ Ren'Py 8.0.3.22090809
 Bootstrap to the start of init.init took 0.03s
 Early init took 0.02s
 Loader init took 0.05s
-Loading error handling took 0.03s
-Loading script took 0.23s
-Loading save slot metadata. took 0.01s
-Loading persistent took 0.00s
-
-File "game/01-definitions.rpy", line 340: expected an indented block
-        layer = get_screen_layer(name)
-         ^
-    
-DPI scale factor: 1.000000
-nvdrs: Loaded, about to disable thread optimizations.
-nvdrs: Disabled thread optimizations.
-Interface start took 0.26s
-
-Initializing gl2 renderer:
-primary display bounds: (0, 0, 1920, 1080)
-swap interval: 1 frames
-Windowed mode.
-Vendor: "b'NVIDIA Corporation'"
-Renderer: b'NVIDIA GeForce GTX 745/PCIe/SSE2'
-Version: b'4.6.0 NVIDIA 516.94'
-Display Info: None
-Screen sizes: virtual=(1920, 1080) physical=(1280, 720) drawable=(1280, 720)
-Maximum texture size: 4096x4096
-Resetting cache.
-Bootstrap to the start of init.init took 24.27s
-Early init took 0.00s
-Loader init took 0.03s
-Loading error handling took 0.01s
-Loading script took 0.13s
+Loading error handling took 0.02s
+Loading script took 0.21s
 Loading save slot metadata. took 0.01s
 Loading persistent took 0.00s
 Faled to initialize steam: FileNotFoundError("Could not find module 'D:\\renpy-7.4.4-sdk\\lib\\py3-windows-x86_64\\steam_api64.dll' (or one of its dependencies). Try using the full path with constructor syntax.")
