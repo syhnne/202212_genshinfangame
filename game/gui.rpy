@@ -166,7 +166,7 @@ define config.keymap = dict(
 define gui.accent_color = '#ffffff'
 
 ## 当既未选中也未悬停时用于文本按钮的颜色。
-define gui.idle_color = '#dbdbdbc4'
+define gui.idle_color = '#e0e0e0'
 
 ## 小颜色用于小文本，需要更亮/更暗才能达到相同的效果。
 define gui.idle_small_color = '#e7e7e7'
@@ -304,7 +304,7 @@ define gui.button_text_xalign = 0.0
 ##
 ## 这些定制由默认界面使用：
 
-define gui.radio_button_borders = Borders(39, 6, 6, 6)
+define gui.radio_button_borders = Borders(40, 11, 6, 6)
 
 define gui.check_button_borders = Borders(27, 6, 6, 6)
 

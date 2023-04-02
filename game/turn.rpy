@@ -182,33 +182,6 @@ screen days():
         hover 'maptogglebutton_h'
         action Show('pov_toggle',dissolve)
         tooltip '切换视角…(Tab)'
-    
-
-    # frame:
-    #     xysize (350,80) xpos -34 ypos 20
-    #     textbutton '切换视角…' yalign 0.5 xpos 44 action Show('pov_toggle',dissolve)
-    # frame:
-    #     xysize (472,80) xpos 328 ypos 20
-    #     hbox:
-    #         # if pov:
-    #         #     style_prefix 'mapui1'
-    #         # elif pov == False:
-    #         #     style_prefix 'mapui2'
-    #         yalign 0.5 xpos 20 spacing 25
-    #         $ dddate=date(time)
-    #         $ ccclock=clocktext(time)
-    #         text '第[dddate]天'
-    #         text '[ccclock]'
-    #         null xsize 60
-    #         if tooltip:
-    #             text tooltip
-    #         else:
-    #             text '去哪里看看…'
-
-# style mapui1_text:
-#     color '#ddaa55'
-# style mapui2_text:
-#     color '#1188dd'
 
 screen map_liyuegang(spot_has_event=False):
     
@@ -278,10 +251,6 @@ screen map_liyuegang(spot_has_event=False):
             
 
 
-
-
- 
-
 ###############################################################################
 ## 剧情流程 ####################################################################
 ###############################################################################
@@ -296,14 +265,6 @@ label turn:
         $ menuscrsdata = None
         $ rand=renpy.random.randint(1,6)
         $ historyadd = '（第'+str(date(time))+'天  '+clocktext(time)
-        
-
-        # ## 特殊剧情判断
-        # if time == 9 and pov and choice_history[-1] != 'p01':
-        #     $ persistent.p01enter = False
-        #     $ persistent.p03enter = False
-        # elif time == 30 and not pov and not 'c07' in choice_history[-3:]:
-        #     $ persistent.p04enter = False
         
         ## 获得列表中特殊事件
         if pov:

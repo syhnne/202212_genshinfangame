@@ -2,11 +2,11 @@ image cg01 = 'images/cg01.png'
 image cg02 = 'images/cg02.png'
 image cg03 = 'images/cg03.png'
 image cg04 = 'images/cg04.png'
-image cg01p = At('images/cg01.png', cgzoom)
-image cg02p = At('images/cg02.png', cgzoom)
-image cg03p = At('images/cg03.png', cgzoom)
-image cg04p = At('images/cg04.png', cgzoom)
-image locked_button = 'images/locked.png'
+image cg01p = Composite((384,216),(0,0),At('images/cg01.png', cgzoom),(0,0),Crop((16,14,384,216),'gui/button/slot_idle_foreground.png'))
+image cg02p = Composite((384,216),(0,0),At('images/cg02.png', cgzoom),(0,0),Crop((16,14,384,216),'gui/button/slot_idle_foreground.png'))
+image cg03p = Composite((384,216),(0,0),At('images/cg03.png', cgzoom),(0,0),Crop((16,14,384,216),'gui/button/slot_idle_foreground.png'))
+image cg04p = Composite((384,216),(0,0),At('images/cg04.png', cgzoom),(0,0),Crop((16,14,384,216),'gui/button/slot_idle_foreground.png'))
+image locked_button = Composite((384,216),(0,0),'images/locked.png',(137,92),Text('(未解锁)',color='#49536681'))
 
 image solidgrey = Solid('#818181')
 image solidwhite = Solid('#e8ecf0')
@@ -138,61 +138,6 @@ image genshinctc = Composite((31,39),
     (0,0), At('gui/ctc3.png', ctcmove),
 )
 
-image navibutton_s = Composite((100,49),
-    (0,12),'gui/navi1.png',
-    (0,12), At('gui/navi2.png', ctcmoveright),
-    (0,12), At('gui/navi3.png', ctcmoveright),
-)
-image navibutton_i = Composite((100,49), (0,12),'gui/navi4.png' )
-image navibutton_h = Composite((100,49), (0,12),'gui/navi1.png', (0,11),'gui/navi4.png' )
-    
-
-image autobutton1:
-    animation
-    subpixel True rotate_pad True
-    around (25,25)
-    xoffset -10 yoffset -10
-    'gui/button/autoforwardbutton_s.png'
-    block:
-        linear 1.0 rotate 360
-        pause 0 alpha 0
-        linear 1.0 rotate 0
-        pause 0 alpha 1
-        repeat
-
-image autobutton2:
-    animation
-    subpixel True rotate_pad True
-    around (25,25)
-    xoffset -10 yoffset -10
-    'gui/button/autoforwardbutton_s.png'
-    alpha 0
-    linear 1.0 rotate 0
-    block:
-        alpha 1
-        linear 1.0 rotate 360
-        pause 0 alpha 0
-        linear 1.0 rotate 0
-        pause 0 alpha 1
-        repeat
-
-image autobutton_i = Composite((100,54), 
-    (0,5),'gui/button/autoforwardbutton_i.png',
-)
-image autobutton_h = Composite((100,54), 
-    (0,5),'gui/button/autoforwardbutton_h.png',
-)
-image autobutton_si = Composite((100,54), 
-    (0,5),'gui/button/autoforwardbutton_si.png',
-    (0,5),'autobutton1',
-    (0,5),'autobutton2',
-)
-image autobutton_sh = Composite((100,54), 
-    (0,5),'gui/button/autoforwardbutton_sh.png',
-    (0,5),'autobutton1',
-    (0,5),'autobutton2',
-)
-
 image choice_foreground2:
     xpos 15
     subpixel True
@@ -276,6 +221,8 @@ image maptooltip2:
     'gui/map/maptooltip.png'
     alpha 0.75
 
+
+## buttons ###########################################
 image save_button_i = Composite((76,76),
     (0,0),'gui/button/quickbutton_i.png',
     (0,0),'gui/button/save.png',
@@ -308,3 +255,102 @@ image back_button_h = Composite((76,76),
     (0,0),'gui/button/quickbutton_h.png',
     (0,0),'gui/button/back.png',
 )
+image navibutton_s = Composite((100,49),
+    (0,12),'gui/navi1.png',
+    (0,12), At('gui/navi2.png', ctcmoveright),
+    (0,12), At('gui/navi3.png', ctcmoveright),
+)
+image navibutton_i = Composite((100,49), (0,12),'gui/navi4.png' )
+image navibutton_h = Composite((100,49), (0,12),'gui/navi1.png', (0,11),'gui/navi4.png' )
+
+image autobutton_i = Composite((100,54), 
+    (0,5),'gui/button/autoforwardbutton_i.png',
+)
+image autobutton_h = Composite((100,54), 
+    (0,5),'gui/button/autoforwardbutton_h.png',
+)
+image autobutton_si = Composite((100,54), 
+    (0,5),'gui/button/autoforwardbutton_si.png',
+    (0,5),'autobutton1',
+    (0,5),'autobutton2',
+)
+image autobutton_sh = Composite((100,54), 
+    (0,5),'gui/button/autoforwardbutton_sh.png',
+    (0,5),'autobutton1',
+    (0,5),'autobutton2',
+)
+
+image autobutton1:
+    animation
+    subpixel True rotate_pad True
+    around (25,25)
+    xoffset -10 yoffset -10
+    'gui/button/autoforwardbutton_s.png'
+    block:
+        linear 1.0 rotate 360
+        pause 0 alpha 0
+        linear 1.0 rotate 0
+        pause 0 alpha 1
+        repeat
+
+image autobutton2:
+    animation
+    subpixel True rotate_pad True
+    around (25,25)
+    xoffset -10 yoffset -10
+    'gui/button/autoforwardbutton_s.png'
+    alpha 0
+    linear 1.0 rotate 0
+    block:
+        alpha 1
+        linear 1.0 rotate 360
+        pause 0 alpha 0
+        linear 1.0 rotate 0
+        pause 0 alpha 1
+        repeat
+
+image skipbutton_i = Composite((100,54), 
+    (0,5),'gui/button/skipbutton_i.png',
+)
+image skipbutton_h = Composite((100,54), 
+    (0,5),'gui/button/skipbutton_h.png',
+)
+image skipbutton_si = Composite((100,54), 
+    (0,5),'gui/button/skipbutton_si.png',
+    (0,5),'skipbutton1',
+    (0,5),'skipbutton2',
+)
+image skipbutton_sh = Composite((100,54), 
+    (0,5),'gui/button/skipbutton_sh.png',
+    (0,5),'skipbutton1',
+    (0,5),'skipbutton2',
+)
+
+image skipbutton1:
+    animation
+    subpixel True rotate_pad True
+    around (25,25)
+    xoffset -10 yoffset -10
+    'gui/button/autoforwardbutton_s.png'
+    block:
+        linear 1.0 rotate 360
+        pause 0 alpha 0
+        linear 1.0 rotate 0
+        pause 0 alpha 1
+        repeat
+
+image skipbutton2:
+    animation
+    subpixel True rotate_pad True
+    around (25,25)
+    xoffset -10 yoffset -10
+    'gui/button/autoforwardbutton_s.png'
+    alpha 0
+    linear 1.0 rotate 0
+    block:
+        alpha 1
+        linear 1.0 rotate 360
+        pause 0 alpha 0
+        linear 1.0 rotate 0
+        pause 0 alpha 1
+        repeat

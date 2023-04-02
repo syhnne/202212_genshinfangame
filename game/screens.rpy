@@ -205,10 +205,14 @@ $ textseencolor = False
 screen say(who, what):
     style_prefix "say"
     tag wthit
-    hbox:
-        style_prefix 'autoforward'
-        xpos 50 ypos 30
-        textbutton _("自动") action Preference("auto-forward", "toggle") yalign 0.5
+    if not in_splash:
+        hbox:
+            xpos 50 ypos 30 spacing 20
+            textbutton _("自动") action Preference("auto-forward", "toggle") yalign 0.5 style_prefix 'autoforward'
+            textbutton _("快进") action Skip() alternate Skip(fast=True, confirm=True) yalign 0.5 style_prefix 'gskip'
+            key "mousedown_4" action If( gui.preference("low_performance_mode"), ShowMenu('history'), MenuHideInterface('history') )
+            key 'K_ESCAPE' action If( gui.preference("low_performance_mode"), ShowMenu('save'), MenuHideInterface('save') )
+            key 's' action If( gui.preference("low_performance_mode"), ShowMenu('save'), MenuHideInterface('save') )
 
     window:
         id "window"
@@ -225,16 +229,23 @@ screen say(who, what):
         else:
             text what id "what" color "#FFFFFF"
 
-
-    key "mousedown_4" action If( gui.preference("low_performance_mode"), ShowMenu('history'), MenuHideInterface('history') )
-    key 'K_ESCAPE' action If( gui.preference("low_performance_mode"), ShowMenu('save'), MenuHideInterface('save') )
-    key 's' action If( gui.preference("low_performance_mode"), ShowMenu('save'), MenuHideInterface('save') )
-
-
     ## 如果有对话框头像，会将其显示在文本之上。请不要在手机界面下显示这个，因为没有空间。
     if not renpy.variant("small"):
         add SideImage() xalign 0.0 yalign 1.0
 
+screen say_middle(who,what):
+    style_prefix "say"
+    window:
+        id "window"
+
+        if who is not None:
+
+            window:
+                id "namebox"
+                style "namebox"
+                text who id "who" 
+
+        text what id "what" color "#FFFFFF"
 
 
 
@@ -384,7 +395,7 @@ screen quick_menu():
             imagebutton idle 'save_button_i' hover 'save_button_h'  tooltip '保存' action If( gui.preference("low_performance_mode"), ShowMenu('save'), MenuHideInterface('save') )
             imagebutton idle 'load_button_i' hover 'load_button_h'  tooltip '读取' action If( gui.preference("low_performance_mode"), ShowMenu('load'), MenuHideInterface('load') )
             imagebutton idle 'settings_button_i' hover 'settings_button_h'  tooltip '设置' action If( gui.preference("low_performance_mode"), ShowMenu('preferences'), MenuHideInterface('preferences') )
-            # textbutton _("快进") action Skip() alternate Skip(fast=True, confirm=True)
+            
     $ tooltip = GetTooltip()
     if tooltip and tooltip in ['保存','读取','设置']:
         nearrect:
@@ -816,7 +827,16 @@ screen file_slots(title):
                             text '阶段' +str(FileJson(slot,'p'))+'…' style "slot_time_text" color '#ffffffde' italic True
                 
                         key "save_delete" action FileDelete(slot)
-
+            imagebutton:
+                yalign 0.45 xpos 10
+                idle 'gui/button/leftbutton.png'
+                hover 'gui/button/leftbutton.png'
+                action FilePagePrevious(9,True)
+            imagebutton:
+                yalign 0.45 xpos 1360
+                idle 'gui/button/rightbutton.png'
+                hover 'gui/button/rightbutton.png'
+                action FilePageNext(9,True)
             ## 用于访问其他页面的按钮。
             hbox:
                 style_prefix "page"
@@ -826,7 +846,7 @@ screen file_slots(title):
 
                 spacing gui.page_spacing
 
-                textbutton _("<") action FilePagePrevious(9,True)
+                # textbutton _("<") action FilePagePrevious(9,True)
 
                 if config.has_autosave:
                     textbutton _("{#auto_page}A") action FilePage("auto")
@@ -838,7 +858,7 @@ screen file_slots(title):
                 for page in range(1, 10):
                     textbutton "[page]" action FilePage(page)
 
-                textbutton _(">") action FilePageNext(9,True)
+                # textbutton _(">") action FilePageNext(9,True)
 
 
 style page_label is gui_label
@@ -961,7 +981,7 @@ screen preferences():
                     text '1920x1080'
                 else:
                     text '自定义'
-            use apref('字体大小', '', ('小', Function(gui.SetPreference("interface_text_size", 26))), ('中',Function(gui.SetPreference("interface_text_size", 30))), ('大',Function(gui.SetPreference("interface_text_size", 34)))):
+            use apref('字体大小', '设置用户界面和对话文本的字体大小。', ('小', Function(gui.SetPreference("interface_text_size", 26))), ('中',Function(gui.SetPreference("interface_text_size", 30))), ('大',Function(gui.SetPreference("interface_text_size", 34)))):
                 $ tsize = gui.preference('interface_text_size')
                 if tsize < 30:
                     text '小'
@@ -976,7 +996,7 @@ screen preferences():
                 else:
                     text '开'
             if config.developer:
-                use apref('流畅模式（关闭一些性能消耗大的功能）', '打开这个功能后，在对话中打开设置时背景会没有虚化，但是会快0.5秒（', ('开', [Function(gui.SetPreference("low_performance_mode", True)),SetVariable('menuscrsdata', None)]),  ('关', Function(gui.SetPreference("low_performance_mode", False)))  ):
+                use apref('流畅模式', '打开这个功能后，在对话中打开设置时背景会没有虚化，但是会快0.5秒（', ('开', [Function(gui.SetPreference("low_performance_mode", True)),SetVariable('menuscrsdata', None)]),  ('关', Function(gui.SetPreference("low_performance_mode", False)))  ):
                     $ lp = gui.preference("low_performance_mode")
                     if lp:
                         text '开'
@@ -984,17 +1004,17 @@ screen preferences():
                         text '关'
             null height 40
             label '快进选项'
-            use apref('跳过未读文本', '', ("只跳过已读文本",Preference("skip", "seen")), ("跳过所有文本",Preference("skip", "all"))):
+            use apref('跳过未读文本', '开启后，快进不会在遇到未读文本时停止。', ("只跳过已读文本",Preference("skip", "seen")), ("跳过所有文本",Preference("skip", "all"))):
                 if preferences.skip_unseen:
                     text '跳过所有文本'
                 else:
                     text "只跳过已读文本"
-            use apref('选项后继续跳过', '', ('跳过',Preference("after choices", "skip")), ('不跳过',Preference("after choices", "stop"))):
+            use apref('选项后继续', '开启后，快进不会在选择选项之后停止。', ('跳过',Preference("after choices", "skip")), ('不跳过',Preference("after choices", "stop"))):
                 if preferences.skip_after_choices:
                     text '跳过'
                 else:
                     text '不跳过'
-            use apref('跳过转场', '', ('跳过', If('not gui.preference("low_performance_mode")',Confirm('建议同时开启流畅模式。是否继续？{size=20}\n（小声bb：关掉之后菜单界面的背景会没有虚化）', [gui.SetPreference("low_performance_mode", True),Preference("transitions", "none")] )) ),  ('不跳过',Preference("transitions", "all"))):
+            use apref('跳过转场', '为避免卡顿，跳过转场会同时关闭一些效果，但不会影响游戏正常运行。', ('跳过', If('not gui.preference("low_performance_mode")',[gui.SetPreference("low_performance_mode", True),Preference("transitions", "none")] ) ),  ('不跳过',[gui.SetPreference("low_performance_mode", True),Preference("transitions", "all")])):
                 if preferences.transitions == 2:
                     text '不跳过'
                 elif preferences.transitions == 0:
@@ -1071,6 +1091,7 @@ style radio_button:
     hover_foreground "navibutton_h"
     idle_foreground 'navibutton_i'
     selected_foreground 'navibutton_s'
+    background Frame('gui/navibg.png',40)
 
 style radio_button_text:
     properties gui.button_text_properties("radio_button")
@@ -1081,6 +1102,13 @@ style autoforward_button:
     hover_foreground 'autobutton_h'
     selected_idle_foreground 'autobutton_si'
     selected_hover_foreground 'autobutton_sh'
+
+style gskip_button:
+    properties gui.button_properties("auto_button")
+    idle_foreground 'skipbutton_i'
+    hover_foreground 'skipbutton_h'
+    selected_idle_foreground 'skipbutton_si'
+    selected_hover_foreground 'skipbutton_sh'
 
 style check_vbox:
     spacing gui.pref_button_spacing

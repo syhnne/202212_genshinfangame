@@ -45,6 +45,7 @@ default fav_history = []
 default choice_history = []
 default nightlore = True
 default in_map = False
+default in_splash = False
 
 default map_random_picture = 1
 default menuscrsdata = None
@@ -202,14 +203,18 @@ init python:
     def MenuHideInterface(menu):
         if type(menu) != type(''):
             renpy.error('打引号')
-        return [HideInterfaceMod(), Function(menuscrs), ShowMenu(menu),]
+        if in_map:
+            return ShowMenu(menu)
+        else:
+            return [HideInterfaceMod(), Function(menuscrs), ShowMenu(menu),]
 
     ## 重写的一个方法，我试过直接运行下面那个函数，好像不行，估计renpy在里面加了些什么东西
     class HideInterfaceMod(Action, DictEquality):
         def __call__(self):
             renpy.call_in_new_context("_hide_windows_mod")
-            
+
 ## 原label名为_hide_windows，删去了python语句块的第三句话，让用户无法使用点击事件，然后在ui.interact中加入pause参数，使隐藏ui事件自动结束
+## core.py line 3552
 label _hide_windows_mod:
     python:
         _windows_hidden = True
