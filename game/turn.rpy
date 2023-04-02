@@ -23,9 +23,7 @@ screen developer_time():
         has hbox
         text 't:[time] f:[fav]'
 
-init python:
-    if config.developer:
-        config.overlay_screens.append("developer_time")
+    
 
 
 # define config.character_id_prefixes = [ ]
@@ -45,6 +43,8 @@ screen pov_toggle(stage=True):
         roll_forward True
         key 'K_TAB' action ToggleScreen('pov_toggle',dissolve)
     zorder 100  
+    key '1' action SetVariable('pov',True)
+    key '2' action SetVariable('pov',False)
     window:
         align (0,0)
         if persistent.playthrough == 4:
@@ -311,6 +311,8 @@ label turn:
 
             ## 打开地图
             $ in_map = True
+            if renpy.config.skipping:
+                $ renpy.config.skipping = None
             if event and type(event[0])==type(''):
                 call screen map_liyuegang(event[0]) with dissolve
             else:
@@ -401,6 +403,8 @@ label start:
 
     call before_start from _call_before_start
     scene black with dissolve
+    if renpy.config.skipping:
+        $ renpy.config.skipping = None
     call screen pov_toggle(False) with dissolve
     if config.developer:
         show screen developer_time

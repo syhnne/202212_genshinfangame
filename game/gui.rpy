@@ -9,7 +9,9 @@ init offset = -2
 init python:
     gui.init(1920, 1080)
     _autosave = False
-    
+    config.overlay_screens.append("quick_menu")
+    if config.developer:
+        config.overlay_screens.append("developer_time")
 
 
 ################################################################################
@@ -43,7 +45,7 @@ define config.keymap = dict(
     screenshot = [ ],
     toggle_afm = [ ],
     toggle_fullscreen = [ 'f', 'alt_K_RETURN', 'alt_K_KP_ENTER', 'K_F11', 'noshift_K_f' ],
-    game_menu = [],
+    game_menu = [ 'K_ESCAPE' ],
     hide_windows = [ 'mouseup_2', 'h', 'noshift_K_h' ],
     launch_editor = [ 'E', 'shift_K_e' ],
     dump_styles = [ ],
@@ -166,7 +168,7 @@ define config.keymap = dict(
 define gui.accent_color = '#ffffff'
 
 ## 当既未选中也未悬停时用于文本按钮的颜色。
-define gui.idle_color = '#e0e0e0'
+define gui.idle_color = '#cccccc'
 
 ## 小颜色用于小文本，需要更亮/更暗才能达到相同的效果。
 define gui.idle_small_color = '#e7e7e7'
@@ -225,6 +227,11 @@ define gui.quick_button_text_idle_color = gui.idle_small_color
 define gui.quick_button_text_selected_color = gui.accent_color
 
 
+
+
+## 此语句决定了允许在历史记录界面上显示哪些标签。
+
+define gui.history_allow_tags = { "alt", "noalt" }
 
 
 
@@ -395,7 +402,7 @@ define gui.main_menu_text_xalign = 0.0
 ## 这些变量控制在不存在覆盖层或窗口时可以包含用户界面组件的框架的外观。
 
 ## 通用框架。
-define gui.frame_borders = Borders(15,15,15,15)
+define gui.frame_borders = Borders(20,20,20,20)
 
 ## 用作快进界面部分的框架。
 define gui.skip_frame_borders = Borders(24, 8, 75, 8)
