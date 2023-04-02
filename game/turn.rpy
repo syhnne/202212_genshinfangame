@@ -32,6 +32,8 @@ screen pov_toggle(stage=True):
     if stage:
         roll_forward True
         key 'K_TAB' action ToggleScreen('pov_toggle',dissolve)
+        key 'K_ESCAPE' action ToggleScreen('pov_toggle',dissolve)
+        key 'hide_windows' action NullAction()
     zorder 100  
     key '1' action SetVariable('pov',True)
     key '2' action SetVariable('pov',False)
@@ -294,12 +296,14 @@ label turn:
 
             ## 打开地图
             $ in_map = True
+            $ _windows_hidden = True
             if renpy.config.skipping:
                 $ renpy.config.skipping = None
             if event and type(event[0])==type(''):
                 call screen map_liyuegang(event[0]) with dissolve
             else:
                 call screen map_liyuegang() with dissolve
+            $ _windows_hidden = False
             $ in_map = False
 
             if _return:
