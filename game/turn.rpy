@@ -23,16 +23,6 @@ screen developer_time():
         has hbox
         text 't:[time] f:[fav]'
 
-    
-
-
-# define config.character_id_prefixes = [ ]
-# 该项指定了一个可以用于 Character() 对象的样式特性(property)前缀列表。当某个样式前缀与列表中的前缀匹配，带有那个前缀的可视组件就会应用对应的样式。
-# 例如，给默认GUI添加“namebox”前缀。当某个角色给定了namebox_background特性时，它会将带有id“namebox”的可视组件设置为say界面的 background。
-# define config.load_failed_label = None
-# 如果配置为一个字符串，表示一个脚本标签(label)。脚本修改过多导致Ren’Py无法恢复产生读档失败的情况下，将跳转到该脚本标签。 在执行读档前，Ren’Py将主控流程切换为最后执行语句开头，并清空调用栈。
-# 也可以配置为一个函数。该函数没有入参，返回值需要是一个脚本标签(label)。
-
 
 
 screen pov_toggle(stage=True):
@@ -106,28 +96,21 @@ screen pov_toggle(stage=True):
 screen beginner_guide():
     zorder 110
     modal True
-    default textline = 1
     window:
-        background 'solidblackbg' align (0,0) xysize(1920,1080)
+        background 'gui/map/beginnerguide.png' align (0,0) xysize(1920,1080)
         frame:
-            xpos 500 yalign 0.3 padding (30,30,30,30)
-            vbox:
-                spacing 20
-                text ' 操作提示：'
-                if textline == 1:
-                    use beginner_guide1
-                    textbutton '下一条(1/2)' action SetScreenVariable('textline', 2) 
-                elif textline == 2:
-                    use beginner_guide2
-                    hbox:
-                        textbutton '上一条(2/2)  ' action SetScreenVariable('textline', 1)
-                        textbutton '  确认' action Hide('beginner_guide')
-
-screen beginner_guide1():
-    text '每天有3次机会，可以在地图上选择要去的地点，触发不同的剧情。\n也可以点击左上角，选择不出门。\n有些地点会触发特殊的事件，有些则不会每天都显示。' 
-screen beginner_guide2():
-    text '另外，某些特殊剧情的触发条件较为特殊，\n可能需要{u}在其他的游戏视角中{/u}先完成某些事件，才会触发相应的剧情。\n请善用存档功能，在不同的游戏视角中尽可能触发更多的事件吧。'
-
+            xpos 540 ypos 20
+            text '1.这里会显示时间和日期，\n每天有3次选择的机会。'
+        frame:
+            xpos 360 ypos 240 
+            text '2.点击这个头像框，可以切换游戏的视角。\n不同的视角中可能有不同的事件发生，{u}还可能受到另一视角上特殊事件的影响…{/u}'
+        frame:
+            xpos 813 ypos 421
+            text '3.点击地点图标，触发相应的剧情。'
+        frame:
+            xpos 1100 ypos 140
+            text '4.随着游戏进度推进，可能会有更多功能解锁…'
+        dismiss action Hide('beginner_guide',dissolve)
 
 screen map_options():
     zorder 51
@@ -135,7 +118,7 @@ screen map_options():
         xsize 500 ysize 80 xpos 1400 ypos 20
         hbox:
             spacing 20 yalign 0.5
-            textbutton '好感度 : [fav]' action CaptureFocus("tips")
+            text '好感度 : [fav]' # action CaptureFocus("tips")
             bar value fav range 100 yalign 0.5
     if GetFocusRect("tips"):
         dismiss action ClearFocus("tips")
