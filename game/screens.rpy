@@ -975,12 +975,13 @@ screen preferences():
                     text '关'
                 else:
                     text '开'
-            use apref('流畅模式（关闭一些性能消耗大的功能）', '打开这个功能后，在对话中打开设置时背景会没有虚化，但是会快0.5秒（', ('开', [Function(gui.SetPreference("low_performance_mode", True)),SetVariable('menuscrsdata', None)]),  ('关', Function(gui.SetPreference("low_performance_mode", False)))  ):
-                $ lp = gui.preference("low_performance_mode")
-                if lp:
-                    text '开'
-                else:
-                    text '关'
+            if config.developer:
+                use apref('流畅模式（关闭一些性能消耗大的功能）', '打开这个功能后，在对话中打开设置时背景会没有虚化，但是会快0.5秒（', ('开', [Function(gui.SetPreference("low_performance_mode", True)),SetVariable('menuscrsdata', None)]),  ('关', Function(gui.SetPreference("low_performance_mode", False)))  ):
+                    $ lp = gui.preference("low_performance_mode")
+                    if lp:
+                        text '开'
+                    else:
+                        text '关'
             null height 40
             label '快进选项'
             use apref('跳过未读文本', '', ("只跳过已读文本",Preference("skip", "seen")), ("跳过所有文本",Preference("skip", "all"))):
