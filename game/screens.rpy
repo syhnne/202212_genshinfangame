@@ -192,9 +192,9 @@ screen say(who, what):
             xpos 50 ypos 30 spacing 20
             textbutton _("自动") action Preference("auto-forward", "toggle") yalign 0.5 style_prefix 'autoforward'
             textbutton _("快进") action Skip() alternate Skip(fast=True, confirm=True) yalign 0.5 style_prefix 'gskip'
-            key "mousedown_4" action If( gui.preference("low_performance_mode"), ShowMenu('history'), MenuHideInterface('history') )
-            key 'K_ESCAPE' action If( gui.preference("low_performance_mode"), ShowMenu('save'), MenuHideInterface('save') )
-            key 's' action If( gui.preference("low_performance_mode"), ShowMenu('save'), MenuHideInterface('save') )
+            key "mousedown_4" action MenuHideInterface('history') 
+            key 'K_ESCAPE' action MenuHideInterface('save') 
+            key 's' action MenuHideInterface('save') 
 
     window:
         id "window"
@@ -359,9 +359,9 @@ screen quick_menu():
     if quick_menu:
         vbox:
             xpos 30 ypos 830
-            imagebutton idle 'save_button_i' hover 'save_button_h'  tooltip '保存' action If( gui.preference("low_performance_mode"), ShowMenu('save'), MenuHideInterface('save') )
-            imagebutton idle 'load_button_i' hover 'load_button_h'  tooltip '读取' action If( gui.preference("low_performance_mode"), ShowMenu('load'), MenuHideInterface('load') )
-            imagebutton idle 'settings_button_i' hover 'settings_button_h'  tooltip '设置' action If( gui.preference("low_performance_mode"), ShowMenu('preferences'), MenuHideInterface('preferences') )
+            imagebutton idle 'save_button_i' hover 'save_button_h'  tooltip '保存' action MenuHideInterface('save') 
+            imagebutton idle 'load_button_i' hover 'load_button_h'  tooltip '读取' action MenuHideInterface('load') 
+            imagebutton idle 'settings_button_i' hover 'settings_button_h'  tooltip '设置' action MenuHideInterface('preferences') 
             
     $ tooltip = GetTooltip()
     if tooltip and tooltip in ['保存','读取','设置']:
@@ -868,26 +868,23 @@ screen preferences():
                 else:
                     text '自定义'
             use pref_choice('字体大小', '设置用户界面和对话文本的字体大小。', ('小', Function(gui.SetPreference("interface_text_size", 26))), ('中',Function(gui.SetPreference("interface_text_size", 30))), ('大',Function(gui.SetPreference("interface_text_size", 34)))):
-                $ tsize = gui.preference('interface_text_size')
-                if tsize < 30:
+                if gui.text_size < 30:
                     text '小'
-                elif tsize == 30:
+                elif gui.text_size == 30:
                     text '中'
                 else:
                     text '大'
             use pref_choice('已读文本突出显示', '其实按一下ctrl就知道这句话读没读过了（', ('开', Function(gui.SetPreference("read_color", '#ffcb31'))), ('关', Function(gui.SetPreference("read_color", '#ffffff'))) ):
-                $ rc = gui.preference('read_color')
-                if rc == '#ffffff':
+                if gui.read_color == '#ffffff':
                     text '关'
                 else:
                     text '开'
-            if config.developer:
-                use pref_choice('流畅模式', '打开这个功能后，在对话中打开设置时背景会没有虚化，但是会快0.5秒（', ('开', [Function(gui.SetPreference("low_performance_mode", True)),SetVariable('menuscrsdata', None)]),  ('关', Function(gui.SetPreference("low_performance_mode", False)))  ):
-                    $ lp = gui.preference("low_performance_mode")
-                    if lp:
-                        text '开'
-                    else:
-                        text '关'
+            # if config.developer:
+            use pref_choice('低配模式', '打开后会关闭一些性能消耗大的功能', ('开', [Function(gui.SetPreference("low_performance_mode", True)),SetVariable('menuscrsdata', None)]),  ('关', Function(gui.SetPreference("low_performance_mode", False)))  ):
+                if gui.low_performance_mode:
+                    text '开'
+                else:
+                    text '关'
             null height 40
             label '快进选项'
             use pref_choice('跳过未读文本', '开启后，快进不会在遇到未读文本时停止。', ("只跳过已读文本",Preference("skip", "seen")), ("跳过所有文本",Preference("skip", "all"))):
@@ -900,7 +897,7 @@ screen preferences():
                     text '跳过'
                 else:
                     text '不跳过'
-            use pref_choice('跳过转场', '为避免卡顿，跳过转场会同时关闭一些效果，但不会影响游戏正常运行。', ('跳过', If('not gui.preference("low_performance_mode")',[gui.SetPreference("low_performance_mode", True),Preference("transitions", "none")] ) ),  ('不跳过',[gui.SetPreference("low_performance_mode", True),Preference("transitions", "all")])):
+            use pref_choice('跳过转场', '如果卡顿严重，可以同时开启低配模式', ('跳过', If('not gui.preference("low_performance_mode")',Preference("transitions", "none") ) ),  ('不跳过',Preference("transitions", "all"))):
                 if preferences.transitions == 2:
                     text '不跳过'
                 elif preferences.transitions == 0:

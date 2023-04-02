@@ -175,7 +175,7 @@ define gui.idle_small_color = '#e7e7e7'
 
 ## 用于悬停的按钮和滑条的颜色。
 define gui.hover_color = '#e4e4e4'
-
+## 已读文本
 define gui.read_color = gui.preference("read_color", '#ffffff')
 
 ## 用于选中但非焦点的文本按钮的颜色。当一个按钮为当前屏幕或设置选项值时，会处于
