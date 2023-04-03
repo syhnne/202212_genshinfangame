@@ -421,7 +421,7 @@ define gui.frame_tile = False
 ## 默认的GUI仅使用滑块和垂直滚动条。所有其他栏仅在创建者编写的屏幕中使用。
 
 ## 水平条，滚动条和滑块的高度。垂直条，滚动条和滑块的宽度。
-define gui.bar_size = 30
+define gui.bar_size = 10
 define gui.scrollbar_size = 18
 define gui.slider_size = 30
 

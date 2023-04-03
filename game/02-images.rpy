@@ -129,8 +129,12 @@ transform ctcmoveright:
     repeat
 
 transform ctc_appear:
-    alpha 0.0
-    linear 0.75 alpha 1.0
+    on show:
+        alpha 0.0 yoffset -5
+        easeout 0.25 alpha 1.0 yoffset 0
+    on hide:
+        alpha 1.0 yoffset 0
+        easein 0.25 alpha 0.0 yoffset 5
 
 image genshinctc = Composite((31,39),
     (0,0), 'gui/ctc1.png',
@@ -261,7 +265,7 @@ image navibutton_s = Composite((100,49),
     (0,12), At('gui/navi3.png', ctcmoveright),
 )
 image navibutton_i = Composite((100,49), (0,12),'gui/navi4.png' )
-image navibutton_h = Composite((100,49), (0,12),'gui/navi1.png', (0,11),'gui/navi4.png' )
+image navibutton_h = Composite((100,49), (0,12),'gui/navi1.png', (0,12),'gui/navi4.png' )
 
 image autobutton_i = Composite((100,54), 
     (0,5),'gui/button/autoforwardbutton_i.png',

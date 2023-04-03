@@ -31,8 +31,8 @@ screen pov_toggle(stage=True):
     modal True
     if stage:
         roll_forward True
-        key 'K_TAB' action ToggleScreen('pov_toggle',dissolve)
-        key 'K_ESCAPE' action ToggleScreen('pov_toggle',dissolve)
+        key 'K_TAB' action [ToggleScreen('pov_toggle',dissolve), Return(False)]
+        key 'K_ESCAPE' action [ToggleScreen('pov_toggle',dissolve), Return(False)]
         key 'hide_windows' action NullAction()
     zorder 100  
     key '1' action SetVariable('pov',True)
@@ -91,7 +91,7 @@ screen pov_toggle(stage=True):
             xpos 30 ypos 30
             idle 'back_button_i'
             hover 'back_button_h'
-            action ToggleScreen('pov_toggle',dissolve)
+            action [ToggleScreen('pov_toggle',dissolve), Return(False)]
             
                 
                 
@@ -117,11 +117,14 @@ screen beginner_guide():
 screen map_options():
     zorder 51
     frame:
-        xsize 500 ysize 80 xpos 1400 ypos 20
+        xsize 500 xpos 1400 ypos 20
         hbox:
-            spacing 20 yalign 0.5
-            text '好感度 : [fav]' # action CaptureFocus("tips")
-            bar value fav range 100 yalign 0.5
+            spacing 15
+            image 'gui/map/fav.png' yalign 0.5
+            vbox:
+                yoffset -5 spacing 3
+                text '好感度：[fav]' size gui.text_size-4 # action CaptureFocus("tips")
+                bar value fav range 100
     if GetFocusRect("tips"):
         dismiss action ClearFocus("tips")
         nearrect:
@@ -130,7 +133,7 @@ screen map_options():
             frame:
                 modal True
                 has vbox
-                text "（操作提示，还没写）"
+                text "（操作提示）"
 
 screen days():
     zorder 50
@@ -149,11 +152,8 @@ screen days():
             xpos 120 ypos 18 xsize 240
             text '第[dddate]天     [ccclock]' xalign 0.5
         
-    imagebutton:
-        ypos 30 xalign 0.5
-        hover 'gui/map/maptooltip.png'
-        idle 'maptooltip2'
-        action NullAction()
+    image 'maptooltip2' ypos 30 xalign 0.5
+        
     hbox:
         ypos 36 xalign 0.5
         if tooltip:
@@ -304,7 +304,7 @@ label turn:
             else:
                 call screen map_liyuegang() with dissolve
             $ _windows_hidden = False
-            $ in_map = False
+            $ in_map = False    
 
             if _return:
 
@@ -356,7 +356,7 @@ screen ctc():
     hbox:
         at ctc_appear
         xalign 0.5 yalign 0.96
-        imagebutton action NullAction() idle 'genshinctc' hover 'genshinctc'
+        image 'genshinctc'
         
         
 

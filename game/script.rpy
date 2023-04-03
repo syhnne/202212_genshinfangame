@@ -427,7 +427,7 @@ label c07:
     '在玩具摊给家里人买点风车拨浪鼓啥的，那个信里写的，然后考虑一下给钟离买什么礼物'
     '我一开始想的时候这和后续剧情有关，但是后来忘了）可以之后再改，大不了重写一个或者删掉（'
     $ p04enter = True
-    $ map_liyuegang_dict['wjt'][int(pov)].remove([27,28,29])
+    $ map_liyuegang_dict['wjt'][int(pov)].remove([21,22,23])
     return
 
 label c08:
