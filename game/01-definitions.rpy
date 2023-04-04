@@ -10,6 +10,7 @@ default persistent.gamedata = {'load_times':0, 'playthrough1_fav':0, }
 default persistent.seen_beginner_guide = False
 
 default persistent.firstrun = False
+default persistent.true_ending = False
 
 
 
@@ -127,6 +128,7 @@ init python:
         p04enter = False
         p05enter = False
         p08enter = False
+        persistent.true_ending = False
         persistent.seen_beginner_guide = False
         renpy.quit(relaunch=True)
 

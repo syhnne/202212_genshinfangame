@@ -18,12 +18,14 @@ label developer_90:
 
 screen developer_time():
     zorder 101
-    frame:
-        xalign 0.9
-        has hbox
-        text 't:[time] f:[fav]'
+    hbox:
+        style_prefix 'developer'
+        xalign 0.5 ypos 8
+        text 't:[time]   f:[fav]'
+        
 
-
+style developer_text is text:
+    size 20
 
 screen pov_toggle(stage=True):
     ## stage表示是否在地图中打开此界面
@@ -296,7 +298,7 @@ label turn:
 
             ## 打开地图
             $ in_map = True
-            $ _windows_hidden = True
+            $ _windows_hidden = True ##禁止隐藏ui界面
             if renpy.config.skipping:
                 $ renpy.config.skipping = None
             if event and type(event[0])==type(''):
@@ -309,7 +311,7 @@ label turn:
             if _return:
 
                 ## 加入历史记录
-                $ choice=map_liyuegang_dict.get(_return)
+                $ choice = map_liyuegang_dict.get(_return)
                 $ add_history(historyadd+'，'+choice[4]+'）')
 
                 ## 特殊事件，与选项无关
@@ -326,8 +328,7 @@ label turn:
                     
                 ## 无特殊事件
                 else:
-                    if _return:
-                        $ choice_history.append(_return)
+                    $ choice_history.append(_return)
                     call expression _return from _call_expression_3
                     $ time = time + 1
                     
@@ -401,13 +402,17 @@ label start:
         $ z_name = glitchtext(10)
         call start_c_3 from _call_start_c_3
     elif persistent.playthrough == 4:
-        jump full_ending
+        if persistent.true_ending:
+            jump full_ending
+        else:
+            jump ending5
     else:
         if pov:
             call start_z from _call_start_z_2
         else:
             call start_c from _call_start_c
-
+    if persistent.playthrough == 2 and config.developer:
+        $ renpy.run(Confirm('别担心，凡是一周目触发过的剧情，在二周目都能进。', NullAction()))
     scene black with dissolve
     jump turn
     return

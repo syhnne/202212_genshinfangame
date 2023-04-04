@@ -2,9 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/turn.rpy", line 155: expected a keyword argument or child statement.
-    'maptooltip2'
-    ^
+File "game/turn.rpy", line 408: expected 'label_name' not found.
+    jump 
+        ^
 
 Ren'Py Version: Ren'Py 8.0.3.22090809
-Mon Apr  3 22:58:03 2023
+Tue Apr  4 22:27:42 2023

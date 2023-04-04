@@ -36,7 +36,7 @@ init python:
             1:[True, 'c01'],
             2:[True, 'c01'],
             4:[False, 'c02'],
-            8:[False, 'p01', 'p01enter'],
+            8:['stay', 'p01'],
             10:[False, 'p02', 'p01enter' ],
             13:[False, 'p03', 'p03enter and c_p02_choice'],
             15:[False, 'c06', 'choice_history[13]==\'p03\''],
@@ -81,7 +81,7 @@ init python:
             'yjt':[ True, True,  1246,785,'玉京台', ],
             'lygmt':[ [False,13], [False,13,28],  1175,218,'璃月港码头', ],
             'swbgg':[ [False,'range(7,62)', range(63,90),], True,    1470,360,'「三碗不过港」', ],
-            'wst':[ [False,55,56], False,   1202,496,'往生堂', ],
+            'wst':[ [False,49,50], False,   1202,496,'往生堂', ],
             'wjt':[ [False,[21,22,23]], False,    1339,366,'「玩具摊」', ],
             'c_home':[ False, [False,[69,70,71]],  510,470,'???', ],
             'z_home':[ [False], False,    200,400,'???', ],
@@ -102,7 +102,7 @@ init python:
 
 
         elif p==3:
-            map_liyuegang_dict['wjt'] [ [False,[21,22,23]], False,    1339,366,'「玩具摊」', ]
+            map_liyuegang_dict['wjt'] = [ [False,[21,22,23]], False,    1339,366,'「玩具摊」', ]
 
             events_c[8] = [False, 'p01', 'renpy.seen_label(\'p01\')' ]
             events_c[10] = [False, 'p02', 'renpy.seen_label(\'p02\')' ]
@@ -110,6 +110,6 @@ init python:
             events_c[21] = ['wjt', 'c07', 'renpy.seen_label(\'c07\')']
             events_c[22] = ['wjt', 'c07']
             events_c[23] = ['wjt', 'c07']
-            d=renpy.random.ranint(21,23)
+            d=renpy.random.randint(21,23)
             events_c[d] = [False, 'c07', 'renpy.seen_label(\'c07\')']
 

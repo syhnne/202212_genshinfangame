@@ -99,6 +99,7 @@ screen developer_options():
             textbutton '5周目(调试)' action SetVariable('persistent.playthrough', 5)
         vbox:
             spacing 20
+            textbutton '刷新剧情列表' action [Function(restore_playthrough,persistent.playthrough),Notify('已刷新。')]
             $ x = persistent.gamedata['load_times']
             text '读档次数：{color=#85c5f5}[x]{/color}\n{color=#ffffff88}p.s.这个变量是为了方便以后加一些类似于“我们已经相遇【load_times】次了”之类的台词设置的（或者直接写在游戏结尾制作组的话那里用来感谢玩家也行）\n点击“从头开始”不会重置这个数据。'
             hbox:
@@ -739,7 +740,7 @@ screen file_slots(title):
                         if FileJson(slot,'timetext'):
                             text FileJson(slot,'timetext') style "slot_time_text"
                         if persistent.unlock_gallery and FileJson(slot,'p') and FileJson(slot,'p') != 5:
-                            text '阶段' +str(FileJson(slot,'p'))+'…' style "slot_time_text" color '#ffffffde' italic True
+                            text str(FileJson(slot,'p'))+'周目'+'…' style "slot_time_text" color '#ffffffde' italic True
                         key "save_delete" action FileDelete(slot)
 
             imagebutton:
@@ -1269,11 +1270,11 @@ screen notify(message):
     zorder 100
     style_prefix "notify"
 
-    frame at notify_appear:
-        text "[message!tq]"
+    frame:
+        at notify_appear
+        text "[message!tq]" 
 
     timer 3.25 action Hide('notify')
-
 
 transform notify_appear:
     on show:
@@ -1282,17 +1283,16 @@ transform notify_appear:
     on hide:
         linear .5 alpha 0.0
 
-
 style notify_frame is empty
 style notify_text is gui_text
 
 style notify_frame:
-    ypos gui.notify_ypos
-
-    background Frame("gui/notify.png", gui.notify_frame_borders, tile=gui.frame_tile)
+    ypos 30 xalign 0.5 xysize (600,60)
+    background 'maptooltip2'
     padding gui.notify_frame_borders.padding
 
 style notify_text:
+    align (0.5,0.5)
     properties gui.text_properties("notify")
 
 
