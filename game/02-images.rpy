@@ -225,6 +225,31 @@ image maptooltip2:
     'gui/map/maptooltip.png'
     alpha 0.75
 
+image spotsp_i = Composite( (146,83),
+    (0,0), 'gui/map/spot.png',
+    (10,0), 'gui/map/spot.png',
+    (20,0), 'gui/map/spot.png',
+    (30,0), 'gui/map/spot.png',
+    (40,0), 'gui/map/spot.png',
+    (50,0), 'gui/map/spot.png',
+    (60,0), 'gui/map/spot.png',
+    (70,0), 'gui/map/spot.png',
+    (80,0), 'gui/map/spot.png',
+)
+
+image spotsp_h = Composite( (146,83),
+    (0,0), 'gui/map/spot_hover.png',
+    (10,0), 'gui/map/spot_hover.png',
+    (20,0), 'gui/map/spot_hover.png',
+    (30,0), 'gui/map/spot_hover.png',
+    (40,0), 'gui/map/spot_hover.png',
+    (50,0), 'gui/map/spot_hover.png',
+    (60,0), 'gui/map/spot_hover.png',
+    (70,0), 'gui/map/spot_hover.png',
+    (80,0), 'gui/map/spot_hover.png',
+)
+
+
 
 ## buttons ###########################################
 image save_button_i = Composite((76,76),

@@ -209,19 +209,28 @@ screen map_liyuegang(spot_has_event=False):
                                 if q == time:
                                     if rand==3:
                                         showspot = not showspot
+                try:
+                    special = value[5]
+                except:
+                    special = 0.5
 
             if showspot:
                 imagebutton:
                     at hovered_animation
                     xpos value[2] ypos value[3]
-                    idle 'gui/map/spot.png'
-                    hover 'gui/map/spot_hover.png'
+                    if special == time:
+                        idle 'spotsp_i'
+                        hover 'spotsp_h'
+                    else:
+                        idle 'gui/map/spot.png'
+                        hover 'gui/map/spot_hover.png'
                     if spot_has_event == key:
                         foreground 'gui/map/spot_foreground_event.png'
                     else:
                         foreground 'gui/map/spot_foreground_notevent.png'
                     action Return(key)
                     tooltip value[4]
+            
                     
         $ tooltip = GetTooltip()            
         if tooltip and tooltip in ['离开璃月港…','不出门…','万民堂','冒险家协会','北国银行','万文集舍','琉璃亭','新月轩','玉京台','璃月港码头','「三碗不过港」','往生堂','「玩具摊」','???']:

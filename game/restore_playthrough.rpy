@@ -38,7 +38,7 @@ init python:
             4:[False, 'c02'],
             8:['stay', 'p01'],
             10:[False, 'p02', 'p01enter' ],
-            13:[False, 'p03', 'p03enter and c_p02_choice'],
+            13:[False, 'p03', 'p03enter'],
             15:[False, 'c06', 'choice_history[13]==\'p03\''],
             21:['wjt', 'c07'],
             22:['wjt', 'c07'],
@@ -56,7 +56,7 @@ init python:
             50:['wst', 'c12'],
             51:[False, 'p08', 'p08enter'],
             57:[False, 'p09', 'p08enter'],
-            66:['outside', 'p13', 'fav>30'],
+            66:['outside', 'p13', 'fav>50'],
             72:['wwjs', 'c15'],
             73:['wwjs', 'c15'],
             74:['wwjs', 'c15'],
@@ -110,6 +110,18 @@ init python:
             events_c[21] = ['wjt', 'c07', 'renpy.seen_label(\'c07\')']
             events_c[22] = ['wjt', 'c07']
             events_c[23] = ['wjt', 'c07']
-            d=renpy.random.randint(21,23)
+            d = renpy.random.randint(21,23)
             events_c[d] = [False, 'c07', 'renpy.seen_label(\'c07\')']
+            events_c[26] = [False, 'p04_3']
+            events_c[30] = [False, 'c09', 'p05enter', 'renpy.seen_label(\'p05\')']
+            events_c[31] = [False, 'c10', 'choice_history[13]==\'p03\' and renpy.seen_label(\'p05\')']
+            events_c[32] = [False, 'c10', 'choice_history[13]==\'p03\' and renpy.seen_label(\'p05\')']
+            events_c[33] = [False, 'c10', 'choice_history[13]==\'p03\' and renpy.seen_label(\'p05\')']
+            events_c[51] = [False, 'p08_3', 'renpy.seen_label(\'p08\')']
+            events_c[57] = [False, 'p09_3', 'renpy.seen_label(\'p08\')']
+            events_c[80] = [False, 'p10_3', 'p10enter']
+            events_c[81] = [False, 'p11', 'choice_history[13]==\'p03\' and renpy.seen_label(\'p03\')']
+
+        
+            
 

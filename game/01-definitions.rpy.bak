@@ -258,7 +258,7 @@ label _game_menu_mod(*args, _game_menu_screen=_game_menu_screen, **kwargs):
     $ renpy.transition(config.enter_transition)
 
     if renpy.has_label("enter_game_menu"):
-        call expression "enter_game_menu" from _call_expression_4
+        call expression "enter_game_menu"
 
     if config.game_menu_music:
         $ renpy.music.play(config.game_menu_music, if_changed=True)

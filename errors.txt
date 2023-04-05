@@ -2,9 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/turn.rpy", line 408: expected 'label_name' not found.
-    jump 
-        ^
+File "game/turn.rpy", line 213: unexpected EOF while parsing
+        special = value[5]
+    
 
 Ren'Py Version: Ren'Py 8.0.3.22090809
-Tue Apr  4 22:27:42 2023
+Wed Apr  5 19:17:05 2023
