@@ -18,7 +18,6 @@ default persistent.true_ending = False
 
 define wanmintangmenu = ['香嫩椒椒鸡','凉拌薄荷','来来菜','扣三丝','四方和平','兽肉薄荷卷','龙须面','米窝窝']
 
-default p01enter = False
 default p03enter = False
 default p04enter = False
 default p05enter = False
@@ -123,7 +122,6 @@ init python:
         delete_all_saves()
         persistent.playthrough = 1
         persistent.lores = {'p03_read':False, 'p05_read':False, 'p08_read':False, 'p10_read':False, }
-        p01enter = False
         p03enter = False
         p04enter = False
         p05enter = False

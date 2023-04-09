@@ -109,7 +109,7 @@ label wmt:
     if time>=63 and choice_history[19] == 'p03' and wmt63_read==False:
         $ wmt63_read=True
         $ favp(2,'wmt63')
-        '万民堂的彩蛋剧情：香菱请钟离帮他试菜，公子不顾阻拦说我也要去，然后被香菱的火史莱姆料理辣的说不出话'
+        '万民堂的彩蛋剧情：香菱请钟离帮他试菜，公子不顾阻拦说我也要去，然后被香菱的火史莱姆料理辣到'
     elif time>=90:
         '因为要过海灯节了，来万民堂吃饭的人很多'
     elif fav>=50:
@@ -314,7 +314,7 @@ label c08:
     if p05enter:
         $ nightlore = False
         $ tp(1)
-        $ favp(3, 'c08saved')
+        $ favp(3, 'p05enter')
         $ del events_c[35]
     return
 
@@ -483,7 +483,6 @@ label p00:
 
 label p01:
     $ favp(2,'p01')
-    $ p01enter=True
     scene bg bgyh inside with dissolve
     '钟离来找公子是为了商量和旅行者吃饭的事，但是两人没有多说话。'
     '现在两个人感情不是很深，还在致力于互损，大概。'

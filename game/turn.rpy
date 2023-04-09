@@ -19,13 +19,16 @@ label developer_90:
 screen developer_time():
     zorder 101
     hbox:
-        style_prefix 'developer'
-        xalign 0.5 ypos 8
-        text 't:[time]   f:[fav]'
+        style_prefix 'developer' xalign 0.5 spacing 15
+        text 'Developer Mode: {u}t:[time]  f:[fav]{/u}'
+        if in_map:
+            text 'Press T to see more.'
+        text '{i}Made by lofter@emilyguai2513'
         
 
 style developer_text is text:
     size 20
+    xalign 0.5
 
 screen pov_toggle(stage=True):
     ## stage表示是否在地图中打开此界面
@@ -89,6 +92,9 @@ screen pov_toggle(stage=True):
             text '请选择游戏视角…'
             textbutton '确定' action Return() sensitive pov!=None xalign 0.5
     else:
+        vbox:
+            xalign 0.5 ypos 30
+            text '切换视角…'
         imagebutton:
             xpos 30 ypos 30
             idle 'back_button_i'
@@ -177,6 +183,8 @@ screen map_liyuegang(spot_has_event=False):
     key "mousedown_4" action ShowMenu('history')
     key 'K_ESCAPE' action ShowMenu('save')
     key 's' action ShowMenu('save')
+    if config.developer:
+        key 't' action ToggleScreen('developer_time_set',dissolve)
 
     window:
         ypos 277 xpos 960
@@ -184,8 +192,6 @@ screen map_liyuegang(spot_has_event=False):
         use days
         if persistent.unlock_gallery:
             use map_options
-        if config.developer:
-            use developer_time_set
 
         for key,value in map_liyuegang_dict.items():
             python:

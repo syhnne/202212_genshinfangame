@@ -6,7 +6,7 @@ init python:
 
         events_z = {
             8:['bgyh', 'p01'],
-            10:[False, 'p00', 'p01enter', 'p02'],
+            10:[False, 'p00', 'choice_history[8]==\'p01\'', 'p02'],
             13:[False, 'p03', 'p03enter'],
             15:[False, 'z04', 'choice_history[13]==\'p03\''],
             18:['mxjxh', 'z05', 'choice_history[13]==\'p03\''],
@@ -37,7 +37,7 @@ init python:
             2:[True, 'c01'],
             4:[False, 'c02'],
             8:['stay', 'p01'],
-            10:[False, 'p02', 'p01enter' ],
+            10:[False, 'p02', 'choice_history[8]==\'p01\'' ],
             13:[False, 'p03', 'p03enter'],
             15:[False, 'c06', 'choice_history[13]==\'p03\''],
             21:['wjt', 'c07'],
@@ -46,9 +46,8 @@ init python:
             26:[False, 'p04'],
             28:[False, 'c08'],
             30:[False, 'c09', 'p05enter', 'p05'],
-            31:[False, 'c10', 'choice_history[13]==\'p03\''],
+            31:[True, 'c10', 'choice_history[13]==\'p03\''],
             32:[True, 'c10', 'choice_history[13]==\'p03\''],
-            33:[True, 'c10', 'choice_history[13]==\'p03\''],
             36:['wmt', 'p06'],
             39:['wwjs', 'p07'],
             40:[False, 'c11', 'choice_history[13]==\'p03\''],
@@ -114,9 +113,8 @@ init python:
             events_c[d] = [False, 'c07', 'renpy.seen_label(\'c07\')']
             events_c[26] = [False, 'p04_3']
             events_c[30] = [False, 'c09', 'p05enter', 'renpy.seen_label(\'p05\')']
-            events_c[31] = [False, 'c10', 'choice_history[13]==\'p03\' and renpy.seen_label(\'p05\')']
-            events_c[32] = [False, 'c10', 'choice_history[13]==\'p03\' and renpy.seen_label(\'p05\')']
-            events_c[33] = [False, 'c10', 'choice_history[13]==\'p03\' and renpy.seen_label(\'p05\')']
+            events_c[31] = [True, 'c10', 'choice_history[13]==\'p03\'']
+            events_c[32] = [True, 'c10', 'choice_history[13]==\'p03\'']
             events_c[51] = [False, 'p08_3', 'renpy.seen_label(\'p08\')']
             events_c[57] = [False, 'p09_3', 'renpy.seen_label(\'p08\')']
             events_c[80] = [False, 'p10_3', 'p10enter']
