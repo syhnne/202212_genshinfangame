@@ -35,7 +35,7 @@ init python:
             0:[True, 'c01'],
             1:[True, 'c01'],
             2:[True, 'c01'],
-            4:[False, 'c02'],
+            7:[False, 'c02'],
             8:['stay', 'p01'],
             10:[False, 'p02', 'choice_history[8]==\'p01\'' ],
             13:[False, 'p03', 'p03enter'],

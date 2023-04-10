@@ -250,7 +250,6 @@ image spotsp_h = Composite( (146,83),
 )
 
 
-
 ## buttons ###########################################
 image save_button_i = Composite((76,76),
     (0,0),'gui/button/quickbutton_i.png',

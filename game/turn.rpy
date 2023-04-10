@@ -17,7 +17,7 @@ label developer_90:
     jump turn
 
 screen developer_time():
-    zorder 101
+    zorder 500
     hbox:
         style_prefix 'developer' xalign 0.5 spacing 15
         text 'Developer Mode: {u}t:[time]  f:[fav]{/u}'
@@ -101,7 +101,6 @@ screen pov_toggle(stage=True):
             hover 'back_button_h'
             action [ToggleScreen('pov_toggle',dissolve), Return(False)]
             
-                
                 
 screen beginner_guide():
     zorder 110
@@ -426,8 +425,8 @@ label start:
             call start_z from _call_start_z_2
         else:
             call start_c from _call_start_c
-    if persistent.playthrough == 2 and config.developer:
-        $ renpy.run(Confirm('别担心，凡是一周目触发过的剧情，在二周目都能进。', NullAction()))
+    # if persistent.playthrough == 2 and config.developer:
+    #     $ renpy.run(Confirm('别担心，凡是一周目触发过的剧情，在二周目都能进。', NullAction()))
     scene black with dissolve
     jump turn
     return

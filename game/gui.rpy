@@ -415,10 +415,6 @@ define gui.frame_tile = False
 
 
 ## 条，滚动条和滑块 ####################################################################
-##
-## 这些语句控制条，滚动条和滑块的外观和大小。
-##
-## 默认的GUI仅使用滑块和垂直滚动条。所有其他栏仅在创建者编写的屏幕中使用。
 
 ## 水平条，滚动条和滑块的高度。垂直条，滚动条和滑块的宽度。
 define gui.bar_size = 10
@@ -445,7 +441,6 @@ define gui.unscrollable = "hide"
 
 ## 本地化 #########################################################################
 
-## 该变量控制允许在何时换行。默认值适用于大多数语言。可用的值请参见 https://
-## www.renpy.org/doc/html/style_properties.html#style-property-language
+## 该变量控制允许在何时换行。默认值适用于大多数语言。可用的值请参见 https://www.renpy.org/doc/html/style_properties.html#style-property-language
 
 define gui.language = "unicode"

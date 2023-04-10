@@ -78,7 +78,6 @@ style genshingui_prompt is gui_prompt:
 
 
 
-
 screen developer_options():
     tag menu
     use game_menu('开发者选项', scroll="viewport"):
