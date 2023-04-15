@@ -112,7 +112,7 @@ screen beginner_guide():
             text '1.这里会显示时间和日期，\n每天有3次选择的机会。'
         frame:
             xpos 360 ypos 240 
-            text '2.点击这个头像框，可以切换游戏的视角。\n不同的视角中可能有不同的事件发生，{u}还可能受到另一视角上特殊事件的影响…{/u}'
+            text '2.点击这个头像框，或者按键盘快捷键Tab，可以切换游戏的视角。\n不同的视角中可能有不同的事件发生，{u}还可能受到另一视角上特殊事件的影响…{/u}'
         frame:
             xpos 813 ypos 421
             text '3.点击地点图标，触发相应的剧情。'
@@ -120,6 +120,13 @@ screen beginner_guide():
             xpos 1100 ypos 140
             text '4.随着游戏进度推进，可能会有更多功能解锁…'
         dismiss action Hide('beginner_guide',dissolve)
+
+screen ctc():
+    zorder 100
+    hbox:
+        at ctc_appear
+        xalign 0.5 yalign 0.96
+        image 'genshinctc'
 
 screen map_options():
     zorder 51
@@ -142,13 +149,13 @@ screen map_options():
                 has vbox
                 text "（操作提示）"
 
-screen days():
+screen days(text=None):
     zorder 50
     $ tooltip = GetTooltip('map_liyuegang')
     $ dddate=date(time)
     $ ccclock=clocktext(time)
 
-    key 'K_TAB' action Show('pov_toggle',dissolve)
+    
     button:
         xpos 20 ypos 20 xysize (400,84)
         style_prefix 'genshingui'
@@ -157,7 +164,10 @@ screen days():
         action NullAction()
         hbox:
             xpos 120 ypos 18 xsize 240
-            text '第[dddate]天     [ccclock]' xalign 0.5
+            if not text:
+                text '第[dddate]天     [ccclock]' xalign 0.5
+            else:
+                text text xalign 0.5
         
     image 'maptooltip2' ypos 30 xalign 0.5
         
@@ -167,34 +177,41 @@ screen days():
             text tooltip size gui.text_size-2
         else:
             text '去哪里看看…' size gui.text_size-2
+    if time != -1:
+        imagebutton:
+            xpos 20 ypos 120
+            idle 'maptogglebutton_i'
+            hover 'maptogglebutton_h'
+            sensitive povtoggle_enable
+            insensitive 'maptogglebutton_is'
+            action Show('pov_toggle',dissolve)
+            tooltip '切换视角…'
 
-    imagebutton:
-        xpos 20 ypos 120
-        idle 'maptogglebutton_i'
-        hover 'maptogglebutton_h'
-        action Show('pov_toggle',dissolve)
-        tooltip '切换视角…(Tab)'
-
-screen map_liyuegang(spot_has_event=False):
+screen map_liyuegang(spot_has_event=[], mapdict=map_liyuegang_dict, bg=None, text=None):
     
-    zorder 0    
+    zorder 0
     
     key "mousedown_4" action ShowMenu('history')
     key 'K_ESCAPE' action ShowMenu('save')
     key 's' action ShowMenu('save')
+    if povtoggle_enable:
+        key 'K_TAB' action Show('pov_toggle',dissolve)
     if config.developer:
         key 't' action ToggleScreen('developer_time_set',dissolve)
 
     window:
         ypos 277 xpos 960
-        background 'map_bg'
-        use days
+        if bg:
+            background bg
+        else:
+            background 'map_bg'
+        use days(text)
         if persistent.unlock_gallery:
             use map_options
 
-        for key,value in map_liyuegang_dict.items():
+        for key,value in mapdict.items():
             python:
-                x = map_liyuegang_dict.get(key)
+                x = mapdict.get(key)
                 map_clist = x[int(pov)]
                 if type(map_clist) == type(True):
                     showspot = map_clist
@@ -229,16 +246,19 @@ screen map_liyuegang(spot_has_event=False):
                     else:
                         idle 'gui/map/spot.png'
                         hover 'gui/map/spot_hover.png'
-                    if spot_has_event == key:
+                    if key in spot_has_event:
                         foreground 'gui/map/spot_foreground_event.png'
                     else:
                         foreground 'gui/map/spot_foreground_notevent.png'
                     action Return(key)
-                    tooltip value[4]
+                    if (pov==False and key==c_home) or (pov and key==z_home):
+                        tooltip '不出门…'
+                    else:
+                        tooltip value[4]
             
                     
         $ tooltip = GetTooltip()            
-        if tooltip and tooltip in ['离开璃月港…','不出门…','万民堂','冒险家协会','北国银行','万文集舍','琉璃亭','新月轩','玉京台','璃月港码头','「三碗不过港」','往生堂','「玩具摊」','???']:
+        if tooltip and not tooltip in ['保存', '读取', '设置', '切换视角…', ]:
             nearrect:
                 focus "tooltip"
                 prefer_top True
@@ -259,13 +279,13 @@ screen map_liyuegang(spot_has_event=False):
 
 label turn:
 
-    scene black with dissolve
-        
     while time <= 90:
         
         $ menuscrsdata = None
         $ rand=renpy.random.randint(1,6)
         $ historyadd = '（第'+str(date(time))+'天  '+clocktext(time)
+
+        scene black with dissolve
         
         ## 获得列表中特殊事件
         if pov:
@@ -277,7 +297,6 @@ label turn:
         if event:
             $ event_label_name = event[1]
             
-
             ## 判定是否满足触发的条件。这个条件需要是个字符串，并且返回一个布尔值
             if len(event)>2:
                 python:
@@ -301,9 +320,6 @@ label turn:
 
         ## 允许打开地图
         else:
-            
-            # 给地图上的小人头像摇个随机数
-            $ map_random_picture = renpy.random.randint(1,6)
 
             ## 新手教程
             if persistent.seen_beginner_guide == False:
@@ -320,9 +336,12 @@ label turn:
             else:
                 call screen map_liyuegang() with dissolve
             $ _windows_hidden = False
-            $ in_map = False    
+            $ in_map = False
 
             if _return:
+
+                # 给地图上的小人头像摇个随机数
+                $ map_random_picture = renpy.random.randint(1,6)
 
                 ## 加入历史记录
                 $ choice = map_liyuegang_dict.get(_return)
@@ -348,13 +367,11 @@ label turn:
                     
                     
             
-        scene black with dissolve
         if clock(time-1)==2 and time != 0 and _return != False and nightlore :
             call night from _call_night
         
-
+    ## 离开循环
     scene black with dissolve
-    
     if persistent.playthrough == 1:
         if fav>50:
             jump ending1
@@ -366,20 +383,12 @@ label turn:
         jump ending4
 
 
-screen ctc():
-    zorder 100
-    hbox:
-        at ctc_appear
-        xalign 0.5 yalign 0.96
-        image 'genshinctc'
-        
-        
-
 
 ################################################
 
 label start:
     python:
+        map_random_picture = renpy.random.randint(1,6)
         pov = None
         playthrough = persistent.playthrough
         _dismiss_pause = False
@@ -425,9 +434,7 @@ label start:
             call start_z from _call_start_z_2
         else:
             call start_c from _call_start_c
-    # if persistent.playthrough == 2 and config.developer:
-    #     $ renpy.run(Confirm('别担心，凡是一周目触发过的剧情，在二周目都能进。', NullAction()))
+
     scene black with dissolve
     jump turn
-    return
 

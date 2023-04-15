@@ -1,30 +1,26 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/turn.rpy", line 290, in script
-    python:
-  File "game/turn.rpy", line 295, in <module>
-    renpy.error(str(time)+'你输入的字符串【'+x+'】条件有误，请检查')
-Exception: 31你输入的字符串【choice_history[36]=='p05'】条件有误，请检查
+  File "game/turn.rpy", line 365, in script call
+    call expression _return from _call_expression_3
+  File "game/turn.rpy", line 365, in script call
+    call expression _return from _call_expression_3
+ScriptError: could not find label 'False'.
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "game/turn.rpy", line 290, in script
-    python:
-  File "D:\renpy-7.4.4-sdk\renpy\ast.py", line 1131, in execute
-    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
-  File "D:\renpy-7.4.4-sdk\renpy\python.py", line 1061, in py_exec_bytecode
-    exec(bytecode, globals, locals)
-  File "game/turn.rpy", line 295, in <module>
-    renpy.error(str(time)+'你输入的字符串【'+x+'】条件有误，请检查')
-  File "D:\renpy-7.4.4-sdk\renpy\exports.py", line 2662, in error
-    _error_handlers[-1](msg)
-  File "D:\renpy-7.4.4-sdk\renpy\exports.py", line 2639, in _error
-    raise Exception(msg)
-Exception: 31你输入的字符串【choice_history[36]=='p05'】条件有误，请检查
+  File "game/turn.rpy", line 365, in script call
+    call expression _return from _call_expression_3
+  File "D:\renpy-8.0.3-sdk\renpy\ast.py", line 1705, in execute
+    rv = renpy.game.context().call(label, return_site=self.next.name)
+  File "game/turn.rpy", line 365, in script call
+    call expression _return from _call_expression_3
+  File "D:\renpy-8.0.3-sdk\renpy\script.py", line 927, in lookup
+    raise ScriptError("could not find label '%s'." % str(original))
+ScriptError: could not find label 'False'.
 
-Windows-10-10.0.22621 AMD64
+Windows-10-10.0.17763 AMD64
 Ren'Py 8.0.3.22090809
-untitled 0.1
-Wed Mar 15 19:27:41 2023
+untitled 0.2
+Sat Apr 15 23:16:36 2023

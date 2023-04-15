@@ -220,6 +220,11 @@ image maptogglebutton_h = Composite((150,150),
     (0,0), 'mapicon',
     (0,0), 'gui/map/chrtoggle_fg_h.png',
 )
+image maptogglebutton_is = Composite((150,150),
+    (0,0), 'gui/map/chrtoggle_bg_h.png',
+    (0,0), 'mapicon',
+    (0,0), 'gui/map/chrtoggle_fg_is.png',
+)
 
 image maptooltip2:
     'gui/map/maptooltip.png'

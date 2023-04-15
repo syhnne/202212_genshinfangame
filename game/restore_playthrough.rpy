@@ -20,9 +20,9 @@ init python:
             51:[False, 'p08', 'p08enter'],
             57:[False, 'p09', 'p08enter'],
             66:['outside', 'p13', 'fav>30'],
-            69:['c_home', 'z09'],
-            70:['c_home', 'z09'],
-            71:['c_home', 'z09'],
+            69:['False', 'z09'],
+            70:['False', 'z09'],
+            71:['False', 'z09'],
             75:['mxjxh', 'z10'], 
             76:['mxjxh', 'z10'], 
             77:['mxjxh', 'z10'], 
@@ -70,7 +70,7 @@ init python:
 
         map_liyuegang_dict = {
             'outside':[ True, True,  180,550,'离开璃月港…', ],
-            'stay':[ True, True,   250,200,'不出门…', ],
+            # 'stay':[ True, True,   250,200,'不出门…', ],
             'wmt':[ True, True,  1565,339,'万民堂', ],
             'mxjxh':[ [False,[75,76,77],], [False,24,[75,76,77],],  1478,221,'冒险家协会', ],
             'bgyh':[ False, [False,6,7,8],    1010,441,'北国银行', ],
@@ -80,10 +80,10 @@ init python:
             'yjt':[ True, True,  1246,785,'玉京台', ],
             'lygmt':[ [False,13], [False,13,28],  1175,218,'璃月港码头', ],
             'swbgg':[ [False,'range(7,62)', range(63,90),], True,    1470,360,'「三碗不过港」', ],
-            'wst':[ [False,49,50], False,   1202,496,'往生堂', ],
+            'wst':[ [False,49,50], True,   1202,496,'往生堂', ],
             'wjt':[ [False,[21,22,23]], False,    1339,366,'「玩具摊」', ],
-            'c_home':[ False, [False,[69,70,71]],  510,470,'???', ],
-            'z_home':[ [False], False,    200,400,'???', ],
+            'False':[ True, [False,[69,70,71]],  510,470,'???', ],
+            'True':[ [False], False,    200,400,'???', ],
         }
 
         if p==2:

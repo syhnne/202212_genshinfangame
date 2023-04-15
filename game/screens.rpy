@@ -530,7 +530,7 @@ screen game_menu(title, scroll=None, yinitial=0.0):
             add 'map_bg' blur 10
         elif menuscrsdata:
             $ s = im.Data(menuscrsdata, "screenshot.png")
-            add Transform(s, zoom=6, blur=10)
+            add Transform(s, zoom=6, blur=15)
         frame:
             style "game_menu_outer_frame"
             background "gui/overlay/game_menu.png"

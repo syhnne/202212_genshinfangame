@@ -37,8 +37,9 @@ define c = Character('c_name', image ='childe', dynamic=True)
 define t = Character('旅行者')
 define p = Character('派蒙')
 
-default playthrough = 0
 default pov = None ##一般理性而言，只有一周目开始前和四周目才会出现None
+default povtoggle_enable = True
+default playthrough = 0
 default time = 0
 default fav = 0
 default fav_history = []
@@ -46,10 +47,12 @@ default choice_history = []
 default nightlore = True
 default in_map = False
 default in_splash = False
+default c_home = 'c_home'
+default z_home = 'wst' ##救命，钟离他住哪啊？别告诉我他不住璃月港，我的编程水准不允许我再做一张地图。。为了避免引发一些危机，我们就当他住在往生堂的员工宿舍（汗）
 
 default map_random_picture = 1
 default menuscrsdata = None
-default playthrough_mismatch = False
+
 
 
 
@@ -61,13 +64,12 @@ init python:
     effects = 'effects'
 
     ## 感谢ddlc，我直接对代码进行一个照搬。
-    import random
     nonunicode = "¡¢£¤¥¦§¨©ª«¬®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿĀāĂăĄąĆćĈĉĊċČčĎďĐđĒēĔĕĖėĘęĚěĜĝĞğĠġĢģĤĥĦħĨĩĪīĬĭĮįİıĲĳĴĵĶķĸĹĺĻļĽľĿŀŁłŃńŅņŇňŉŊŋŌōŎŏŐőŒœŔŕŖŗŘřŚśŜŝŞşŠšŢţŤťŦŧŨũŪūŬŭŮůŰűŲųŴŵŶŷŸŹźŻżŽž"
     erererer = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'
     def glitchtext(length):
         output = ""
         for x in range(length):
-            output += random.choice(nonunicode+erererer)
+            output += renpy.random.choice(nonunicode+erererer)
         return output
     gtext_mainmenu = glitchtext(12)
 
@@ -75,13 +77,9 @@ init python:
     def date(time):
         if persistent.playthrough == 5:
             return '??'
-        elif time >= 0:
+        else:
             date = (time//3)+1
             return date
-        else:
-            date = time//3
-            return date
-            
 
     ## 判断时间。因为time这个词被我用过了，所以换成clock，不要在意这些细节。
     def clock(time):
@@ -90,7 +88,7 @@ init python:
 
     ## 返回时间段
     def clocktext(time):
-        if time<0:
+        if time<-1:
             return '???'
         elif time%3 == 0:
             return '上午'
@@ -275,3 +273,16 @@ label _game_menu_mod(*args, _game_menu_screen=_game_menu_screen, **kwargs):
 
     jump expression _game_menu_screen
     
+
+# ## 打开地图。这个函数用不了，因为我不知道call screen这个renpy语句究竟是怎样一个流程。
+# map_liyuegang_dict = None
+# def openmap(eventspot=[], mapdict=map_liyuegang_dict, bg=None, text=None):
+#     if renpy.config.skipping:
+#         renpy.config.skipping = None
+#     in_map = True
+#     _windows_hidden = True
+#     # call screen map_liyuegang(eventspot, mapdict, bg, text) with dissolve
+#     Dissolve(0.3)
+#     renpy.call_screen('map_liyuegang', eventspot, mapdict, bg, text)
+#     in_map = False
+#     _windows_hidden = False

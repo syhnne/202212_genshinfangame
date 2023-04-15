@@ -44,12 +44,37 @@ label start_z_2:
 
 label start_c:
 
-    scene bg bgyh 0 with wipeleft
+    scene bg bgyh 2 with wipeleft
     '开头部分，可能是在北国银行吧，旅行者和派蒙碰到公子，接下他的委托去帮他买一些东西，因为他现在上了璃月的黑名单了，大家都不卖他东西（'
     '之所以这么写，呃，是因为我觉得主线刚结束那会儿两个人处于一种比较尴尬的状态，需要旅行者带他们去吃饭（？'
 
-    ## 如果真有人扒开代码看了，这是我大概三个月之前自己写的，
+    ## 我宣布以下是整个工程中最粪的代码。不是我不想把它们绑成一个函数，是renpy他针对我，我原封不动搬的内部代码，还怕他不认得，特地把python hide全给他重写一遍，他还是不认，宁死不给我隐藏用户界面。
+    ## 只能解释为，显示菜单这一步中，隐藏用户界面这件事发生在了别的地方。或者是他干脆在那里加个了判断，只认“call screen”这几个字。真是把我害惨了，早知如此直接来这里写屎山，不折腾那函数了。
+    $ mapdict = {'c_home':[ True, True,  510,470,'回到客栈', ],  'continue':[ True, True,  835,538,'继续逛逛…', ]}
+    if renpy.config.skipping:
+        $ renpy.config.skipping = None
+    $ time -= 1
+    $ in_map = True
+    $ povtoggle_enable = False
+    $ _windows_hidden = True
+    call screen map_liyuegang([], mapdict, None, None) with dissolve
+    $ time += 1
+    $ in_map = False
+    $ povtoggle_enable = True
+    $ _windows_hidden = False
 
+    # showmap map_liyuegang([], mapdict, None, None) with dissolve
+
+    if _return == 'continue':
+        scene bg lyg 2 with dissolve
+        'continue'
+    else:
+        scene bg c with dissolve
+        'home'
+    call night
+    scene bg bgyh 0 with dissolve
+    '……'
+    
     # scene bg bgyh 0 with wipeleft
     # ## 显示旅行者和派蒙的立绘
     # c '哟，伙伴，我们又见面了。'
@@ -71,7 +96,6 @@ label start_c:
     # p '这样啊？'
     # p '你自己不能去买吗，为什么要让我们…'
     # p '…我知道了！哼哼，一定是在黄金屋时，旅行者得知你要偷走「神之心」，下手太重打得你没法出门了！'
-    # ## 旅行者：很难不流汗。拜托，我当年刚入坑的时候吃了十多个甜甜花酿鸡才打过。
     # t '派蒙…'
     # c '噗…怎么会呢。我可不是那么轻易就会被打倒的人。'
     # c '那次事件之后，璃月很多商铺都把我和「北国银行」纳入了黑名单，所以只好拜托你们去买了。'
@@ -102,6 +126,14 @@ label start_c_3:
 
 
 ## 地点 ###############################################################################
+
+label c_home:
+    '不出门的剧情'
+    return
+
+label z_home:
+    '理论上玩家看不到这句话，因为我没改过钟离住的地方'
+    return
 
 label wmt:
     scene expression 'bg wmt '+str(clock(time)) with dissolve
@@ -885,6 +917,7 @@ label after_load:
 
 
 label night:
+    scene black with dissolve
     '一天结束了'
 
     return
