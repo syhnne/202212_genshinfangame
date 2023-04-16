@@ -1,28 +1,32 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/turn.rpy", line 399, in script
-    if ev == 'stay':
-  File "game/turn.rpy", line 399, in <module>
-    if ev == 'stay':
-NameError: name 'ev' is not defined
+  File "game/01-definitions.rpy", line 278, in script
+    $ ui.interact(suppress_overlay=True, suppress_window=True) ##这是关键
+  File "game/01-definitions.rpy", line 278, in <module>
+    $ ui.interact(suppress_overlay=True, suppress_window=True) ##这是关键
+TypeError: 'Dissolve' object is not callable
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "game/turn.rpy", line 399, in script
-    if ev == 'stay':
-  File "D:\renpy-8.0.3-sdk\renpy\ast.py", line 2115, in execute
-    if renpy.python.py_eval(condition):
-  File "D:\renpy-8.0.3-sdk\renpy\python.py", line 1092, in py_eval
-    return py_eval_bytecode(code, globals, locals)
-  File "D:\renpy-8.0.3-sdk\renpy\python.py", line 1085, in py_eval_bytecode
-    return eval(bytecode, globals, locals)
-  File "game/turn.rpy", line 399, in <module>
-    if ev == 'stay':
-NameError: name 'ev' is not defined
+  File "game/01-definitions.rpy", line 278, in script
+    $ ui.interact(suppress_overlay=True, suppress_window=True) ##这是关键
+  File "D:\renpy-8.0.3-sdk\renpy\ast.py", line 1131, in execute
+    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
+  File "D:\renpy-8.0.3-sdk\renpy\python.py", line 1061, in py_exec_bytecode
+    exec(bytecode, globals, locals)
+  File "game/01-definitions.rpy", line 278, in <module>
+    $ ui.interact(suppress_overlay=True, suppress_window=True) ##这是关键
+  File "D:\renpy-8.0.3-sdk\renpy\ui.py", line 299, in interact
+    rv = renpy.game.interface.interact(roll_forward=roll_forward, **kwargs)
+  File "D:\renpy-8.0.3-sdk\renpy\display\core.py", line 3377, in interact
+    repeat, rv = self.interact_core(preloads=preloads, trans_pause=trans_pause, pause=pause, pause_start=pause_start, pause_modal=pause_modal, **kwargs) # type: ignore
+  File "D:\renpy-8.0.3-sdk\renpy\display\core.py", line 3752, in interact_core
+    trans = self.ongoing_transition[None](
+TypeError: 'Dissolve' object is not callable
 
 Windows-10-10.0.17763 AMD64
 Ren'Py 8.0.3.22090809
 untitled 0.2
-Sun Apr 16 14:14:43 2023
+Sun Apr 16 18:40:43 2023
