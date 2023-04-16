@@ -881,12 +881,12 @@ screen preferences():
                     text '关'
                 else:
                     text '开'
-            # if config.developer:
-            use pref_choice('低配模式', '打开后会关闭一些性能消耗大的功能', ('开', [Function(gui.SetPreference("low_performance_mode", True)),SetVariable('menuscrsdata', None)]),  ('关', Function(gui.SetPreference("low_performance_mode", False)))  ):
-                if gui.low_performance_mode:
-                    text '开'
-                else:
-                    text '关'
+            if config.developer:
+                use pref_choice('低配模式', '打开后会关闭一些性能消耗大的功能', ('开', [Function(gui.SetPreference("low_performance_mode", True)),SetVariable('menuscrsdata', None)]),  ('关', Function(gui.SetPreference("low_performance_mode", False)))  ):
+                    if gui.low_performance_mode:
+                        text '开'
+                    else:
+                        text '关'
             null height 40
             label '快进选项'
             use pref_choice('跳过未读文本', '开启后，快进不会在遇到未读文本时停止。', ("只跳过已读文本",Preference("skip", "seen")), ("跳过所有文本",Preference("skip", "all"))):
@@ -899,7 +899,7 @@ screen preferences():
                     text '跳过'
                 else:
                     text '不跳过'
-            use pref_choice('跳过转场', '如果卡顿严重，可以同时开启低配模式', ('跳过', If('not gui.preference("low_performance_mode")',Preference("transitions", "none") ) ),  ('不跳过',Preference("transitions", "all"))):
+            use pref_choice('跳过转场', '开启后，将隐藏转场的动画效果。', ('跳过', [Preference("transitions", "none"), Function(gui.SetPreference("low_performance_mode", True))]  ),  ('不跳过',Preference("transitions", "all"))):
                 if preferences.transitions == 2:
                     text '不跳过'
                 elif preferences.transitions == 0:

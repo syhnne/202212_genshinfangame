@@ -1,3 +1,4 @@
+## 这下是真的只有我和上帝能看懂了，估计一两周过后，就只有上帝能看懂了
 
 screen developer_time_set():
     zorder 100
@@ -187,7 +188,8 @@ screen days(text=None):
             action Show('pov_toggle',dissolve)
             tooltip '切换视角…'
 
-screen map_liyuegang(spot_has_event=[], mapdict=map_liyuegang_dict, bg=None, text=None):
+screen map_liyuegang(spot_has_event='', mapdict=map_liyuegang_dict, bg=None, text=None):
+    ## spot has event是把列表里头的触发字符串原封不动传过来了，所以要分割一下空格，识别一下stay
     
     zorder 0
     
@@ -209,9 +211,20 @@ screen map_liyuegang(spot_has_event=[], mapdict=map_liyuegang_dict, bg=None, tex
         if persistent.unlock_gallery:
             use map_options
 
-        for key,value in mapdict.items():
+        python:
+            ev = spot_has_event.split(' ')
+            if len(ev) == 1:
+                if ev[0] == 'stay':
+                    evshow = call_stay()
+                else:
+                    evshow = ev[0]
+            else:
+                evshow = None
+
+        for spotname, spotinfo in mapdict.items():
+            
             python:
-                x = mapdict.get(key)
+                x = mapdict.get(spotname)
                 map_clist = x[int(pov)]
                 if type(map_clist) == type(True):
                     showspot = map_clist
@@ -232,29 +245,34 @@ screen map_liyuegang(spot_has_event=[], mapdict=map_liyuegang_dict, bg=None, tex
                                     if rand==3:
                                         showspot = not showspot
                 try:
-                    special = value[5]
+                    special = spotinfo[5]
                 except:
                     special = 0.5
+                if spotname == chome or spotname == zhome:
+                    to_return = 'stay'
+                else:
+                    to_return = spotname
+
 
             if showspot:
                 imagebutton:
                     at hovered_animation
-                    xpos value[2] ypos value[3]
+                    xpos spotinfo[2] ypos spotinfo[3]
                     if special == time:
                         idle 'spotsp_i'
                         hover 'spotsp_h'
                     else:
                         idle 'gui/map/spot.png'
                         hover 'gui/map/spot_hover.png'
-                    if key in spot_has_event:
+                    if spotname == evshow:
                         foreground 'gui/map/spot_foreground_event.png'
                     else:
                         foreground 'gui/map/spot_foreground_notevent.png'
-                    action Return(key)
-                    if (pov==False and key==c_home) or (pov and key==z_home):
+                    action Return(to_return)
+                    if (pov==False and spotname==chome) or (pov and spotname==zhome):
                         tooltip '不出门…'
                     else:
-                        tooltip value[4]
+                        tooltip spotinfo[4]
             
                     
         $ tooltip = GetTooltip()            
@@ -314,7 +332,7 @@ label turn:
         if event and type(event[0])==type(True) and event[0] == False:
             $ choice_history.append(event_label_name)
             $ add_history(historyadd+'）')
-            call expression event_label_name from _call_expression
+            call expression event_label_name
             $ time = time + 1 
             
 
@@ -344,31 +362,42 @@ label turn:
                 $ map_random_picture = renpy.random.randint(1,6)
 
                 ## 加入历史记录
-                $ choice = map_liyuegang_dict.get(_return)
+                if _return == 'stay':
+                    $ choice = map_liyuegang_dict.get(call_stay())
+                    
+                else:
+                    $ choice = map_liyuegang_dict.get(_return)
                 $ add_history(historyadd+'，'+choice[4]+'）')
 
                 ## 特殊事件，与选项无关
                 if event and type(event[0])==type(True):
                     $ choice_history.append(event_label_name)
-                    call expression event_label_name from _call_expression_1
+                    call expression event_label_name
                     $ time = time + 1
                     
                 ## 特殊事件，选对才能进
-                elif event and type(event[0])==type('') and event[0] == _return:
-                    $ choice_history.append(event_label_name)
-                    call expression event_label_name from _call_expression_2
-                    $ time = time + 1
+                elif event and type(event[0])==type(''):
+                    $ ev = event[0].split(' ')[0]
+                    if ev == _return:
+                        $ choice_history.append(event_label_name)
+                        call expression event_label_name
+                        $ time = time + 1
+                    elif ev == 'stay':
+                        call expression call_stay()
                     
                 ## 无特殊事件
                 else:
                     $ choice_history.append(_return)
-                    call expression _return from _call_expression_3
+                    if _return == 'stay':
+                        call expression call_stay()
+                    else:
+                        call expression _return
                     $ time = time + 1
                     
                     
             
         if clock(time-1)==2 and time != 0 and _return != False and nightlore :
-            call night from _call_night
+            call night
         
     ## 离开循环
     scene black with dissolve
@@ -412,7 +441,7 @@ label start:
         $ pov_enable_c = True
         $ pov_enable_z = True
 
-    call before_start from _call_before_start
+    call before_start
     scene black with dissolve
     if renpy.config.skipping:
         $ renpy.config.skipping = None
@@ -420,10 +449,10 @@ label start:
     if config.developer:
         show screen developer_time
     if persistent.playthrough == 2:
-        call start_z from _call_start_z_1
+        call start_z
     elif persistent.playthrough == 3:
         $ z_name = glitchtext(10)
-        call start_c_3 from _call_start_c_3
+        call start_c_3
     elif persistent.playthrough == 4:
         if persistent.true_ending:
             jump full_ending
@@ -431,9 +460,9 @@ label start:
             jump ending5
     else:
         if pov:
-            call start_z from _call_start_z_2
+            call start_z
         else:
-            call start_c from _call_start_c
+            call start_c
 
     scene black with dissolve
     jump turn

@@ -1,26 +1,28 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/turn.rpy", line 365, in script call
-    call expression _return from _call_expression_3
-  File "game/turn.rpy", line 365, in script call
-    call expression _return from _call_expression_3
-ScriptError: could not find label 'False'.
+  File "game/turn.rpy", line 399, in script
+    if ev == 'stay':
+  File "game/turn.rpy", line 399, in <module>
+    if ev == 'stay':
+NameError: name 'ev' is not defined
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "game/turn.rpy", line 365, in script call
-    call expression _return from _call_expression_3
-  File "D:\renpy-8.0.3-sdk\renpy\ast.py", line 1705, in execute
-    rv = renpy.game.context().call(label, return_site=self.next.name)
-  File "game/turn.rpy", line 365, in script call
-    call expression _return from _call_expression_3
-  File "D:\renpy-8.0.3-sdk\renpy\script.py", line 927, in lookup
-    raise ScriptError("could not find label '%s'." % str(original))
-ScriptError: could not find label 'False'.
+  File "game/turn.rpy", line 399, in script
+    if ev == 'stay':
+  File "D:\renpy-8.0.3-sdk\renpy\ast.py", line 2115, in execute
+    if renpy.python.py_eval(condition):
+  File "D:\renpy-8.0.3-sdk\renpy\python.py", line 1092, in py_eval
+    return py_eval_bytecode(code, globals, locals)
+  File "D:\renpy-8.0.3-sdk\renpy\python.py", line 1085, in py_eval_bytecode
+    return eval(bytecode, globals, locals)
+  File "game/turn.rpy", line 399, in <module>
+    if ev == 'stay':
+NameError: name 'ev' is not defined
 
 Windows-10-10.0.17763 AMD64
 Ren'Py 8.0.3.22090809
 untitled 0.2
-Sat Apr 15 23:16:36 2023
+Sun Apr 16 14:14:43 2023

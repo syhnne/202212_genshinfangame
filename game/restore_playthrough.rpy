@@ -4,6 +4,12 @@ init python:
 
         global events_z, events_c, map_liyuegang_dict
 
+
+        ## 开头的数字：有特殊事件的时间
+        ## 列表第一项：False表示直接进特殊剧情，True表示打开地图但无论选什么都进特殊剧情，字符串表示特殊剧情的标点，stay是特殊标签会指引向_home变量的标签名，后面有空格和别的东西表示不显示
+        ## 列表第二项：特殊剧情的label
+        ## 列表第三项：如果有，是触发特殊剧情的条件
+        ## 列表第四项：如果有，是满足该特殊条件时触发的剧情，覆盖第二项
         events_z = {
             8:['bgyh', 'p01'],
             10:[False, 'p00', 'choice_history[8]==\'p01\'', 'p02'],
@@ -70,7 +76,6 @@ init python:
 
         map_liyuegang_dict = {
             'outside':[ True, True,  180,550,'离开璃月港…', ],
-            # 'stay':[ True, True,   250,200,'不出门…', ],
             'wmt':[ True, True,  1565,339,'万民堂', ],
             'mxjxh':[ [False,[75,76,77],], [False,24,[75,76,77],],  1478,221,'冒险家协会', ],
             'bgyh':[ False, [False,6,7,8],    1010,441,'北国银行', ],
@@ -82,8 +87,8 @@ init python:
             'swbgg':[ [False,'range(7,62)', range(63,90),], True,    1470,360,'「三碗不过港」', ],
             'wst':[ [False,49,50], True,   1202,496,'往生堂', ],
             'wjt':[ [False,[21,22,23]], False,    1339,366,'「玩具摊」', ],
-            'False':[ True, [False,[69,70,71]],  510,470,'???', ],
-            'True':[ [False], False,    200,400,'???', ],
+            'c_home':[ True, [False,[69,70,71]],  510,470,'???', ],
+            'z_home':[ [False], False,    200,400,'???', ],
         }
 
         if p==2:

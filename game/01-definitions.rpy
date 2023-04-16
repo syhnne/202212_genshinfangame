@@ -47,8 +47,8 @@ default choice_history = []
 default nightlore = True
 default in_map = False
 default in_splash = False
-default c_home = 'c_home'
-default z_home = 'wst' ##救命，钟离他住哪啊？别告诉我他不住璃月港，我的编程水准不允许我再做一张地图。。为了避免引发一些危机，我们就当他住在往生堂的员工宿舍（汗）
+default chome = 'c_home'
+default zhome = 'wst' ##救命，钟离他住哪啊？别告诉我他不住璃月港，我的编程水准不允许我再做一张地图。。为了避免引发一些危机，我们就当他住在往生堂的员工宿舍（汗）
 
 default map_random_picture = 1
 default menuscrsdata = None
@@ -148,6 +148,14 @@ init python:
         for i in range(amount):
             x=choice_history[-1]
             choice_history.append(x)
+
+    ## 给stay事件单独做个函数，稍微增加一点前面那坨shit的可读性
+    def call_stay():
+        global pov, chome, zhome
+        if pov:
+            return zhome
+        else:
+            return chome
 
     ## 移动鼠标
     def RigMouse(targetpos=[1460, 655]):

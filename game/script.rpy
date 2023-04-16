@@ -56,11 +56,13 @@ label start_c:
     $ time -= 1
     $ in_map = True
     $ povtoggle_enable = False
+    $ nightlore = False
     $ _windows_hidden = True
-    call screen map_liyuegang([], mapdict, None, None) with dissolve
+    call screen map_liyuegang('', mapdict, None, None) with dissolve
     $ time += 1
     $ in_map = False
     $ povtoggle_enable = True
+    $ nightlore = True
     $ _windows_hidden = False
 
     # showmap map_liyuegang([], mapdict, None, None) with dissolve
@@ -173,14 +175,6 @@ label outside:
         '地点5'
     else:
         '地点6'
-    return
-
-
-label stay:
-    if pov:
-        'z'
-    else:
-        'c'
     return
 
 
@@ -823,13 +817,13 @@ label ending1:
     $ persistent.playthrough = 2
     $ persistent.gamedata['playthrough1_fav'] = fav
     $ _history_list=[]
-    call endgame from _call_endgame
+    call endgame
     return
 
 label ending2:
     '坏结局，且进不了二周目的那种，理论上和第一种剧情不会有交集所以分两个label写了'
     $ _history_list=[]
-    call endgame from _call_endgame_2
+    call endgame
     return
 
 label ending3:
@@ -838,7 +832,7 @@ label ending3:
     '但我没想好要怎么在游戏里体现这点'
     $ persistent.playthrough = 3
     $ _history_list=[]
-    call endgame from _call_endgame_3
+    call endgame
     return
 
 label ending4:

@@ -2,9 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/turn.rpy", line 254: reached end of line when expecting ':'.
-    if 
-       ^
+File "game/turn.rpy", line 252: invalid syntax
+        imagebutton:
+    
 
 Ren'Py Version: Ren'Py 8.0.3.22090809
-Sat Apr 15 23:14:51 2023
+Sun Apr 16 14:04:09 2023
