@@ -232,26 +232,31 @@ image maptooltip2:
 
 image spotsp_i = Composite( (146,83),
     (0,0), 'gui/map/spot.png',
-    (10,0), 'gui/map/spot.png',
     (20,0), 'gui/map/spot.png',
-    (30,0), 'gui/map/spot.png',
     (40,0), 'gui/map/spot.png',
-    (50,0), 'gui/map/spot.png',
     (60,0), 'gui/map/spot.png',
-    (70,0), 'gui/map/spot.png',
     (80,0), 'gui/map/spot.png',
+    (100,0), 'gui/map/spot.png',
+    (120,0), 'gui/map/spot.png',
+    (140,0), 'gui/map/spot.png',
+    (160,0), 'gui/map/spot.png',
+    (180,0), 'gui/map/spot.png',
+    (200,0), 'gui/map/spot.png',
 )
 
-image spotsp_h = Composite( (146,83),
+## 这玩意会造成一个闪烁的效果，因为合成图像大小为0，就会反复判断你的鼠标是否在悬浮。
+image spotsp_h = Composite( (0,0),
     (0,0), 'gui/map/spot_hover.png',
-    (10,0), 'gui/map/spot_hover.png',
     (20,0), 'gui/map/spot_hover.png',
-    (30,0), 'gui/map/spot_hover.png',
     (40,0), 'gui/map/spot_hover.png',
-    (50,0), 'gui/map/spot_hover.png',
     (60,0), 'gui/map/spot_hover.png',
-    (70,0), 'gui/map/spot_hover.png',
     (80,0), 'gui/map/spot_hover.png',
+    (100,0), 'gui/map/spot_hover.png',
+    (120,0), 'gui/map/spot_hover.png',
+    (140,0), 'gui/map/spot_hover.png',
+    (160,0), 'gui/map/spot_hover.png',
+    (180,0), 'gui/map/spot_hover.png',
+    (200,0), 'gui/map/spot_hover.png',
 )
 
 

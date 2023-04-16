@@ -85,7 +85,7 @@ screen developer_options():
             style_prefix "check"
             textbutton '是否已读新手教程' action ToggleVariable('persistent.seen_beginner_guide')
             textbutton 'CG画廊开关' action ToggleVariable('persistent.unlock_gallery')
-        text '{color=#ffffff88}p.s.cg画廊需要完整通关一次（进二周目且打完）才能解锁，但不一定非得是真结局。\n和它一起解锁的还有一个显示好感度数值的界面，我想在那里再做个操作提示界面之类的，因为进真结局的条件比较复杂'
+        text '{color=#ffffff88}p.s.cg画廊需要完整通关一次（进二周目且打完）才能解锁，但不一定非得是真结局。\n和它一起解锁的还有一个显示好感度数值的界面，以及存档底下有关“这个档是几周目的”的提示'
         text ''
         hbox:
             style_prefix 'check'
@@ -402,11 +402,8 @@ screen navigation():
 
         if main_menu:
 
-            if persistent.playthrough == 1 or persistent.playthrough == 5:
-                textbutton _("开始游戏") action Start()
-            else:
-                $ gtext_mainmenu = glitchtext(12)
-                textbutton '[gtext_mainmenu]' action Start()
+            textbutton _("开始游戏") action Start()     
+            
 
         else:
 

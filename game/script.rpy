@@ -329,7 +329,9 @@ label c07:
     '在玩具摊给家里人买点风车拨浪鼓啥的，那个信里写的，然后考虑一下给钟离买什么礼物'
     '我一开始想的时候这和后续剧情有关，但是后来忘了）可以之后再改，大不了重写一个或者删掉（'
     $ p04enter = True
-    $ map_liyuegang_dict['wjt'][int(pov)].remove([21,22,23])
+    if [21,22,23] in map_liyuegang_dict['wjt'][int(pov)]:
+        $ map_liyuegang_dict['wjt'][int(pov)].remove([21,22,23])
+
     return
 
 label c08:
@@ -589,7 +591,7 @@ label p03_3:
     scene bg p03 1 with dissolve
     $ favp(8,'p03_3')
     '打架，但是三周目'
-    scene bg p03 1.5
+    scene bg p03 3
     '现实里钟离为了救被天理打到只剩一口气的公子，消耗了自己的神力，所以在这里他变成凡人了'
     '但这不影响他很能打，只是这次和一周目第二次打一样，在公子开魔王武装之前，就成功在钟离脸上划了一道口子'
     '然后他看到了红色而不是金色的血'
@@ -734,7 +736,10 @@ label p10_3:
     scene expression 'bg lyg '+str(clock(time)) with dissolve
     $ favp(3,'p10')
     '送花的剧情，但是3周目'
-    '没触发剧情的也能看见，因为结尾有呼应'
+    if p10enter:
+        '如果你看到这行字，说明你触发过前面的条件剧情'
+    else:
+        '如果你看到这行字，说明你没触发这个的条件剧情，但是三周目我准备强制所有玩家看一遍这个'
     return
 
 label p11:

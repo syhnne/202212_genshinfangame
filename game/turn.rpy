@@ -69,7 +69,6 @@ label turn:
                 ## 加入历史记录
                 if _return == 'stay':
                     $ choice = map_liyuegang_dict.get(call_stay())
-                    
                 else:
                     $ choice = map_liyuegang_dict.get(_return)
                 $ add_history(historyadd+'，'+choice[4]+'）')
