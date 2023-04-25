@@ -9,7 +9,9 @@ label splashscreen:
         if not persistent.firstrun:
             ## 在此加入firstrun需要的代码。我总觉得我一定会需要这东西，但是一直没想出在这写点啥。。
             persistent.firstrun = True
-    '这是游戏进入主界面前显示的画面，每次启动游戏前，都会显示一次。'
+        if not renpy.has_live2d():
+            '您的设备不支持Live2D，将使用替代方案显示。'
+
     ## 回头加个用户协议，我怕有人玩到二周目被吓（（（
     $ in_splash = False
     return
@@ -17,9 +19,13 @@ label splashscreen:
 
 label before_start:
 
-    '这是游戏开始之前的部分，可以写一点开头语来暗示剧情。'
-    if persistent.playthrough != 1:
-        '当然，不同周目可以在这里写不同的东西（'
+    '测试live2d'
+    if renpy.has_live2d():
+        show live2dtest testani with dissolve
+    else:
+        show black
+    '好！动起来了'
+    '真是太好了，这下子凡是脸容易崩的地方，全部改成live2d，只要动起来就没人能看清我的脸崩没崩（狂喜'
 
     return
 

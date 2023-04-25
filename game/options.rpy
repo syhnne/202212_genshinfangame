@@ -68,7 +68,7 @@ define config.has_voice = False
 
 ## 进入或退出游戏菜单。
 
-define config.enter_transition = dissolve
+
 define config.exit_transition = dissolve
 
 
@@ -77,9 +77,7 @@ define config.exit_transition = dissolve
 define config.intra_transition = dissolve
 
 
-## 载入游戏后使用的转场。
 
-define config.after_load_transition = dissolve
 
 
 ## 在游戏结束之后进入主菜单时使用的转场。
@@ -103,10 +101,7 @@ define config.end_game_transition = dissolve
 define config.window = "auto"
 
 
-## 用于显示和隐藏对话框窗口的转场
 
-define config.window_show_transition = Dissolve(.1)
-define config.window_hide_transition = Dissolve(.1)
 
 
 ## 默认设置 ########################################################################
@@ -121,19 +116,7 @@ default preferences.text_cps = 40
 default preferences.afm_time = 15
 
 
-## 存档目录 ########################################################################
-##
-## 控制 Ren'Py 为此游戏放置存档的，基于平台的特定目录。存档文件将放置在：
-##
-## Windows：%APPDATA\RenPy\<config.save_directory>
-##
-## Macintosh：$HOME/Library/RenPy/<config.save_directory>
-##
-## Linux：$HOME/.renpy/<config.save_directory>
-##
-## 该命令一般不应变更，若要变更，应为有效字符串而不是表达式。
 
-define config.save_directory = "game/saves"
 
 
 ## 图标 ##########################################################################

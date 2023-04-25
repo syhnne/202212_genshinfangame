@@ -392,3 +392,6 @@ image skipbutton2:
         linear 1.0 rotate 0
         pause 0 alpha 1
         repeat
+
+
+image live2dtest = Live2D("Resources/test.model3.json", seamless=True, loop=True)

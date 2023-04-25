@@ -9,6 +9,7 @@ init offset = -2
 init python:
     gui.init(1920, 1080)
     _autosave = False
+    _live2d_fade = True
     config.overlay_screens.append("quick_menu")
     if config.developer:
         config.overlay_screens.append("developer_time")
@@ -18,6 +19,8 @@ init python:
 ## GUI配置变量
 ################################################################################
 
+define config.gl2 = True
+define config.log_live2d_loading = True
 define config.save_directory = "game\saves"
 define config.developer = True ## 摇人来测试游戏的时候改成true，测试完成后改回auto或者注释掉这个语句
 define config.rollback_enabled = config.developer
@@ -26,12 +29,16 @@ define config.autosave_on_quit = True
 define config.has_quicksave = False
 define config.has_autosave = False
 define config.mouse = {}
+
 define config.window_show_transition = { "screens" : Dissolve(.1) }
 define config.window_hide_transition = { "screens" : Dissolve(.1) }
-define config.after_load_transition = fade
+
+
+define config.after_load_transition = dissolve
 define config.end_splash_transition = fade
 define config.enter_replay_transition = fade
-define config.enter_transition = fade
+define config.enter_transition = dissolve
+
 define config.menu_include_disabled = True
 # define config.replay_scope = { "_game_menu_screen" : "preferences" }
 define dissolve = Dissolve(0.3)

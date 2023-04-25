@@ -1,0 +1,22 @@
+{
+	"Version": 3,
+	"FileReferences": {
+		"Moc": "test.moc3",
+		"Textures": [
+			"test.1024/texture_00.png"
+		],
+		"DisplayInfo": "test.cdi3.json"
+	},
+	"Groups": [
+		{
+			"Target": "Parameter",
+			"Name": "LipSync",
+			"Ids": []
+		},
+		{
+			"Target": "Parameter",
+			"Name": "EyeBlink",
+			"Ids": []
+		}
+	]
+}

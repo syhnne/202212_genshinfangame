@@ -1,4 +1,4 @@
-## 但是有的代码开源了也不会有人看懂的
+
 
 screen developer_time_set():
     zorder 100
@@ -48,9 +48,6 @@ screen pov_toggle(stage=True):
         if persistent.playthrough == 4:
             foreground 'shadow' align (0,0) xysize(1920,1080)
         background 'gui/pov_toggle/bg.png'
-        # ConditionSwitch( 'persistent.playthrough == 4', 'gui/pov_toggle/p4.png',
-        # 'persistent.playthrough != 4', 'gui/pov_toggle/bg.png')
-            ## 如何做到按钮的遮挡效果：你先写谁，renpy就先渲染哪个按钮，后来的会挡在先来的前面
         imagebutton:
             idle 'pov_toggle_c_i'
             hover 'pov_toggle_c_h'
