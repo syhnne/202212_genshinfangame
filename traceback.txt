@@ -1,34 +1,45 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/turn.rpy", line 169, in script call
-    call before_start
-  File "game/script.rpy", line 23, in script
-    show live2dtest testani with dissolve
-Exception: Image 'live2dtest' does not accept attributes 'testani'.
+  File "game/02-images.rpy", line 397, in script
+    image live2dtest = Live2D("Resources/test.model3.json", seamless=True, loop=True)
+  File "game/02-images.rpy", line 397, in script
+    image live2dtest = Live2D("Resources/test.model3.json", seamless=True, loop=True)
+  File "game/02-images.rpy", line 397, in <module>
+    image live2dtest = Live2D("Resources/test.model3.json", seamless=True, loop=True)
+Exception: Could not load Live2D. b'Live2DCubismCore.dll' was not found.
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "game/turn.rpy", line 169, in script call
-    call before_start
-  File "game/script.rpy", line 23, in script
-    show live2dtest testani with dissolve
-  File "D:\renpy-7.4.4-sdk\renpy\ast.py", line 1408, in execute
-    show_imspec(self.imspec, atl=getattr(self, "atl", None))
-  File "D:\renpy-7.4.4-sdk\renpy\ast.py", line 1371, in show_imspec
-    renpy.config.show(name,
-  File "D:\renpy-7.4.4-sdk\renpy\exports.py", line 686, in show
-    if not base.find_target() and renpy.config.missing_show:
-  File "D:\renpy-7.4.4-sdk\renpy\display\image.py", line 414, in find_target
-    self.target = target._duplicate(a)
-  File "D:\renpy-7.4.4-sdk\renpy\display\layout.py", line 155, in _duplicate
-    args.extraneous()
-  File "D:\renpy-7.4.4-sdk\renpy\display\core.py", line 265, in extraneous
-    raise Exception("Image '{}' does not accept attributes '{}'.".format(
-Exception: Image 'live2dtest' does not accept attributes 'testani'.
+  File "D:\emily 202305\renpy\renpy-8.0.3-sdk\renpy\bootstrap.py", line 277, in bootstrap
+    renpy.main.main()
+  File "D:\emily 202305\renpy\renpy-8.0.3-sdk\renpy\main.py", line 558, in main
+    renpy.game.context().run(node)
+  File "game/02-images.rpy", line 397, in script
+    image live2dtest = Live2D("Resources/test.model3.json", seamless=True, loop=True)
+  File "/home/tom/ab/renpy-build/tmp/install.linux-x86_64/lib/python3.9/site-packages/future/utils/__init__.py", line 441, in raise_
+  File "game/02-images.rpy", line 397, in script
+    image live2dtest = Live2D("Resources/test.model3.json", seamless=True, loop=True)
+  File "D:\emily 202305\renpy\renpy-8.0.3-sdk\renpy\ast.py", line 1230, in execute
+    img = renpy.python.py_eval_bytecode(self.code.bytecode)
+  File "D:\emily 202305\renpy\renpy-8.0.3-sdk\renpy\python.py", line 1085, in py_eval_bytecode
+    return eval(bytecode, globals, locals)
+  File "game/02-images.rpy", line 397, in <module>
+    image live2dtest = Live2D("Resources/test.model3.json", seamless=True, loop=True)
+  File "D:\emily 202305\renpy\renpy-8.0.3-sdk\renpy\gl2\live2d.py", line 555, in __init__
+    common = self.create_common(default_fade)
+  File "D:\emily 202305\renpy\renpy-8.0.3-sdk\renpy\gl2\live2d.py", line 499, in create_common
+    rv = Live2DCommon(self.filename, default_fade)
+  File "D:\emily 202305\renpy\renpy-8.0.3-sdk\renpy\gl2\live2d.py", line 175, in __init__
+    init()
+  File "D:\emily 202305\renpy\renpy-8.0.3-sdk\renpy\gl2\live2d.py", line 90, in init
+    onetime_init()
+  File "D:\emily 202305\renpy\renpy-8.0.3-sdk\renpy\gl2\live2d.py", line 66, in onetime_init
+    raise Exception("Could not load Live2D. {} was not found.".format(dll))
+Exception: Could not load Live2D. b'Live2DCubismCore.dll' was not found.
 
-Windows-10-10.0.22621 AMD64
+Windows-10-10.0.17763 AMD64
 Ren'Py 8.0.3.22090809
 untitled 0.2
-Tue Apr 25 17:52:00 2023
+Tue May  9 08:10:47 2023
