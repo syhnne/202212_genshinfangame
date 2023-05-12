@@ -1,45 +1,38 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/02-images.rpy", line 397, in script
-    image live2dtest = Live2D("Resources/test.model3.json", seamless=True, loop=True)
-  File "game/02-images.rpy", line 397, in script
-    image live2dtest = Live2D("Resources/test.model3.json", seamless=True, loop=True)
-  File "game/02-images.rpy", line 397, in <module>
-    image live2dtest = Live2D("Resources/test.model3.json", seamless=True, loop=True)
-Exception: Could not load Live2D. b'Live2DCubismCore.dll' was not found.
+  File "game/turn.rpy", line 65, in script
+    call screen map_liyuegang(event[0]) with dissolve
+  File "renpy/common/000statements.rpy", line 604, in execute_call_screen
+    args, kwargs = a.evaluate()
+  File "game/turn.rpy", line 65, in <module>
+    call screen map_liyuegang(event[0]) with dissolve
+TypeError: 'NoneType' object is not subscriptable
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "D:\emily 202305\renpy\renpy-8.0.3-sdk\renpy\bootstrap.py", line 277, in bootstrap
-    renpy.main.main()
-  File "D:\emily 202305\renpy\renpy-8.0.3-sdk\renpy\main.py", line 558, in main
-    renpy.game.context().run(node)
-  File "game/02-images.rpy", line 397, in script
-    image live2dtest = Live2D("Resources/test.model3.json", seamless=True, loop=True)
-  File "/home/tom/ab/renpy-build/tmp/install.linux-x86_64/lib/python3.9/site-packages/future/utils/__init__.py", line 441, in raise_
-  File "game/02-images.rpy", line 397, in script
-    image live2dtest = Live2D("Resources/test.model3.json", seamless=True, loop=True)
-  File "D:\emily 202305\renpy\renpy-8.0.3-sdk\renpy\ast.py", line 1230, in execute
-    img = renpy.python.py_eval_bytecode(self.code.bytecode)
+  File "game/turn.rpy", line 65, in script
+    call screen map_liyuegang(event[0]) with dissolve
+  File "D:\emily 202305\renpy\renpy-8.0.3-sdk\renpy\ast.py", line 2232, in execute
+    self.call("execute")
+  File "D:\emily 202305\renpy\renpy-8.0.3-sdk\renpy\ast.py", line 2220, in call
+    return renpy.statements.call(method, parsed, *args, **kwargs)
+  File "D:\emily 202305\renpy\renpy-8.0.3-sdk\renpy\statements.py", line 281, in call
+    return method(parsed, *args, **kwargs)
+  File "renpy/common/000statements.rpy", line 604, in execute_call_screen
+    args, kwargs = a.evaluate()
+  File "D:\emily 202305\renpy\renpy-8.0.3-sdk\renpy\ast.py", line 342, in evaluate
+    value = renpy.python.py_eval(v, locals=scope)
+  File "D:\emily 202305\renpy\renpy-8.0.3-sdk\renpy\python.py", line 1092, in py_eval
+    return py_eval_bytecode(code, globals, locals)
   File "D:\emily 202305\renpy\renpy-8.0.3-sdk\renpy\python.py", line 1085, in py_eval_bytecode
     return eval(bytecode, globals, locals)
-  File "game/02-images.rpy", line 397, in <module>
-    image live2dtest = Live2D("Resources/test.model3.json", seamless=True, loop=True)
-  File "D:\emily 202305\renpy\renpy-8.0.3-sdk\renpy\gl2\live2d.py", line 555, in __init__
-    common = self.create_common(default_fade)
-  File "D:\emily 202305\renpy\renpy-8.0.3-sdk\renpy\gl2\live2d.py", line 499, in create_common
-    rv = Live2DCommon(self.filename, default_fade)
-  File "D:\emily 202305\renpy\renpy-8.0.3-sdk\renpy\gl2\live2d.py", line 175, in __init__
-    init()
-  File "D:\emily 202305\renpy\renpy-8.0.3-sdk\renpy\gl2\live2d.py", line 90, in init
-    onetime_init()
-  File "D:\emily 202305\renpy\renpy-8.0.3-sdk\renpy\gl2\live2d.py", line 66, in onetime_init
-    raise Exception("Could not load Live2D. {} was not found.".format(dll))
-Exception: Could not load Live2D. b'Live2DCubismCore.dll' was not found.
+  File "game/turn.rpy", line 65, in <module>
+    call screen map_liyuegang(event[0]) with dissolve
+TypeError: 'NoneType' object is not subscriptable
 
 Windows-10-10.0.17763 AMD64
 Ren'Py 8.0.3.22090809
 untitled 0.2
-Tue May  9 08:10:47 2023
+Wed May 10 12:14:02 2023

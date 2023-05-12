@@ -64,14 +64,14 @@ label start_c:
     $ povtoggle_enable = False
     $ nightlore = False
     $ _windows_hidden = True
-    call screen map_liyuegang('', mapdict, None, None) with dissolve
+    call screen map1('', mapdict, None, None) with dissolve
     $ time += 1
     $ in_map = False
     $ povtoggle_enable = True
     $ nightlore = True
     $ _windows_hidden = False
 
-    # showmap map_liyuegang([], mapdict, None, None) with dissolve
+    # showmap map1([], mapdict, None, None) with dissolve
 
     if _return == 'continue':
         scene bg lyg 2 with dissolve

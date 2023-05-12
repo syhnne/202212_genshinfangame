@@ -56,9 +56,15 @@ label turn:
             if renpy.config.skipping:
                 $ renpy.config.skipping = None
             if event and type(event[0])==type(''):
-                call screen map_liyuegang(event[0]) with dissolve
+                if current_map:
+                    call screen map1(event[0]) with dissolve
+                else:
+                    call screen map2(event[0]) with dissolve
             else:
-                call screen map_liyuegang() with dissolve
+                if current_map:
+                    call screen map1() with dissolve
+                else:
+                    call screen map2() with dissolve
             $ _windows_hidden = False
             $ in_map = False
 

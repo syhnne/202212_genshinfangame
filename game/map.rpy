@@ -140,7 +140,7 @@ screen map_options():
 
 screen days(text=None):
     zorder 50
-    $ tooltip = GetTooltip('map_liyuegang')
+    $ tooltip = GetTooltip('map1')
     $ dddate=date(time)
     $ ccclock=clocktext(time)
 
@@ -175,6 +175,7 @@ screen days(text=None):
             insensitive 'maptogglebutton_is'
             action Show('pov_toggle',dissolve)
             tooltip '切换视角…'
+    textbutton '切换地图' action [ToggleVariable('current_map'), Return(False), ]
 
 
 
@@ -182,7 +183,7 @@ screen days(text=None):
 
 
 
-screen map_liyuegang(spot_has_event='', mapdict=map_liyuegang_dict, bg=None, text=None):
+screen map1(spot_has_event='', mapdict=map_liyuegang_dict, bg=None, text=None):
     ## spot has event是把列表里头的触发字符串原封不动传过来了，所以要分割一下空格，识别一下stay
     
     zorder 1
@@ -277,3 +278,21 @@ screen map_liyuegang(spot_has_event='', mapdict=map_liyuegang_dict, bg=None, tex
                 frame:
                     xalign 0.5
                     text tooltip
+
+
+screen map2(spot_has_event='', mapdict=map2_dict, bg=None, text=None):
+       
+    zorder 1
+    
+    key "mousedown_4" action ShowMenu('history')
+    key 'K_ESCAPE' action ShowMenu('save')
+    key 's' action ShowMenu('save')
+    if povtoggle_enable:
+        key 'K_TAB' action Show('pov_toggle',dissolve)
+    if config.developer:
+        key 't' action ToggleScreen('developer_time_set',dissolve)
+
+    use days()
+
+    for spotname, spotinfo in mapdict.items():
+

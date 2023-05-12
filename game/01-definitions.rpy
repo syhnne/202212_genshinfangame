@@ -42,6 +42,7 @@ default povtoggle_enable = True
 default playthrough = 0
 default time = 0
 default fav = 0
+default current_map = True
 default fav_history = []
 default choice_history = []
 default nightlore = True
@@ -283,14 +284,14 @@ label _game_menu_mod(*args, _game_menu_screen=_game_menu_screen, **kwargs):
     
 
 # ## 打开地图。这个函数用不了，因为我不知道call screen这个renpy语句究竟是怎样一个流程。
-# map_liyuegang_dict = None
-# def openmap(eventspot=[], mapdict=map_liyuegang_dict, bg=None, text=None):
+# map1_dict = None
+# def openmap(eventspot=[], mapdict=map1_dict, bg=None, text=None):
 #     if renpy.config.skipping:
 #         renpy.config.skipping = None
 #     in_map = True
 #     _windows_hidden = True
-#     # call screen map_liyuegang(eventspot, mapdict, bg, text) with dissolve
+#     # call screen map1(eventspot, mapdict, bg, text) with dissolve
 #     Dissolve(0.3)
-#     renpy.call_screen('map_liyuegang', eventspot, mapdict, bg, text)
+#     renpy.call_screen('map1', eventspot, mapdict, bg, text)
 #     in_map = False
 #     _windows_hidden = False

@@ -91,6 +91,15 @@ init python:
             'z_home':[ [False], False,    200,400,'???', ],
         }
 
+        map2_dict = {
+            's1':[False, False, 20, 20, '璃月港', True],
+            's2':[False, False, 40, 20, '璃沙郊', False],
+            's3':[False, False, 60, 20, '望舒客栈', False],
+            's4':[False, False, 80, 20, '绝云间', False],
+            's5':[False, False, 100, 20, '轻策庄', False],
+            's6':[False, False, 120, 20, '归离原', False],
+        }
+
         if p==2:
             
             events_z[10] = [False, 'p00', 'renpy.seen_label(\'p02\')', 'p02_2']
